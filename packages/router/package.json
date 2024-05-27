@@ -41,5 +41,6 @@
         "dist",
         "*.mjs",
         "template"
-    ]
+    ],
+    "gitHead": "7d03faa9e53e1e8d8023e2e78d65500bd5d25e8b"
 }

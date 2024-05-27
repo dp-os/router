@@ -20,7 +20,7 @@
     },
     "devDependencies": {
         "@gez/lint": "0.0.9",
-        "@gez/router": "workspace:^",
+        "@gez/router": "^0.0.4",
         "@types/node": "20.12.12",
         "@vitest/coverage-v8": "1.6.0",
         "eslint": "8.57.0",
@@ -47,5 +47,6 @@
         "dist",
         "*.mjs",
         "template"
-    ]
+    ],
+    "gitHead": "7d03faa9e53e1e8d8023e2e78d65500bd5d25e8b"
 }

@@ -13,7 +13,7 @@
         "vue": "^3.0.0"
     },
     "dependencies": {
-        "@gez/router": "workspace:^"
+        "@gez/router": "^0.0.4"
     },
     "devDependencies": {
         "@gez/lint": "0.0.9",
@@ -45,5 +45,6 @@
         "dist",
         "*.mjs",
         "template"
-    ]
+    ],
+    "gitHead": "7d03faa9e53e1e8d8023e2e78d65500bd5d25e8b"
 }
