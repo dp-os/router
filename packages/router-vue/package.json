@@ -1,0 +1,51 @@
+{
+    "name": "@gez/router-vue",
+    "template": "library",
+    "scripts": {
+        "build": "unbuild",
+        "postinstall": "node './scripts/postinstall.js'",
+        "lint:js": "eslint . --ext .js,.mjs,.cjs,.ts,.vue --fix",
+        "lint:css": "stylelint '**/*.{css,vue}' --fix --aei",
+        "lint:type": "tsc --noEmit",
+        "test": "vitest --pass-with-no-tests",
+        "coverage": "vitest run --coverage --pass-with-no-tests"
+    },
+    "peerDependencies": {
+        "vue": "^3.0.0 || ^2.7.8"
+    },
+    "peerDependenciesMeta": {
+        "vue": {
+            "optional": true
+        }
+    },
+    "devDependencies": {
+        "@gez/router": "workspace:^",
+        "@types/node": "20.12.12",
+        "eslint": "8.57.0",
+        "stylelint": "16.5.0",
+        "typescript": "5.4.5",
+        "unbuild": "2.0.0",
+        "vue": "^2.7.8",
+        "@gez/lint": "0.0.9",
+        "@vitest/coverage-v8": "1.6.0",
+        "vitest": "1.6.0"
+    },
+    "version": "0.0.2",
+    "type": "module",
+    "private": false,
+    "exports": {
+        ".": {
+            "import": "./dist/index.mjs",
+            "require": "./dist/index.cjs"
+        }
+    },
+    "main": "./dist/index.cjs",
+    "module": "dist/index.mjs",
+    "types": "./dist/index.d.ts",
+    "files": [
+        "src",
+        "dist",
+        "*.mjs",
+        "template"
+    ]
+}

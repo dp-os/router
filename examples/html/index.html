@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="icon" href="/favicon.ico" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>router example</title>
+    </head>
+    <body>
+        <div id="bar">
+            <header>
+                <div class="wrapper">app.vue</div>
+            </header>
+            <div class="tabs">
+                router-push
+                <button onclick="router.push('/')">push /</button>
+                <button onclick="router.push('/test1')">push /test1</button>
+                <button onclick="router.push('/test1/test2')">push /test1/test2</button>
+                <button onclick="router.push('/test2xxxxx')">push /test2xxxxx</button>
+                <button onclick="router.push('/test3-33')">push /test3-33</button>
+                <button onclick="router.push('/test4/44/55')">push /test4/44/55</button>
+                <button onclick="router.push({
+                    path: '/test4/66/77',
+                    query: {
+                        a: '1',
+                        b: '2'
+                    },
+                    hash: '7788',
+                    state: {
+                        test: '1234'
+                    }
+                })">push /test4/66/77</button>
+            </div>
+            <div class="tabs">
+                router-replace
+                <button onclick="router.replace('/')">replace /</button>
+                <button onclick="router.replace('/test1')">replace /test1</button>
+                <button onclick="router.replace('/test1/test2')">replace /test1/test2</button>
+                <button onclick="router.replace('/test2xxxxx')">replace /test2xxxxx</button>
+                <button onclick="router.replace('/test3-33')">replace /test3-33</button>
+                <button onclick="router.replace('/test4/44/55')">replace /test4/44/55</button>
+            </div>
+            <div class="tabs">
+                go
+                <button onclick="router.go(1)">go 1</button>
+                <button onclick="router.go(2)">go 2</button>
+                <button onclick="router.go(-1)">go -1</button>
+                <button onclick="router.go(-2)">go -2</button>
+                <button onclick="router.go(0)">go 0</button>
+            </div>
+            <div class="tabs">
+                forward back
+                <button onclick="router.forward()">forward</button>
+                <button onclick="router.back()">back</button>
+            </div>
+        </div>
+        <div id="app">
+        </div>
+        <script type="module" src="/src/main.ts"></script>
+    </body>
+</html>
