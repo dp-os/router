@@ -3,7 +3,7 @@
     "template": "library",
     "scripts": {
         "build": "unbuild",
-        "postinstall": "node './scripts/postinstall.js'",
+        "postinstall": "node './bin/postinstall.js'",
         "lint:js": "eslint . --ext .js,.mjs,.cjs,.ts,.vue --fix",
         "lint:css": "stylelint '**/*.{css,vue}' --fix --aei",
         "lint:type": "tsc --noEmit",
@@ -35,15 +35,23 @@
     "private": false,
     "exports": {
         ".": {
-            "import": "./dist/index.mjs",
-            "require": "./dist/index.cjs"
-        }
+            "types": "./lib/index.d.ts",
+            "require": "./lib/index.cjs",
+            "import": "./lib/index.mjs",
+            "browser": "./lib/index.mjs"
+        },
+        "./*": "./*"
     },
-    "main": "./dist/index.cjs",
-    "module": "dist/index.mjs",
-    "types": "./dist/index.d.ts",
+    "bin": {
+        "router-vue-fix": "bin/postinstall.js"
+    },
+    "main": "./lib/index.cjs",
+    "module": "lib/index.mjs",
+    "types": "./lib/index.d.ts",
     "files": [
         "src",
+        "lib",
+        "bin",
         "dist",
         "*.mjs",
         "template"

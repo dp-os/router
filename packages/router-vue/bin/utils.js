@@ -19,23 +19,22 @@ async function copyFolderRecursively(src, dest) {
 }
 
 async function copy(version) {
-    const dest = path.resolve('./lib')
-    const src = path.join(dest, `v${version}`)
+    const dest = path.resolve('./lib');
+    const src = path.join(dest, `v${version}`);
 
     // unlink for pnpm
     try {
-        fs.unlinkSync(dir)
-        fs.unlinkSync(dest)
-    } catch (error) { }
+        fs.unlinkSync(dir);
+        fs.unlinkSync(dest);
+    } catch (error) {}
 
     // await fs.promises.cp(src, dest)
-    await copyFolderRecursively(src, dest)
+    await copyFolderRecursively(src, dest);
 }
 
 async function switchVersion(version) {
-    console.log(`[@gen.router] Switching to v${version}`)
-    await copy(version)
+    console.log(`[@gen.router] Switching to v${version}`);
+    await copy(version);
 }
-
 
 export { switchVersion };

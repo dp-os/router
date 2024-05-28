@@ -24,3 +24,15 @@ export default defineBuildConfig({
         }
     ]
 });
+// export default defineBuildConfig([
+//     {
+//         name: 'lib',
+//         entries: ['./lib/'],
+//         outDir: '/dist'
+//     },
+//     {
+//         name: 'minified',
+//         entries: ['./bin/'],
+//         outDir: '/dist/bin'
+//     }
+// ]);
