@@ -159,8 +159,8 @@ export interface Route {
     search: URL['search'];
 
     params: Record<string, string>;
-    query: Record<string, string>;
-    queryArray: Record<string, string[]>;
+    query: Record<string, string | undefined>;
+    queryArray: Record<string, string[] | undefined>;
     state: HistoryState;
     meta: RouteMeta;
     path: string;
@@ -179,8 +179,8 @@ export interface RouteRecord {
 
     fullPath: string;
     params: Record<string, string>;
-    query: Record<string, string>;
-    queryArray: Record<string, string[]>;
+    query: Record<string, string | undefined>;
+    queryArray: Record<string, string[] | undefined>;
     hash: string;
     state: HistoryState;
 
