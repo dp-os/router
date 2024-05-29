@@ -387,49 +387,46 @@ router.afterEach(async (from, to) => {
 });
 
 /* register用法 start */
-// Vue.use(RouterVuePlugin);
+Vue.use(RouterVuePlugin);
 
-// router.register('vue2', () => {
-//     // 服务端情况：不需要销毁实例
-//     // 客户端：路由跳转，调用新的应用类型时，这里需要销毁
-//     const app = new Vue({
-//         render: (h) => h(App),
-//         router,
-//     });
-//     return {
-//         mount() {
-//             console.log('@mount');
-//             app.$mount('#app');
-//         },
-//         update() {},
-//         ssr() {
-//             // const renderer = createRenderer();
-//             // return renderer.renderToString(app);
-//             return app.toString();
-//         },
-//         destroy() {
-//             app.$destroy();
-//         }
-//     }
-// });
+router.register('vue2', () => {
+    // 服务端情况：不需要销毁实例
+    // 客户端：路由跳转，调用新的应用类型时，这里需要销毁
+    const app = new Vue({
+        render: (h) => h(App),
+        router,
+    });
+    return {
+        mount() {
+            console.log('@mount');
+            app.$mount('#app');
+        },
+        updated() {
+            console.log('@updated');
+        },
+        destroy() {
+            app.$destroy();
+        }
+    }
+});
 
-// router.init();
+router.init();
 
-// (window as any)['router'] = router;
-// (window as any)['route'] = router.route;
+(window as any)['router'] = router;
+(window as any)['route'] = router.route;
 /* register用法 end */
 
 
 /* 单应用便捷用法 start */
-Vue.use(RouterVuePlugin);
-router.init();
-const app = new Vue({
-    render: (h) => h(App),
-    router,
-}).$mount('#app');
+// Vue.use(RouterVuePlugin);
+// router.init();
+// const app = new Vue({
+//     render: (h) => h(App),
+//     router,
+// }).$mount('#app');
 
-// for debugger
-(window as any)['app'] = app;
-(window as any)['router'] = router;
-(window as any)['route'] = router.route;
+// // for debugger
+// (window as any)['app'] = app;
+// (window as any)['router'] = router;
+// (window as any)['route'] = router.route;
 /* 单应用便捷用法 start */

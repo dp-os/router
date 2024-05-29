@@ -337,13 +337,10 @@ export interface RegisteredConfig {
     mount: () => any;
 
     /* 更新 */
-    update: () => any;
+    updated: () => any;
 
     /* 销毁 */
     destroy: () => any;
-
-    /* 获取ssr所需内容 */
-    ssr: () => any;
 }
 
 /**

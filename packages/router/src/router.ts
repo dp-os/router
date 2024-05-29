@@ -99,7 +99,7 @@ class Router {
                 registerConfig.mount();
                 registerConfig.mounted = true;
             }
-            registerConfig.update();
+            registerConfig.updated();
         }
     }
 

@@ -95,12 +95,9 @@ router.register('html', (router) => {
             console.log('@mount');
             render();
         },
-        update() {
-            console.log('@update');
+        updated() {
+            console.log('@updated');
             render();
-        },
-        ssr() {
-            return '';
         },
         destroy() {
             console.log('@destroy');
