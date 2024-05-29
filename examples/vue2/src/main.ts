@@ -432,4 +432,4 @@ const app = new Vue({
 (window as any)['app'] = app;
 (window as any)['router'] = router;
 (window as any)['route'] = router.route;
-/* register用法 start */
+/* 单应用便捷用法 start */
