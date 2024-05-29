@@ -31,10 +31,12 @@ const router = createRouter({
     },
     routes: [
         {
+            appType: 'vue2',
             path: '(.*)',
             asyncComponent: () => import('./components/All.vue')
         },
         {
+            appType: 'vue2',
             path: '',
             component: Test,
             beforeEnter: async (from, to) => {
@@ -246,6 +248,7 @@ const router = createRouter({
             ]
         },
         {
+            appType: 'vue2',
             path: 'test1',
             component: TestT1,
             children: [
@@ -256,14 +259,17 @@ const router = createRouter({
             ]
         },
         {
+            appType: 'vue2',
             path: 'test2(.*)',
             component: TestT2
         },
         {
+            appType: 'vue2',
             path: 'test3-:id',
             component: TestT3
         },
         {
+            appType: 'vue2',
             path: 'test4/:id/:name',
             // component: TestT4,
             asyncComponent: async () => {
@@ -300,6 +306,7 @@ const router = createRouter({
             },
         },
         {
+            appType: 'vue2',
             path: ['test5', 'test51', 'test52'],
             component: TestT5,
             children: [
@@ -310,10 +317,12 @@ const router = createRouter({
             ]
         },
         {
+            appType: 'vue2',
             path: 'redirect',
             redirect: 'test2'
         },
         {
+            appType: 'vue2',
             path: 'beforeEnter',
             beforeEnter: async (from, to) => {
                 await new Promise((resolve) => {
@@ -377,6 +386,9 @@ router.afterEach(async (from, to) => {
     console.log('afterEach 2', from.fullPath, to.fullPath);
 });
 
+/* register用法 start */
+// Vue.use(RouterVuePlugin);
+
 // router.register('vue2', () => {
 //     // 服务端情况：不需要销毁实例
 //     // 客户端：路由跳转，调用新的应用类型时，这里需要销毁
@@ -388,7 +400,6 @@ router.afterEach(async (from, to) => {
 //         mount() {
 //             console.log('@mount');
 //             app.$mount('#app');
-//             document.body.append(app.$el);
 //         },
 //         update() {},
 //         ssr() {
@@ -402,16 +413,52 @@ router.afterEach(async (from, to) => {
 //     }
 // });
 
-router.init();
+// router.init();
 
+// (window as any)['router'] = router;
+// (window as any)['route'] = router.route;
+/* register用法 end */
+
+
+/* register用法 start */
 Vue.use(RouterVuePlugin);
 
-const app = new Vue({
-    render: (h) => h(App),
-    router,
-}).$mount('#app');
+router.register('vue2', (router) => {
+    // 服务端情况：不需要销毁实例
+    // 客户端：路由跳转，调用新的应用类型时，这里需要销毁
+    const app = new Vue({
+        render: (h) => h(App),
+        router,
+    });
+    return {
+        mount() {
+            console.log('@mount');
+            app.$mount('#app');
+            // document.body.append(app.$el);
+        },
+        update() {
+
+        },
+        ssr() {
+            // const renderer = createRenderer();
+            // return renderer.renderToString(app);
+            return app.toString();
+        },
+        destroy() {
+            app.$destroy();
+        }
+    }
+});
+
+router.init();
+
+// const app = new Vue({
+//     render: (h) => h(App),
+//     router,
+// }).$mount('#app');
 
 // for debugger
-(window as any)['app'] = app;
+// (window as any)['app'] = app;
 (window as any)['router'] = router;
 (window as any)['route'] = router.route;
+/* register用法 start */

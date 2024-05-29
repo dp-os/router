@@ -381,7 +381,10 @@ export interface RouterInstance {
     init: () => void;
 
     /* app配置注册 */
-    register: (name: string, config: () => RegisteredConfig) => void;
+    register: (
+        name: string,
+        config: (RouterInstance) => RegisteredConfig
+    ) => void;
 
     /* 全局路由守卫 */
     readonly guards: {

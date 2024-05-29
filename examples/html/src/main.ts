@@ -73,7 +73,7 @@ const router = createRouter({
 
 (window as any).router = router;
 
-router.register('html', () => {
+router.register('html', (router) => {
     // 服务端情况：不需要销毁实例
     // 客户端：路由跳转，调用新的应用类型时，这里需要销毁
 

@@ -168,9 +168,9 @@ class Router {
     > = {};
 
     /* app配置注册 */
-    register(name: string, config: () => RegisteredConfig) {
+    register(name: string, config: (router: Router) => RegisteredConfig) {
         this.registeredConfigMap[name] = {
-            ...config(),
+            ...config(this),
             mounted: false
         };
     }
