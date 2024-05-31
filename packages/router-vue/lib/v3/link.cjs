@@ -27,7 +27,7 @@ var __spreadValues = (a, b) => {
 const RouterLink = exports.RouterLink = (0, _vue.defineComponent)({
   props: {
     to: {
-      type: String,
+      type: [String, Object],
       required: true
     },
     tag: {

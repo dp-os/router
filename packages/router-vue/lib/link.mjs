@@ -8,7 +8,7 @@ export const RouterLink = defineComponent({
   functional: true,
   props: {
     to: {
-      type: String,
+      type: [String, Object],
       required: true
     },
     tag: {

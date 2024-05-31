@@ -23,7 +23,7 @@ import { useRoute, useRouter } from "./use.mjs";
 export const RouterLink = defineComponent({
   props: {
     to: {
-      type: String,
+      type: [String, Object],
       required: true
     },
     tag: {

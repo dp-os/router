@@ -21,6 +21,17 @@ const router = useRouter()
       <router-link to="/test1">/test1</router-link>
       <router-link to="/test1/test2">/test1/test2</router-link>
       <router-link to="/test4/4/5">/test4/4/5</router-link>
+      <router-link :to="{
+            path: '/test4/66/77',
+            query: {
+              a: '1',
+              b: '2',
+            },
+            hash: '7788',
+            state: {
+              test: '1234',
+            },
+          }">/test4/66/77</router-link>
     </div>
     <div class="tabs">
       router-push

@@ -11,7 +11,7 @@ const RouterLink = exports.RouterLink = (0, _vue.defineComponent)({
   functional: true,
   props: {
     to: {
-      type: String,
+      type: [String, Object],
       required: true
     },
     tag: {

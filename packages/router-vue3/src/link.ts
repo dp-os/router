@@ -61,7 +61,7 @@ export interface RouterLinkProps {
 export const RouterLink = defineComponent({
     props: {
         to: {
-            type: String as PropType<RouterLinkProps['to']>,
+            type: [String, Object] as PropType<RouterLinkProps['to']>,
             required: true
         },
         tag: {
