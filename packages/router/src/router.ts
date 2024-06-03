@@ -14,7 +14,8 @@ import {
     type RouterMatcher,
     RouterMode,
     type RouterOptions,
-    type RouterRawLocation
+    type RouterRawLocation,
+    type RouterScrollBehavior
 } from './types';
 import { inBrowser, normalizePath } from './utils';
 
@@ -39,6 +40,9 @@ class Router {
 
     /* 路由history类 */
     history: RouterHistory;
+
+    /* 滚动行为 */
+    scrollBehavior: RouterScrollBehavior;
 
     /* 当前路由信息 */
     route: Route = {
@@ -72,6 +76,12 @@ class Router {
             (inBrowser ? RouterMode.HISTORY : RouterMode.ABSTRACT);
 
         this.base = options.base || '';
+
+        this.scrollBehavior =
+            options.scrollBehavior ||
+            ((to, from, savedPosition) => {
+                return false;
+            });
 
         this.history = createHistory({
             router: this,

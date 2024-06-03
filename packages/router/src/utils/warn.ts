@@ -1,3 +1,9 @@
+export function assert(condition: boolean, message: string) {
+    if (!condition) {
+        throw new Error(`[@gez/router] ${message}`);
+    }
+}
+
 export function warn(...args: any[]) {
     console.log(
         '%c ROUTER WARNING:',

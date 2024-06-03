@@ -1,8 +1,15 @@
-import { type RouterRawLocation } from '../types';
+import { type RouterInstance, type RouterRawLocation } from '../types';
 import { normalizeLocation } from '../utils';
 import { RouterHistory } from './base';
 
 export class HtmlHistory extends RouterHistory {
+    constructor(router: RouterInstance) {
+        super(router);
+        if ('scrollRestoration' in window.history) {
+            window.history.scrollRestoration = 'manual';
+        }
+    }
+
     // 获取当前地址，包括 path query hash
     getCurrentLocation() {
         const { href } = window.location;
@@ -40,9 +47,14 @@ export class HtmlHistory extends RouterHistory {
     }
 
     async push(location: RouterRawLocation) {
-        this.transitionTo(location, (route) => {
+        await this.transitionTo(location, (route) => {
             const state = route.state || history.state || {};
             window.history.pushState(state, '', route.fullPath);
+            // const position = this.router.scrollBehavior(
+            //     this.current,
+            //     route,
+            //     {}
+            // );
         });
     }
 
