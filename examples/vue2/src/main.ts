@@ -389,7 +389,7 @@ router.afterEach(async (from, to) => {
 /* register用法 start */
 Vue.use(RouterVuePlugin);
 
-router.register('vue2', () => {
+router.register('vue2', (router) => {
     // 服务端情况：不需要销毁实例
     // 客户端：路由跳转，调用新的应用类型时，这里需要销毁
     const app = new Vue({

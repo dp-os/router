@@ -380,7 +380,7 @@ export interface RouterInstance {
     /* app配置注册 */
     register: (
         name: string,
-        config: (RouterInstance) => RegisteredConfig
+        config: (router: RouterInstance) => RegisteredConfig
     ) => void;
 
     /* 全局路由守卫 */
