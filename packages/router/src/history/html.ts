@@ -1,11 +1,19 @@
 import { type RouterInstance, type RouterRawLocation } from '../types';
-import { normalizeLocation } from '../utils';
+import {
+    computeScrollPosition,
+    getSavedScrollPosition,
+    normalizeLocation,
+    saveScrollPosition,
+    scrollToPosition
+} from '../utils';
 import { RouterHistory } from './base';
 
 export class HtmlHistory extends RouterHistory {
     constructor(router: RouterInstance) {
         super(router);
+
         if ('scrollRestoration' in window.history) {
+            // 只有在 html 模式下才需要修改历史滚动模式
             window.history.scrollRestoration = 'manual';
         }
     }
@@ -46,23 +54,38 @@ export class HtmlHistory extends RouterHistory {
         window.removeEventListener('popstate', this.onPopState);
     }
 
+    // 新增路由记录跳转
     async push(location: RouterRawLocation) {
-        await this.transitionTo(location, (route) => {
-            const state = route.state || history.state || {};
-            window.history.pushState(state, '', route.fullPath);
-            // const position = this.router.scrollBehavior(
-            //     this.current,
-            //     route,
-            //     {}
-            // );
-        });
+        await this.jump(location, false);
     }
 
     // 替换当前路由记录跳转
     async replace(location: RouterRawLocation) {
+        await this.jump(location, true);
+    }
+
+    // 跳转方法
+    async jump(location: RouterRawLocation, replace: boolean = false) {
         await this.transitionTo(location, (route) => {
+            const { current } = this;
+            saveScrollPosition(current.fullPath, computeScrollPosition());
+
             const state = route.state || history.state || {};
-            window.history.replaceState(state, '', route.fullPath);
+            window.history[replace ? 'replaceState' : 'pushState'](
+                state,
+                '',
+                route.fullPath
+            );
+
+            setTimeout(async () => {
+                const savedPosition = getSavedScrollPosition(route.fullPath);
+                const position = await this.router.scrollBehavior(
+                    current,
+                    route,
+                    savedPosition
+                );
+                position && scrollToPosition(position);
+            });
         });
     }
 

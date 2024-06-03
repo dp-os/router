@@ -6,6 +6,17 @@ import {
     type ScrollPositionCoordinates
 } from '../types';
 
+/**
+ * 获取当前滚动位置
+ */
+export const computeScrollPosition = (): _ScrollPositionNormalized => ({
+    left: window.scrollX,
+    top: window.scrollY
+});
+
+/**
+ * 获取元素位置
+ */
 function getElementPosition(
     el: Element,
     offset: ScrollPositionCoordinates
@@ -20,11 +31,9 @@ function getElementPosition(
     };
 }
 
-export const computeScrollPosition = (): _ScrollPositionNormalized => ({
-    left: window.scrollX,
-    top: window.scrollY
-});
-
+/**
+ * 滚动到指定位置
+ */
 export function scrollToPosition(position: ScrollPosition): void {
     let scrollToOptions: ScrollPositionCoordinates;
 
@@ -60,8 +69,14 @@ export function scrollToPosition(position: ScrollPosition): void {
     }
 }
 
+/**
+ * 存储的滚动位置
+ */
 export const scrollPositions = new Map<string, _ScrollPositionNormalized>();
 
+/**
+ * 保存滚动位置
+ */
 export function saveScrollPosition(
     key: string,
     scrollPosition: _ScrollPositionNormalized
@@ -69,9 +84,12 @@ export function saveScrollPosition(
     scrollPositions.set(key, scrollPosition);
 }
 
+/**
+ * 获取存储的滚动位置
+ */
 export function getSavedScrollPosition(key: string) {
     const scroll = scrollPositions.get(key);
     // 保存的滚动位置信息不应当被多次使用, 下一次应当使用新保存的位置信息
     scrollPositions.delete(key);
-    return scroll;
+    return scroll || null;
 }
