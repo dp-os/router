@@ -66,8 +66,8 @@ export class HtmlHistory extends RouterHistory {
 
     // 跳转方法
     async jump(location: RouterRawLocation, replace: boolean = false) {
+        const current = Object.assign({}, this.current);
         await this.transitionTo(location, (route) => {
-            const { current } = this;
             saveScrollPosition(current.fullPath, computeScrollPosition());
 
             const state = route.state || history.state || {};

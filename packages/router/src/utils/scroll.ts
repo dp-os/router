@@ -82,6 +82,8 @@ export function saveScrollPosition(
     scrollPosition: _ScrollPositionNormalized
 ) {
     scrollPositions.set(key, scrollPosition);
+    console.log('saveScrollPosition', key, scrollPositions);
+    return scrollPositions;
 }
 
 /**
@@ -91,5 +93,6 @@ export function getSavedScrollPosition(key: string) {
     const scroll = scrollPositions.get(key);
     // 保存的滚动位置信息不应当被多次使用, 下一次应当使用新保存的位置信息
     scrollPositions.delete(key);
+    console.log('getSavedScrollPosition', key, scroll);
     return scroll || null;
 }

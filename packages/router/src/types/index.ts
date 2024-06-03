@@ -320,7 +320,11 @@ export interface RouterLocation {
 /**
  * 路由跳转等事件使用的参数
  */
-export type RouterRawLocation = RouterLocation | string;
+export type RouterRawLocation =
+    | (RouterLocation & {
+          keepScrollPosition?: boolean;
+      })
+    | string;
 
 /**
  * 路由匹配规则

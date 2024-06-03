@@ -80,6 +80,7 @@ class Router {
         this.scrollBehavior =
             options.scrollBehavior ||
             ((to, from, savedPosition) => {
+                if (savedPosition) return savedPosition;
                 return false;
             });
 
