@@ -223,16 +223,16 @@ export interface RouterHistory {
     updateRoute: (route: RouteRecord) => void;
 
     /* 跳转方法，会创建新的历史纪录 */
-    push: (location: RouterRawLocation) => void;
+    push: (location: RouterRawLocation) => Promise<void>;
 
     /* 跳转方法，替换当前历史记录 */
-    replace: (location: RouterRawLocation) => void;
+    replace: (location: RouterRawLocation) => Promise<void>;
 
     /* 路由移动到指定历史记录方法 */
     go: (delta: number) => void;
 
     /* 初始化方法 */
-    init: () => void;
+    init: () => Promise<void>;
 
     /* 卸载方法 */
     destroy: () => void;
@@ -375,7 +375,7 @@ export interface RouterInstance {
     updateRoute: (route: RouteRecord) => void;
 
     /* 初始化 */
-    init: () => void;
+    init: () => Promise<void>;
 
     /* app配置注册 */
     register: (
@@ -396,10 +396,10 @@ export interface RouterInstance {
     afterEach: (guard: NavigationGuardAfter) => void;
 
     /* 路由跳转方法，会创建新的历史记录 */
-    push: (location: RouterRawLocation) => void;
+    push: (location: RouterRawLocation) => Promise<void>;
 
     /* 路由跳转方法，会替换当前的历史记录 */
-    replace: (location: RouterRawLocation) => void;
+    replace: (location: RouterRawLocation) => Promise<void>;
 
     /* 前往特定路由历史记录的方法，可以在历史记录前后移动 */
     go: (delta: number) => void;

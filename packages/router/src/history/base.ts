@@ -204,12 +204,12 @@ export abstract class RouterHistory {
     /**
      * 跳转方法，会创建新的历史纪录
      */
-    abstract push(location: RouterRawLocation): void;
+    abstract push(location: RouterRawLocation): Promise<void>;
 
     /**
      * 跳转方法，替换当前历史记录
      */
-    abstract replace(location: RouterRawLocation): void;
+    abstract replace(location: RouterRawLocation): Promise<void>;
 
     /**
      * 路由移动到指定历史记录方法
@@ -219,7 +219,7 @@ export abstract class RouterHistory {
     /**
      * 初始化方法
      */
-    abstract init(): void;
+    abstract init(): Promise<void>;
 
     /**
      * 卸载方法

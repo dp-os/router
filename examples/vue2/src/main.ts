@@ -405,12 +405,13 @@ router.register('vue2', () => {
             console.log('@updated');
         },
         destroy() {
+            console.log('@destroy');
             app.$destroy();
         }
     }
 });
 
-router.init();
+await router.init();
 
 (window as any)['router'] = router;
 (window as any)['route'] = router.route;

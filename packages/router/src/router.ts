@@ -156,9 +156,8 @@ class Router {
     // }
 
     /* 初始化 */
-    init() {
-        const history = this.history;
-        history.init();
+    async init() {
+        await this.history.init();
     }
 
     /* 已注册的app配置 */
@@ -195,13 +194,13 @@ class Router {
     }
 
     /* 路由跳转方法，会创建新的历史记录 */
-    push(location: RouterRawLocation) {
-        this.history.push(location);
+    async push(location: RouterRawLocation) {
+        await this.history.push(location);
     }
 
     /* 路由跳转方法，会替换当前的历史记录 */
-    replace(location: RouterRawLocation) {
-        this.history.replace(location);
+    async replace(location: RouterRawLocation) {
+        await this.history.replace(location);
     }
 
     /* 前往特定路由历史记录的方法，可以在历史记录前后移动 */

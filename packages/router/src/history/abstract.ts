@@ -16,23 +16,23 @@ export class AbstractHistory extends RouterHistory {
         this.init();
     }
 
-    init() {}
+    async init() {}
 
     destroy() {}
 
     // 设置监听函数
     setupListeners() {}
 
-    push(location: RouterRawLocation) {
-        this.transitionTo(location, (route) => {
+    async push(location: RouterRawLocation) {
+        await this.transitionTo(location, (route) => {
             this.stack = this.stack.slice(0, this.index + 1).concat(route);
             this.index++;
         });
     }
 
     // 替换当前路由记录跳转
-    replace(location: RouterRawLocation) {
-        this.transitionTo(location, (route) => {
+    async replace(location: RouterRawLocation) {
+        await this.transitionTo(location, (route) => {
             this.stack = this.stack.slice(0, this.index).concat(route);
         });
     }
