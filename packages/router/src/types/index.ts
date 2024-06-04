@@ -322,7 +322,7 @@ export interface RouterHistory {
  */
 export interface RouterLocation {
     path?: string;
-    query?: Record<string, string>;
+    query?: Record<string, string | undefined>;
     queryArray?: Record<string, string[]>;
     params?: Record<string, string>;
     hash?: string;
