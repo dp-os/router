@@ -4,8 +4,7 @@ export {
     stringifyPath,
     normalizeLocation
 } from './path';
-export { isESModule } from './isESModule';
-export { inBrowser } from './inBrowser';
+export { isESModule, inBrowser } from './utils';
 export { warn } from './warn';
 export { isSameRoute, isEqualRoute } from './guards';
 export {

@@ -82,17 +82,25 @@ export function saveScrollPosition(
     scrollPosition: _ScrollPositionNormalized
 ) {
     scrollPositions.set(key, scrollPosition);
-    console.log('saveScrollPosition', key, scrollPositions);
-    return scrollPositions;
+    // preserve existing history state as it could be overriden by the user
+    const stateCopy = Object.assign({}, window.history.state);
+    stateCopy.key = scrollPosition;
+
+    const protocolAndPath =
+        window.location.protocol + '//' + window.location.host;
+    const absolutePath = window.location.href.replace(protocolAndPath, '');
+    window.history.replaceState(stateCopy, '', absolutePath);
 }
 
 /**
  * 获取存储的滚动位置
  */
-export function getSavedScrollPosition(key: string) {
-    const scroll = scrollPositions.get(key);
+export function getSavedScrollPosition(
+    key: string
+): _ScrollPositionNormalized | null {
+    const scroll = scrollPositions.get(key) || history.state[key];
+
     // 保存的滚动位置信息不应当被多次使用, 下一次应当使用新保存的位置信息
     scrollPositions.delete(key);
-    console.log('getSavedScrollPosition', key, scroll);
     return scroll || null;
 }

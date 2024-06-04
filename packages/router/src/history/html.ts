@@ -34,9 +34,21 @@ export class HtmlHistory extends RouterHistory {
         };
     }
 
-    onPopState() {
+    onPopState(e: PopStateEvent) {
+        const current = Object.assign({}, this.current);
         // 当路由变化时触发跳转事件
-        this.transitionTo(this.getCurrentLocation());
+        this.transitionTo(this.getCurrentLocation(), (route) => {
+            saveScrollPosition(current.fullPath, computeScrollPosition());
+            setTimeout(async () => {
+                const savedPosition = getSavedScrollPosition(route.fullPath);
+                const position = await this.router.scrollBehavior(
+                    current,
+                    route,
+                    savedPosition
+                );
+                position && scrollToPosition(position);
+            });
+        });
     }
 
     async init() {
@@ -76,16 +88,6 @@ export class HtmlHistory extends RouterHistory {
                 '',
                 route.fullPath
             );
-
-            setTimeout(async () => {
-                const savedPosition = getSavedScrollPosition(route.fullPath);
-                const position = await this.router.scrollBehavior(
-                    current,
-                    route,
-                    savedPosition
-                );
-                position && scrollToPosition(position);
-            });
         });
     }
 

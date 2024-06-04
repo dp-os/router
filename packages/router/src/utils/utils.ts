@@ -1,4 +1,9 @@
 /**
+ * 是否在浏览器环境
+ */
+export const inBrowser = typeof window !== 'undefined';
+
+/**
  *  Symbol 是否可用
  */
 export const isSymbolAble =
