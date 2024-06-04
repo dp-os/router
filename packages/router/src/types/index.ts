@@ -322,6 +322,9 @@ export interface RouterLocation {
  */
 export type RouterRawLocation =
     | (RouterLocation & {
+          /**
+           * 设置此参数后，不保存滚动位置，跳转后页面位置仍在原处
+           */
           keepScrollPosition?: boolean;
       })
     | string;

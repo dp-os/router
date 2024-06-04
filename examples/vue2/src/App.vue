@@ -58,6 +58,25 @@ const router = useRouter()
       >
         push /test4/66/77
       </button>
+      <button
+        @click="
+          router.push({
+            keepScrollPosition: true,
+            path: '/test4/99/11',
+            query: {
+              k: '2',
+              b: '4',
+            },
+            hash: '5566',
+            state: {
+              test: '6789',
+            },
+          })
+        "
+      >
+        push /test4/99/11
+        keepScrollPosition
+      </button>
     </div>
     <div class="tabs">
       router-replace
@@ -130,8 +149,12 @@ const router = useRouter()
   </div>
 </template>
 
-<style scoped>
+<style>
+body {
+  min-height: 2000px;
+}
 .tabs {
+  padding: 12px 0;
   > * {
     font-size: 16px;
     color: skyblue;

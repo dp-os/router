@@ -1,6 +1,7 @@
 import { type RouterInstance, type RouterRawLocation } from '../types';
 import {
     computeScrollPosition,
+    getKeepScrollPosition,
     getSavedScrollPosition,
     normalizeLocation,
     saveScrollPosition,
@@ -40,6 +41,11 @@ export class HtmlHistory extends RouterHistory {
         this.transitionTo(this.getCurrentLocation(), (route) => {
             saveScrollPosition(current.fullPath, computeScrollPosition());
             setTimeout(async () => {
+                const keepScrollPosition = history.state.keepScrollPosition;
+                console.log('@keepScrollPosition', keepScrollPosition);
+                if (keepScrollPosition) {
+                    return;
+                }
                 const savedPosition = getSavedScrollPosition(route.fullPath);
                 const position = await this.router.scrollBehavior(
                     current,
@@ -80,11 +86,14 @@ export class HtmlHistory extends RouterHistory {
     async jump(location: RouterRawLocation, replace: boolean = false) {
         const current = Object.assign({}, this.current);
         await this.transitionTo(location, (route) => {
-            saveScrollPosition(current.fullPath, computeScrollPosition());
+            const keepScrollPosition = getKeepScrollPosition(location);
+            if (!keepScrollPosition) {
+                saveScrollPosition(current.fullPath, computeScrollPosition());
+            }
 
             const state = route.state || history.state || {};
             window.history[replace ? 'replaceState' : 'pushState'](
-                state,
+                Object.assign(state, { keepScrollPosition }),
                 '',
                 route.fullPath
             );

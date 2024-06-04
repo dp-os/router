@@ -11,5 +11,6 @@ export {
     computeScrollPosition,
     scrollToPosition,
     saveScrollPosition,
-    getSavedScrollPosition
+    getSavedScrollPosition,
+    getKeepScrollPosition
 } from './scroll';

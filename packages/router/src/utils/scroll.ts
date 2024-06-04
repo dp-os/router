@@ -1,7 +1,6 @@
 import {
     type _ScrollPositionNormalized,
-    type RouteRecord,
-    ScrollBehaviorHandler,
+    type RouterRawLocation,
     type ScrollPosition,
     type ScrollPositionCoordinates
 } from '../types';
@@ -103,4 +102,12 @@ export function getSavedScrollPosition(
     // 保存的滚动位置信息不应当被多次使用, 下一次应当使用新保存的位置信息
     scrollPositions.delete(key);
     return scroll || null;
+}
+
+/**
+ * 获取跳转配置的保持滚动位置参数
+ */
+export function getKeepScrollPosition(location: RouterRawLocation): boolean {
+    if (typeof location === 'string') return false;
+    return location.keepScrollPosition || false;
 }

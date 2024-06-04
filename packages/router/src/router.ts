@@ -81,7 +81,10 @@ class Router {
             options.scrollBehavior ||
             ((to, from, savedPosition) => {
                 if (savedPosition) return savedPosition;
-                return false;
+                return {
+                    left: 0,
+                    top: 0
+                };
             });
 
         this.history = createHistory({
