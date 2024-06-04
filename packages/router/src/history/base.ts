@@ -77,6 +77,11 @@ export abstract class RouterHistory {
      * 解析路由
      */
     resolve(location: RouterRawLocation): RouteRecord {
+        const rawLocation =
+            typeof location === 'string' ? { path: location } : location;
+        if (rawLocation.path === undefined) {
+            rawLocation.path = this.current.fullPath;
+        }
         const { base, ...normalizedLocation } = normalizeLocation(
             location,
             this.router.base

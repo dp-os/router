@@ -309,7 +309,7 @@ export interface RouterHistory {
  * 路由跳转等事件使用的参数
  */
 export interface RouterLocation {
-    path: string;
+    path?: string;
     query?: Record<string, string>;
     queryArray?: Record<string, string[]>;
     params?: Record<string, string>;

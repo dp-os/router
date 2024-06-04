@@ -42,7 +42,6 @@ export class HtmlHistory extends RouterHistory {
             saveScrollPosition(current.fullPath, computeScrollPosition());
             setTimeout(async () => {
                 const keepScrollPosition = history.state.keepScrollPosition;
-                console.log('@keepScrollPosition', keepScrollPosition);
                 if (keepScrollPosition) {
                     return;
                 }
