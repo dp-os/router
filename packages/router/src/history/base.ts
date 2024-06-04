@@ -221,6 +221,12 @@ export abstract class RouterHistory {
      */
     abstract go(delta: number): void;
 
+    /* 路由历史记录前进方法 */
+    abstract forward(): void;
+
+    /* 路由历史记录后退方法 */
+    abstract back(): void;
+
     /**
      * 初始化方法
      */

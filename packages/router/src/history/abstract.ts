@@ -47,4 +47,14 @@ export class AbstractHistory extends RouterHistory {
         this.index = targetIndex;
         this.updateRoute(route);
     }
+
+    /* 路由历史记录前进方法 */
+    forward() {
+        this.go(1);
+    }
+
+    /* 路由历史记录后退方法 */
+    back() {
+        this.go(-1);
+    }
 }

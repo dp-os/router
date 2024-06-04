@@ -102,4 +102,22 @@ export class HtmlHistory extends RouterHistory {
     go(delta: number): void {
         window.history.go(delta);
     }
+
+    forward(): void {
+        window.history.forward();
+    }
+
+    protected timer: NodeJS.Timeout | null = null;
+
+    back(): void {
+        const oldState = history.state;
+        window.history.back();
+        this.timer = setTimeout(() => {
+            if (history.state === oldState) {
+                const noBackNavigation = this.router.options.noBackNavigation;
+                noBackNavigation && noBackNavigation();
+            }
+            this.timer = null;
+        }, 80);
+    }
 }

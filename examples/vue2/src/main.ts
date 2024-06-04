@@ -29,6 +29,9 @@ const router = createRouter({
 
         return base;
     },
+    noBackNavigation: () => {
+        console.log('@noBackNavigation');
+    },
     routes: [
         {
             appType: 'vue2',

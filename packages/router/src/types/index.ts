@@ -207,6 +207,12 @@ export interface RouterOptions {
      */
     scrollBehavior?: RouterScrollBehavior;
 
+    /**
+     * 到达历史记录末点时触发 history back 之后的回调
+     * @description 只有在 history state 可用的环境才生效
+     */
+    noBackNavigation?: () => void;
+
     /* 路由配置使用的 route */
     routes: RouteConfig[];
 }
@@ -297,6 +303,12 @@ export interface RouterHistory {
 
     /* 路由移动到指定历史记录方法 */
     go: (delta: number) => void;
+
+    /* 路由历史记录前进方法 */
+    forward: () => void;
+
+    /* 路由历史记录后退方法 */
+    back: () => void;
 
     /* 初始化方法 */
     init: () => Promise<void>;

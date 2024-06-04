@@ -224,12 +224,12 @@ class Router {
 
     /* 路由历史记录前进方法 */
     forward() {
-        this.history.go(1);
+        this.history.forward();
     }
 
     /* 路由历史记录后退方法 */
     back() {
-        this.history.go(-1);
+        this.history.back();
     }
 
     /* 根据获取当前所有活跃的路由Record对象 */

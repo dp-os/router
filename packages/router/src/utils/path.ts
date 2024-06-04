@@ -108,7 +108,7 @@ export function stringifyPath(
 export function normalizeLocation(
     rawLocation: RouterRawLocation,
     base: RouterBase = ''
-): RouterLocation & { base: string } {
+): RouterLocation & { path: string; base: string } {
     let pathname: string = '';
     let query: Record<string, string> = {};
     let queryArray: Record<string, string[]> = {};
@@ -156,7 +156,7 @@ export function normalizeLocation(
     const { query: realQuery, queryArray: realQueryArray } =
         parsePath(fullPath);
 
-    const res: RouterLocation & { base: string } = {
+    const res: RouterLocation & { path: string; base: string } = {
         base: baseString,
         path,
         query: realQuery,
