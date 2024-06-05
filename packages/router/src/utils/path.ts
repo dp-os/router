@@ -83,7 +83,8 @@ export function stringifyPath(
         hash = ''
     }: {
         pathname: string;
-        query: Record<string, string>;
+        /* 按 Hanson 要求加入 undefined 类型 */
+        query: Record<string, string | undefined>;
         queryArray: Record<string, string[]>;
         hash: string;
     } = {
@@ -110,7 +111,8 @@ export function normalizeLocation(
     base: RouterBase = ''
 ): RouterLocation & { path: string; base: string } {
     let pathname: string = '';
-    let query: Record<string, string> = {};
+    /* 按 Hanson 要求加入 undefined 类型 */
+    let query: Record<string, string | undefined> = {};
     let queryArray: Record<string, string[]> = {};
     let hash: string = '';
     let params: Record<string, string> | undefined;

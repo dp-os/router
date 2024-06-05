@@ -36,7 +36,8 @@ class RouteMatcher {
         { base } = { base: '' }
     ): RouteRecord | null {
         let path: string = '';
-        let query: Record<string, string> = {};
+        /* 按 Hanson 要求加入 undefined 类型 */
+        let query: Record<string, string | undefined> = {};
         let queryArray: Record<string, string[]> = {};
         let params: Record<string, string> = {};
         let hash: string = '';

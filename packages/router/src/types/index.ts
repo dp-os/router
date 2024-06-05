@@ -120,7 +120,8 @@ export type RouterBase =
     | string
     | ((params: {
           fullPath: string;
-          query: Record<string, string>;
+          /* 按 Hanson 要求加入 undefined 类型 */
+          query: Record<string, string | undefined>;
           queryArray: Record<string, string[]>;
           hash: string;
       }) => string);
@@ -232,7 +233,9 @@ export interface Route {
     search: URL['search'];
 
     params: Record<string, string>;
+    /* 按 Hanson 要求加入 undefined 类型 */
     query: Record<string, string | undefined>;
+    /* 按 Hanson 要求加入 undefined 类型 */
     queryArray: Record<string, string[] | undefined>;
     state: HistoryState;
     meta: RouteMeta;
@@ -252,7 +255,9 @@ export interface RouteRecord {
 
     fullPath: string;
     params: Record<string, string>;
+    /* 按 Hanson 要求加入 undefined 类型 */
     query: Record<string, string | undefined>;
+    /* 按 Hanson 要求加入 undefined 类型 */
     queryArray: Record<string, string[] | undefined>;
     hash: string;
     state: HistoryState;
@@ -322,6 +327,7 @@ export interface RouterHistory {
  */
 export interface RouterLocation {
     path?: string;
+    /* 按 Hanson 要求加入 undefined 类型 */
     query?: Record<string, string | undefined>;
     queryArray?: Record<string, string[]>;
     params?: Record<string, string>;
@@ -354,7 +360,7 @@ export interface RouteMatch {
     /* 路径解析方法 */
     parse: (path: string) => {
         params: Record<string, string>;
-        query: Record<string, string>;
+        query: Record<string, string | undefined>;
         queryArray: Record<string, string[]>;
         hash: string;
     };
@@ -362,7 +368,7 @@ export interface RouteMatch {
     /* 按照传入参数解析出完整路径 */
     compile: (params?: {
         params?: Record<string, string>;
-        query?: Record<string, string>;
+        query?: Record<string, string | undefined>;
         queryArray?: Record<string, string[]>;
         hash?: string;
     }) => string;
