@@ -50,7 +50,7 @@ class RouteMatcher {
         hash = rawLocation.hash || parsedOption.hash || '';
         state = rawLocation.state || {};
 
-        const routeMatch = this.routeMatches.findLast(({ match }) => {
+        const routeMatch = this.routeMatches.find(({ match }) => {
             return match(path);
         });
 
@@ -161,7 +161,20 @@ function createRouteMatches(
             )
         );
     }
-    return routeMatches;
+
+    // 去除重复的匹配规则
+    const matches = routeMatches.reduce<RouteMatch[]>((acc, match) => {
+        const index = acc.findIndex((item) => {
+            return item.path === match.path;
+        });
+        if (index === -1) {
+            acc.push(match);
+        } else {
+            acc[index] = match;
+        }
+        return acc;
+    }, []);
+    return matches;
 }
 
 /**

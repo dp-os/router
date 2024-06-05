@@ -12,11 +12,6 @@ const router = createRouter({
     routes: [
         {
             appType: 'html',
-            path: '(.*)',
-            component: All
-        },
-        {
-            appType: 'html',
             path: '',
             component: Test,
             children: [
@@ -67,7 +62,12 @@ const router = createRouter({
             path: '/test4/:id/:name',
             component: Test4
             // asyncComponent: () => import('./template/test4')
-        }
+        },
+        {
+            appType: 'html',
+            path: '(.*)',
+            component: All
+        },
     ]
 });
 

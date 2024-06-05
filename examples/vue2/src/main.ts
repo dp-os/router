@@ -35,11 +35,6 @@ const router = createRouter({
     routes: [
         {
             appType: 'vue2',
-            path: '(.*)',
-            asyncComponent: () => import('./components/All.vue')
-        },
-        {
-            appType: 'vue2',
             path: '',
             component: Test,
             beforeEnter: async (from, to) => {
@@ -352,7 +347,12 @@ const router = createRouter({
                 });
                 console.log('beforeLeave', 'hook', from.fullPath, to.fullPath);
             },
-        }
+        },
+        {
+            appType: 'vue2',
+            path: '(.*)',
+            asyncComponent: () => import('./components/All.vue')
+        },
     ]
 });
 
