@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from "vue"
-import { useRoute, useRouter } from "@gez/router-vue"
+import { useRoute, useRouter } from "@gez/router-vue3"
 
 const route = useRoute();
 const routeJson = computed(() => {
@@ -24,7 +24,7 @@ function click() {
     </header>
     <div class="tabs">
       router-link
-      <router-link to="/">/</router-link>
+      <router-link class="rrrrrrrr3" to="/">/</router-link>
       <router-link to="/test1">/test1</router-link>
       <router-link to="/test1/test2">/test1/test2</router-link>
       <router-link to="/test4/4/5">/test4/4/5</router-link>

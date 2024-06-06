@@ -54,9 +54,9 @@ importers:
       '@gez/router':
         specifier: workspace:^
         version: link:../../packages/router
-      '@gez/router-vue':
+      '@gez/router-vue2':
         specifier: workspace:^
-        version: link:../../packages/router-vue
+        version: link:../../packages/router-vue2
       vue:
         specifier: ^2.7.16
         version: 2.7.16
@@ -94,9 +94,9 @@ importers:
       '@gez/router':
         specifier: workspace:^
         version: link:../../packages/router
-      '@gez/router-vue':
+      '@gez/router-vue3':
         specifier: workspace:^
-        version: link:../../packages/router-vue
+        version: link:../../packages/router-vue3
       vue:
         specifier: ^3.4.21
         version: 3.4.27(typescript@5.4.5)

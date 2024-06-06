@@ -2,7 +2,7 @@ import { createApp } from 'vue'
 import AppComponent from './App.vue'
 
 import { createRouter } from '@gez/router';
-import { RouterVuePlugin } from '@gez/router-vue'
+import { RouterVuePlugin } from '@gez/router-vue3'
 
 import Test from './components/Test.vue';
 import TestT1 from './components/TestT1.vue';

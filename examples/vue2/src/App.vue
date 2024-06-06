@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from "vue"
-import { useRoute, useRouter } from "@gez/router-vue"
+import { useRoute, useRouter } from "@gez/router-vue2"
 
 const route = computed(() => {
   const { matched, ...rest } = useRoute()
@@ -17,7 +17,7 @@ const router = useRouter()
     </header>
     <div class="tabs">
       router-link
-      <router-link to="/">/</router-link>
+      <router-link class="rrrrrrrr" to="/">/</router-link>
       <router-link to="/test1">/test1</router-link>
       <router-link to="/test1/test2">/test1/test2</router-link>
       <router-link to="/test4/4/5">/test4/4/5</router-link>

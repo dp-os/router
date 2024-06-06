@@ -2,7 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 
 import { createRouter } from '@gez/router';
-import { RouterVuePlugin } from '@gez/router-vue'
+import { RouterVuePlugin } from '@gez/router-vue2'
 
 import Test from './components/Test.vue';
 import TestT1 from './components/TestT1.vue';
@@ -249,10 +249,16 @@ const router = createRouter({
             appType: 'vue2',
             path: 'test1',
             component: TestT1,
+            meta: {
+                nn: '/test1'
+            },
             children: [
                 {
                     path: "test2",
-                    component: TestT2
+                    component: TestT2,
+                    meta: {
+                        title: 'test1/test2'
+                    },
                 }
             ]
         },

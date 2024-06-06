@@ -11,7 +11,7 @@
     },
     "dependencies": {
         "@gez/router": "workspace:^",
-        "@gez/router-vue": "workspace:^",
+        "@gez/router-vue2": "workspace:^",
         "vue": "^2.7.16"
     },
     "devDependencies": {
