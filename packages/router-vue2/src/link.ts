@@ -138,6 +138,7 @@ export const RouterLink = defineComponent({
         return h(
             tag,
             {
+                ...ctx.data,
                 class: [
                     'router-link',
                     {
