@@ -197,7 +197,16 @@ function createRouteMatch(
         (acc, item, index) => {
             const { children } = route;
             const path = normalizePath(item, parent?.path);
-            const regex = pathToRegexp(path);
+            let regex: RegExp;
+            try {
+                regex = pathToRegexp(path);
+            } catch (error) {
+                console.warn(
+                    `@create route rule failed on path: ${path}`,
+                    route
+                );
+                return acc;
+            }
             const toPath = compile(path, { encode: encodeURIComponent });
             const parseParams = match(path, { decode: decodeURIComponent });
             const current: RouteMatch = {

@@ -34,6 +34,12 @@ const router = createRouter({
     },
     routes: [
         {
+            // 这是一个错误的路由配置，但是会打印配置错误的提示
+            appType: 'vue2',
+            path: '*', // 应当为 (.*)
+            component: TestT1,
+        },
+        {
             appType: 'vue2',
             path: '',
             component: Test,
