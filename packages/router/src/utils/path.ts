@@ -143,8 +143,6 @@ export function normalizeLocation(
         hash = parsedOption.hash;
     }
 
-    console.log('normalizeLocation', rawLocation, pathname, query, queryArray);
-
     const fullPath = stringifyPath({
         pathname,
         query,
