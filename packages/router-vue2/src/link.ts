@@ -140,12 +140,14 @@ export const RouterLink = defineComponent({
             {
                 ...ctx.data,
                 class: [
+                    ...(ctx.data.class || []),
                     'router-link',
                     {
                         [activeClass]: active
                     }
                 ],
                 attrs: {
+                    ...(ctx.data.attrs || {}),
                     href: resolveRoute.fullPath
                 },
                 on

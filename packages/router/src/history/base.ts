@@ -83,7 +83,7 @@ export abstract class RouterHistory {
             rawLocation.path = this.current.fullPath;
         }
         const { base, ...normalizedLocation } = normalizeLocation(
-            location,
+            rawLocation,
             this.router.base
         );
         const route: RouteRecord = {

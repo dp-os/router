@@ -90,14 +90,15 @@ export const RouterLink = defineComponent({
       tag,
       __spreadProps(__spreadValues({}, ctx.data), {
         class: [
+          ...ctx.data.class || [],
           "router-link",
           {
             [activeClass]: active
           }
         ],
-        attrs: {
+        attrs: __spreadProps(__spreadValues({}, ctx.data.attrs || {}), {
           href: resolveRoute.fullPath
-        },
+        }),
         on
       }),
       ctx.children

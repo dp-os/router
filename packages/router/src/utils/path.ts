@@ -121,8 +121,16 @@ export function normalizeLocation(
     if (typeof rawLocation === 'object') {
         const parsedOption = parsePath(rawLocation.path);
         pathname = parsedOption.pathname;
-        query = rawLocation.query || parsedOption.query;
-        queryArray = rawLocation.queryArray || parsedOption.queryArray;
+
+        // 只有在rawLocation初始传入了 query 或 queryArray 时才使用 rawLocation
+        if (rawLocation.query || rawLocation.queryArray) {
+            queryArray = rawLocation.queryArray || {};
+            query = rawLocation.query || {};
+        } else {
+            queryArray = parsedOption.queryArray;
+            query = parsedOption.query;
+        }
+
         hash = rawLocation.hash || parsedOption.hash;
 
         params = rawLocation.params; // params 不使用默认值
@@ -134,6 +142,8 @@ export function normalizeLocation(
         queryArray = parsedOption.queryArray;
         hash = parsedOption.hash;
     }
+
+    console.log('normalizeLocation', rawLocation, pathname, query, queryArray);
 
     const fullPath = stringifyPath({
         pathname,

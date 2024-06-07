@@ -17,8 +17,11 @@ const router = useRouter()
     </header>
     <div class="tabs">
       router-link
-      <router-link class="rrrrrrrr" to="/">/</router-link>
-      <router-link to="/test1">/test1</router-link>
+      <router-link class="sss vvv" :class="['aaa',{
+        test: false,
+        kk: true
+      }]" to="/" data="data" :query="JSON.stringify($route.query)">/</router-link>
+      <router-link to="/test1" @click="console.log(123)">/test1</router-link>
       <router-link to="/test1/test2">/test1/test2</router-link>
       <router-link to="/test4/4/5">/test4/4/5</router-link>
       <router-link
