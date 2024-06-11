@@ -338,7 +338,7 @@ const router = createRouter({
             },
         },
         {
-            path: '(.*)',
+            path: '(.*)*',
             asyncComponent: () => import('./components/All.vue')
         },
     ]

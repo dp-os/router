@@ -362,7 +362,7 @@ const router = createRouter({
         },
         {
             appType: 'vue2',
-            path: '(.*)',
+            path: '(.*)*',
             asyncComponent: () => import('./components/All.vue')
         },
     ]
