@@ -20,7 +20,7 @@
     },
     "devDependencies": {
         "@gez/lint": "0.0.9",
-        "@gez/router": "0.0.22",
+        "@gez/router": "0.0.23",
         "@types/node": "20.12.12",
         "@vitest/coverage-v8": "1.6.0",
         "eslint": "8.57.0",
@@ -30,7 +30,7 @@
         "vitest": "1.6.0",
         "vue": "^2.7.8"
     },
-    "version": "0.0.22",
+    "version": "0.0.23",
     "type": "module",
     "private": false,
     "exports": {
