@@ -97,8 +97,9 @@ const RouterLink = exports.RouterLink = (0, _vue.defineComponent)({
     eventTypeList.forEach(eventName => {
       on[eventName.toLocaleLowerCase()] = handler;
     });
+    const className = ctx.data.class || [];
     return h(tag, __spreadProps(__spreadValues({}, ctx.data), {
-      class: [...(ctx.data.class || []), "router-link", {
+      class: [...className, "router-link", {
         [activeClass]: active
       }],
       attrs: __spreadProps(__spreadValues({}, ctx.data.attrs || {}), {

@@ -86,11 +86,12 @@ export const RouterLink = defineComponent({
     eventTypeList.forEach((eventName) => {
       on[eventName.toLocaleLowerCase()] = handler;
     });
+    const className = ctx.data.class || [];
     return h(
       tag,
       __spreadProps(__spreadValues({}, ctx.data), {
         class: [
-          ...ctx.data.class || [],
+          ...className,
           "router-link",
           {
             [activeClass]: active

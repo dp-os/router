@@ -135,12 +135,14 @@ export const RouterLink = defineComponent({
             on[eventName.toLocaleLowerCase()] = handler;
         });
 
+        const className = ctx.data.class || [];
+
         return h(
             tag,
             {
                 ...ctx.data,
                 class: [
-                    ...(ctx.data.class || []),
+                    ...className,
                     'router-link',
                     {
                         [activeClass]: active
