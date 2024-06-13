@@ -3,7 +3,10 @@ import { type VueConstructor } from 'vue';
 interface VueWithRouter extends Vue {
     _routerRoot: VueWithRouter;
     _router: RouterInstance;
-    _route: Route;
+    _route: {
+        value: Route;
+        count: number;
+    };
     $parent: VueWithRouter | null;
 }
 declare module 'vue/types/vue' {
@@ -12,7 +15,10 @@ declare module 'vue/types/vue' {
         readonly $route: Route;
         _routerRoot: VueWithRouter;
         readonly _router: RouterInstance;
-        readonly _route: Route;
+        readonly _route: {
+            value: Route;
+            count: number;
+        };
     }
 }
 declare module 'vue/types/options' {

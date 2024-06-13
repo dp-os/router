@@ -240,6 +240,11 @@ export interface RouterOptions {
     base?: RouterBase;
 
     /**
+     * 初始化时使用的初始 url
+     */
+    initUrl?: string;
+
+    /**
      * 滚动行为配置
      */
     scrollBehavior?: RouterScrollBehavior;

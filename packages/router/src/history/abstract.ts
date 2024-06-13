@@ -16,7 +16,13 @@ export class AbstractHistory extends RouterHistory {
         this.init();
     }
 
-    async init() {}
+    async init() {
+        const { initUrl } = this.router.options;
+        if (initUrl !== undefined) {
+            // 存在 initUrl 则用 initUrl 进行初始化
+            await this.replace(initUrl);
+        }
+    }
 
     destroy() {}
 

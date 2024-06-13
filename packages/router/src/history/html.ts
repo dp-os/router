@@ -57,8 +57,14 @@ export class HtmlHistory extends RouterHistory {
     }
 
     async init() {
-        // 初始化时替换当前历史记录，目的是将 base 错误的路径修改为 base正确的路径时 不创建新的历史记录
-        await this.replace(this.getCurrentLocation());
+        const { initUrl } = this.router.options;
+        if (initUrl !== undefined) {
+            // 存在 initUrl 则用 initUrl 进行初始化
+            await this.replace(initUrl);
+        } else {
+            // 初始化时替换当前历史记录，目的是将 base 错误的路径修改为 base正确的路径时 不创建新的历史记录
+            await this.replace(this.getCurrentLocation());
+        }
         this.setupListeners();
     }
 

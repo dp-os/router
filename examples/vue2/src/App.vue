@@ -1,13 +1,39 @@
-<script setup lang="ts">
-import { computed } from "vue"
+<!-- <script setup lang="ts">
+import { computed, watch } from "vue"
 import { useRoute, useRouter } from "@gez/router-vue2"
 
+const router = useRouter();
+
+const $route = useRoute();
+
 const route = computed(() => {
-  const { matched, ...rest } = useRoute()
-  return JSON.stringify(rest, null, 4)
+  const { matched, ...rest } = $route;
+  return JSON.stringify(rest, null, 4);
 })
 
-const router = useRouter()
+watch($route, (cur, old) => {
+  console.log('@update', cur, cur.fullPath, cur === router.route);
+});
+
+</script> -->
+<script lang="ts">
+export default {
+    name: "app",
+    computed: {
+        route() {
+            const { matched, ...rest } = this.$route;
+            return JSON.stringify(rest, null, 4);
+        }
+    },
+    watch: {
+        $route(cur, old) {
+            console.log("@update", cur, cur.fullPath, cur === this.$router.route);
+        }
+    },
+    beforeCreate() {
+        console.log("@beforeCreate all");
+    }
+}
 </script>
 
 <template>

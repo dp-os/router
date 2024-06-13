@@ -27,7 +27,13 @@ class RouterVuePlugin {
         if (this.$options.router) {
           this._routerRoot = this;
           this._routerRoot._router = this.$options.router;
-          Vue.util.defineReactive(this, "_route", this._router.route);
+          Vue.util.defineReactive(this, "_route", {
+            value: this._router.route,
+            count: 0
+          });
+          this.$options.router.afterEach(() => {
+            this._route.count++;
+          });
         } else {
           this.$parent && (this._routerRoot = this.$parent._routerRoot);
         }
@@ -42,7 +48,8 @@ class RouterVuePlugin {
     });
     Object.defineProperty(Vue.prototype, "$route", {
       get() {
-        return this._routerRoot._route;
+        this._routerRoot._route.count;
+        return this._routerRoot._route.value;
       }
     });
   }
