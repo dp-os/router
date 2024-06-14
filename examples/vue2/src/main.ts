@@ -29,7 +29,7 @@ const router = createRouter({
 
         return base;
     },
-    initUrl: '/test4/4/5',
+    initUrl: '/op/4/5',
     noBackNavigation: () => {
         console.log('@noBackNavigation');
     },
@@ -361,11 +361,11 @@ const router = createRouter({
                 console.log('beforeLeave', 'hook', from.fullPath, to.fullPath);
             },
         },
-        {
-            appType: 'vue2',
-            path: '(.*)*',
-            asyncComponent: () => import('./components/All.vue')
-        },
+        // {
+        //     appType: 'vue2',
+        //     path: '(.*)*',
+        //     asyncComponent: () => import('./components/All.vue')
+        // },
     ]
 });
 

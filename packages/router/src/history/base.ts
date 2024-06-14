@@ -11,7 +11,8 @@ import {
     isEqualRoute,
     isESModule,
     isSameRoute,
-    normalizeLocation
+    normalizeLocation,
+    stringifyPath
 } from '../utils';
 
 /**
@@ -86,10 +87,37 @@ export abstract class RouterHistory {
             rawLocation,
             this.router.base
         );
-        const route: RouteRecord = {
-            ...(this.router.matcher.match(normalizedLocation, { base }) ||
-                createRouteRecord({ base, fullPath: base }))
-        };
+
+        // 匹配成功则返回匹配值
+        const matcher = this.router.matcher.match(normalizedLocation, { base });
+        if (matcher) {
+            return matcher;
+        }
+
+        // 匹配失败则返回目标路径
+        const {
+            path = '',
+            params = {},
+            query = {},
+            queryArray = {},
+            hash = '',
+            state = {}
+        } = normalizedLocation;
+        const route = createRouteRecord({
+            base,
+            fullPath: stringifyPath({
+                pathname: path,
+                query,
+                queryArray,
+                hash
+            }),
+            path,
+            params,
+            query,
+            queryArray,
+            hash,
+            state
+        });
         return route;
     }
 
