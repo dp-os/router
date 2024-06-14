@@ -29,7 +29,6 @@ const router = createRouter({
 
         return base;
     },
-    initUrl: '/op/4/5',
     noBackNavigation: () => {
         console.log('@noBackNavigation');
     },
@@ -51,6 +50,7 @@ const router = createRouter({
                     }, 50);
                 });
                 console.log('beforeEnter', '0', from.fullPath, to.fullPath);
+                return '/test1'
             },
             beforeUpdate: async (from, to) => {
                 await new Promise((resolve) => {

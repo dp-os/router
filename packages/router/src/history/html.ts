@@ -35,7 +35,7 @@ export class HtmlHistory extends RouterHistory {
         };
     }
 
-    onPopState(e: PopStateEvent) {
+    onPopState = (e: PopStateEvent) => {
         const current = Object.assign({}, this.current);
         // 当路由变化时触发跳转事件
         this.transitionTo(this.getCurrentLocation(), (route) => {
@@ -54,7 +54,7 @@ export class HtmlHistory extends RouterHistory {
                 position && scrollToPosition(position);
             });
         });
-    }
+    };
 
     async init() {
         const { initUrl } = this.router.options;
@@ -63,14 +63,27 @@ export class HtmlHistory extends RouterHistory {
             await this.replace(initUrl);
         } else {
             // 初始化时替换当前历史记录，目的是将 base 错误的路径修改为 base正确的路径时 不创建新的历史记录
-            await this.replace(this.getCurrentLocation());
+            const location = this.getCurrentLocation();
+            let state = {
+                _ancientRoute: true // 最古历史的标记, 在调用返回事件时如果有这个标记则直接调用没有历史记录的钩子
+            };
+            try {
+                state = {
+                    ...location.state,
+                    ...state
+                };
+            } catch (error) {}
+            await this.replace({
+                ...location,
+                state
+            });
         }
         this.setupListeners();
     }
 
     // 设置监听函数
     setupListeners() {
-        window.addEventListener('popstate', this.onPopState.bind(this));
+        window.addEventListener('popstate', this.onPopState);
     }
 
     destroy() {
@@ -117,11 +130,17 @@ export class HtmlHistory extends RouterHistory {
 
     back(): void {
         const oldState = history.state;
+        if (oldState._ancientRoute === true) {
+            const noBackNavigation = this.router.options.noBackNavigation;
+            noBackNavigation && noBackNavigation(this.router);
+            return;
+        }
+
         window.history.back();
         this.timer = setTimeout(() => {
             if (history.state === oldState) {
                 const noBackNavigation = this.router.options.noBackNavigation;
-                noBackNavigation && noBackNavigation();
+                noBackNavigation && noBackNavigation(this.router);
             }
             this.timer = null;
         }, 80);

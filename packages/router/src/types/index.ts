@@ -253,7 +253,7 @@ export interface RouterOptions {
      * 到达历史记录末点时触发 history back 之后的回调
      * @description 只有在 history state 可用的环境才生效
      */
-    noBackNavigation?: () => void;
+    noBackNavigation?: (router: RouterInstance) => void;
 
     /**
      * 路由配置使用的 route
@@ -343,7 +343,7 @@ export interface RouteRecord {
     /**
      * 重定向来源
      */
-    redirectedFrom?: string;
+    redirectedFrom?: RouteRecord;
 
     /**
      * 来源

@@ -33,7 +33,10 @@ class RouteMatcher {
      */
     public match(
         rawLocation: RouterLocation,
-        { base } = { base: '' }
+        {
+            base,
+            redirectedFrom
+        }: { base: string; redirectedFrom?: RouteRecord } = { base: '' }
     ): RouteRecord | null {
         let path: string = '';
         /* 按 Hanson 要求加入 undefined 类型 */
@@ -106,6 +109,7 @@ class RouteMatcher {
                 asyncComponent,
                 meta,
                 redirect,
+                redirectedFrom,
                 matched
             };
 
@@ -116,7 +120,10 @@ class RouteMatcher {
                         : redirect,
                     base
                 );
-                return this.match(normalizedLocation, { base });
+                return this.match(normalizedLocation, {
+                    base,
+                    redirectedFrom: routeRecord
+                });
             }
             return routeRecord;
         }

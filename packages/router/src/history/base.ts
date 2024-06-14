@@ -141,6 +141,34 @@ export abstract class RouterHistory {
         await this.runTask(this.current, route, onComplete);
     }
 
+    /**
+     * TODO 逻辑解耦，抽离到task
+     * 重定向方法
+     */
+    async redirectTo(
+        location: RouterRawLocation,
+        from: RouteRecord,
+        onComplete?: (route: RouteRecord) => void
+    ) {
+        // 寻找即将跳转路径匹配到的路由对象
+        const route = this.resolve(location);
+        this.abortTask();
+
+        // 禁止重复跳转
+        if (isEqualRoute(this.current, route)) {
+            return;
+        }
+
+        await this.runTask(
+            this.current,
+            {
+                ...route,
+                redirectedFrom: from
+            },
+            onComplete
+        );
+    }
+
     /* 当前执行的任务 */
     tasks: Tasks | null = null;
 
@@ -215,7 +243,7 @@ export abstract class RouterHistory {
                         break;
 
                     default:
-                        await this.transitionTo(res, onComplete);
+                        await this.redirectTo(res, from, onComplete);
                         break;
                 }
             },
