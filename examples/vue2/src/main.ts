@@ -29,6 +29,7 @@ const router = createRouter({
 
         return base;
     },
+    initUrl: '/test4/4/5',
     noBackNavigation: () => {
         console.log('@noBackNavigation');
     },

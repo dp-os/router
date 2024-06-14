@@ -23,6 +23,9 @@ export default {
         route() {
             const { matched, ...rest } = this.$route;
             return JSON.stringify(rest, null, 4);
+        },
+        router() {
+            return this.$router;
         }
     },
     watch: {

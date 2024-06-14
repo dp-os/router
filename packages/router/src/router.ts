@@ -6,6 +6,7 @@ import {
     type NavigationGuard,
     type NavigationGuardAfter,
     type RegisteredConfig,
+    type RegisteredConfigMap,
     type Route,
     type RouterBase,
     type RouteRecord,
@@ -103,17 +104,19 @@ class Router {
             curAppType && this.registeredConfigMap[curAppType];
         const registerConfig = appType && this.registeredConfigMap[appType];
 
-        if (curAppType !== appType && curRegisterConfig) {
-            curRegisterConfig.destroy();
-            curRegisterConfig.mounted = false;
-        }
-
         if (registerConfig) {
-            if (!registerConfig.mounted) {
-                registerConfig.mount();
+            const { mounted, generator } = registerConfig;
+            if (!mounted) {
+                registerConfig.config = generator(this);
+                registerConfig.config?.mount();
                 registerConfig.mounted = true;
             }
-            registerConfig.updated();
+            registerConfig.config?.updated();
+        }
+
+        if (curAppType !== appType && curRegisterConfig) {
+            curRegisterConfig.config?.destroy();
+            curRegisterConfig.mounted = false;
         }
     }
 
@@ -175,15 +178,15 @@ class Router {
     }
 
     /* 已注册的app配置 */
-    protected registeredConfigMap: Record<
-        string,
-        RegisteredConfig & { mounted: boolean }
-    > = {};
+    protected registeredConfigMap: RegisteredConfigMap = {};
 
     /* app配置注册 */
-    register(name: string, config: (router: Router) => RegisteredConfig) {
+    register(
+        name: string,
+        config: (router: RouterInstance) => RegisteredConfig
+    ) {
         this.registeredConfigMap[name] = {
-            ...config(this),
+            generator: config,
             mounted: false
         };
     }

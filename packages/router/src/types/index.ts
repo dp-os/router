@@ -549,6 +549,18 @@ export interface RouterMatcher {
 /**
  * 路由注册配置
  */
+export type RegisteredConfigMap = Record<
+    string,
+    {
+        mounted: boolean;
+        generator: (router: RouterInstance) => RegisteredConfig;
+        config?: RegisteredConfig;
+    }
+>;
+
+/**
+ * 路由注册配置
+ */
 export interface RegisteredConfig {
     /**
      * 初始化
