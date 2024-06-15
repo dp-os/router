@@ -34,6 +34,7 @@ const router = createRouter({
     },
     handleOutside: (location, replace) => {
         console.log('@handleOutside', location, replace);
+        return false;
     },
     routes: [
         {
