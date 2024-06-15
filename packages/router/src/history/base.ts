@@ -53,8 +53,8 @@ export abstract class RouterHistory {
      * 更新当前路由
      */
     updateRoute(route: RouteRecord) {
-        // 为了便于管理，使用同一个对象储存路由，使用 Object.assign 进行对象合并
-        const newRoute = Object.assign(this.current, {
+        // 为了便于管理和避免环状数据，每次都创建一个新对象，使用 Object.assign 进行对象合并
+        const newRoute = Object.assign({}, this.current, {
             base: route.base,
             path: route.path,
             fullPath: route.fullPath,
