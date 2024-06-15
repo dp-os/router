@@ -256,6 +256,11 @@ export interface RouterOptions {
     noBackNavigation?: (router: RouterInstance) => void;
 
     /**
+     * 路由跳转到外部链接时触发
+     */
+    handleOutside?: (location: RouterRawLocation, replace: boolean) => void;
+
+    /**
      * 路由配置使用的 route
      */
     routes: RouteConfig[];

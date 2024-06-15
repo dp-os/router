@@ -99,6 +99,14 @@ export class HtmlHistory extends RouterHistory {
             return false;
         }
 
+        // 如果有配置跳转外站函数，则执行配置函数
+        const { handleOutside } = this.router.options;
+        if (handleOutside) {
+            handleOutside(url, replace);
+            return true;
+        }
+
+        // 没有配置则走默认逻辑
         if (replace) {
             window.location.replace(url);
         } else {

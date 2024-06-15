@@ -3,6 +3,7 @@ import {
     type RouterInstance,
     type RouterRawLocation
 } from '../types';
+import { isPathWithProtocolOrDomain } from '../utils';
 import { RouterHistory } from './base';
 
 export class AbstractHistory extends RouterHistory {
@@ -29,17 +30,41 @@ export class AbstractHistory extends RouterHistory {
     // 设置监听函数
     setupListeners() {}
 
+    // 处理外站跳转逻辑
+    handleOutside(location: RouterRawLocation, replace: boolean = false) {
+        const { flag, url } = isPathWithProtocolOrDomain(location);
+        if (!flag) {
+            return false;
+        }
+
+        // 如果有配置跳转外站函数，则执行配置函数
+        const { handleOutside } = this.router.options;
+        if (handleOutside) {
+            handleOutside(url, replace);
+        }
+
+        return true;
+    }
+
+    // 新增路由记录跳转
     async push(location: RouterRawLocation) {
-        await this.transitionTo(location, (route) => {
-            this.stack = this.stack.slice(0, this.index + 1).concat(route);
-            this.index++;
-        });
+        await this.jump(location, false);
     }
 
     // 替换当前路由记录跳转
     async replace(location: RouterRawLocation) {
+        await this.jump(location, true);
+    }
+
+    // 跳转方法
+    async jump(location: RouterRawLocation, replace: boolean = false) {
+        if (this.handleOutside(location, replace)) {
+            return;
+        }
+
         await this.transitionTo(location, (route) => {
-            this.stack = this.stack.slice(0, this.index).concat(route);
+            const index = replace ? this.index : this.index + 1;
+            this.stack = this.stack.slice(0, index).concat(route);
         });
     }
 
