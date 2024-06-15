@@ -32,6 +32,9 @@ const router = createRouter({
     noBackNavigation: () => {
         console.log('@noBackNavigation');
     },
+    handleOutside: (location, replace) => {
+        console.log('@handleOutside', location, replace);
+    },
     routes: [
         {
             // 这是一个错误的路由配置，但是会打印配置错误的提示
