@@ -65,15 +65,15 @@ export class Tasks<T extends func = func> {
                     const res = await handler();
                     cb && (await cb(res));
                 } catch (error) {
-                    if (process.env.NODE_ENV !== 'production') {
-                        warn('task error:', error);
-                    }
+                    // if (process.env.NODE_ENV !== 'production') {
+                    warn('task error:', error);
+                    // }
                     this.status = TaskStatus.ERROR;
                 }
             } else {
-                if (process.env.NODE_ENV !== 'production') {
-                    warn('task is not a function', handler);
-                }
+                // if (process.env.NODE_ENV !== 'production') {
+                warn('task is not a function', handler);
+                // }
             }
         }
         if ((this.status as TaskStatus) !== TaskStatus.RUNNING) return;
