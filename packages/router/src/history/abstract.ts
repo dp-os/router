@@ -60,9 +60,12 @@ export class AbstractHistory extends RouterHistory {
 
         // 如果有配置跳转外站函数，则执行配置函数
         const { handleOutside } = this.router.options;
-        if (handleOutside && handleOutside(route, replace)) {
-            // 如果配置函数返回 true 则跳出
-            return true;
+        if (handleOutside) {
+            const res = handleOutside(route, replace);
+            if (res === false) {
+                // 如果配置函数返回 false 则跳出
+                return true;
+            }
         }
 
         return true;

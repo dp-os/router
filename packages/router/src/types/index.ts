@@ -257,7 +257,7 @@ export interface RouterOptions {
 
     /**
      * 路由跳转到外部链接时触发
-     * 返回 true 才会阻止路由跳转外站的默认行为
+     * 返回 false 才会阻止路由跳转外站的默认行为
      */
     handleOutside?: (route: Route, replace: boolean) => boolean | undefined;
 
