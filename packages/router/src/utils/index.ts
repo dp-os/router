@@ -15,3 +15,4 @@ export {
     getSavedScrollPosition,
     getKeepScrollPosition
 } from './scroll';
+export { openWindow } from './bom';

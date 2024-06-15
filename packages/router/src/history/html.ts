@@ -5,6 +5,7 @@ import {
     getSavedScrollPosition,
     isPathWithProtocolOrDomain,
     normalizeLocation,
+    openWindow,
     saveScrollPosition,
     scrollToPosition
 } from '../utils';
@@ -102,7 +103,7 @@ export class HtmlHistory extends RouterHistory {
             window.location.replace(url);
         } else {
             const { hostname } = new URL(url);
-            window.open(url, hostname);
+            openWindow(url, hostname);
         }
 
         return true;
