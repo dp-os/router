@@ -67,6 +67,10 @@ export default {
         }"
         >/test4/66/77</router-link
       >
+      <router-link to="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript">mdn docs/Web/JavaScript</router-link>
+      <router-link to="developer.mozilla.org/zh-CN/docs/Web">mdn docs/Web</router-link>
+      <router-link to="github.com">github.com</router-link>
+      <router-link to="github.com" replace>replace github.com</router-link>
     </div>
     <div class="tabs">
       router-push

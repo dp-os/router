@@ -53,25 +53,8 @@ export abstract class RouterHistory {
      * 更新当前路由
      */
     updateRoute(route: RouteRecord) {
-        // 为了便于管理和避免环状数据，每次都创建一个新对象，使用 Object.assign 进行对象合并
-        const newRoute = Object.assign({}, this.current, {
-            base: route.base,
-            path: route.path,
-            fullPath: route.fullPath,
-            query: route.query,
-            queryArray: route.queryArray,
-            params: route.params,
-            hash: route.hash,
-            state: route.state,
-            component: route.component,
-            asyncComponent: route.asyncComponent,
-            meta: route.meta,
-            redirect: route.redirect,
-            matched: route.matched,
-            redirectedFrom: route.redirectedFrom,
-            from: route.from
-        });
-        this.router.updateRoute(newRoute);
+        this.current = route;
+        this.router.updateRoute(route);
     }
 
     /**

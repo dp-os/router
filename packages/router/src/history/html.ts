@@ -3,6 +3,7 @@ import {
     computeScrollPosition,
     getKeepScrollPosition,
     getSavedScrollPosition,
+    isPathWithProtocolOrDomain,
     normalizeLocation,
     saveScrollPosition,
     scrollToPosition
@@ -90,6 +91,23 @@ export class HtmlHistory extends RouterHistory {
         window.removeEventListener('popstate', this.onPopState);
     }
 
+    // 处理外站跳转逻辑
+    handleOutside(location: RouterRawLocation, replace: boolean = false) {
+        const { flag, url } = isPathWithProtocolOrDomain(location);
+        if (!flag) {
+            return false;
+        }
+
+        if (replace) {
+            window.location.replace(url);
+        } else {
+            const { hostname } = new URL(url);
+            window.open(url, hostname);
+        }
+
+        return true;
+    }
+
     // 新增路由记录跳转
     async push(location: RouterRawLocation) {
         await this.jump(location, false);
@@ -102,6 +120,10 @@ export class HtmlHistory extends RouterHistory {
 
     // 跳转方法
     async jump(location: RouterRawLocation, replace: boolean = false) {
+        if (this.handleOutside(location, replace)) {
+            return;
+        }
+
         const current = Object.assign({}, this.current);
         await this.transitionTo(location, (route) => {
             const keepScrollPosition = getKeepScrollPosition(location);

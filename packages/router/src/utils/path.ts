@@ -109,7 +109,11 @@ export function stringifyPath(
 export function normalizeLocation(
     rawLocation: RouterRawLocation,
     base: RouterBase = ''
-): RouterLocation & { path: string; base: string } {
+): RouterLocation & {
+    path: string;
+    base: string;
+    queryArray: Record<string, string[]>;
+} {
     let pathname: string = '';
     /* 按 Hanson 要求加入 undefined 类型 */
     let query: Record<string, string | undefined> = {};
@@ -166,7 +170,11 @@ export function normalizeLocation(
     const { query: realQuery, queryArray: realQueryArray } =
         parsePath(fullPath);
 
-    const res: RouterLocation & { path: string; base: string } = {
+    const res: RouterLocation & {
+        path: string;
+        base: string;
+        queryArray: Record<string, string[]>;
+    } = {
         base: baseString,
         path,
         query: realQuery,
@@ -176,4 +184,49 @@ export function normalizeLocation(
     };
     if (params) res.params = params;
     return res;
+}
+
+/**
+ * 判断路径是否以协议或域名开头
+ */
+export function isPathWithProtocolOrDomain(location: RouterRawLocation): {
+    flag: boolean;
+    url: string;
+} {
+    let url: string = '';
+    if (typeof location === 'string') {
+        url = location;
+    } else {
+        const {
+            path,
+            query = {},
+            queryArray,
+            hash = '',
+            ...nLocation
+        } = normalizeLocation(location);
+        url = stringifyPath({
+            ...nLocation,
+            query,
+            queryArray,
+            pathname: path,
+            hash
+        });
+    }
+    const regexDomain =
+        /^(?:https?:\/\/|[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9](\/.*)?/i;
+
+    if (regexDomain.test(url)) {
+        if (!/^https?:\/\//i.test(url)) {
+            url = `http://${url}`;
+        }
+        return {
+            flag: true,
+            url
+        };
+    }
+
+    return {
+        flag: false,
+        url
+    };
 }
