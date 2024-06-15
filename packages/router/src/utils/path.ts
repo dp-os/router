@@ -2,6 +2,7 @@ import URLParse from 'url-parse';
 
 import {
     type HistoryState,
+    type Route,
     type RouterBase,
     type RouterLocation,
     type RouterRawLocation
@@ -190,13 +191,21 @@ export function normalizeLocation(
  * 判断路径是否以协议或域名开头
  */
 export function isPathWithProtocolOrDomain(location: RouterRawLocation): {
+    /**
+     * 是否以协议或域名开头
+     */
     flag: boolean;
-    url: string;
+    /**
+     * 虚假的 route 信息，内部跳转时无法信任，只有外站跳转时使用
+     */
+    route: Route;
 } {
     let url: string = '';
+    let state = {};
     if (typeof location === 'string') {
         url = location;
     } else {
+        state = location.state || {};
         const {
             path,
             query = {},
@@ -214,19 +223,52 @@ export function isPathWithProtocolOrDomain(location: RouterRawLocation): {
     }
     const regexDomain =
         /^(?:https?:\/\/|[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9](\/.*)?/i;
+    if (!/^https?:\/\//i.test(url)) {
+        url = `http://${url}`;
+    }
+
+    const {
+        hash,
+        host,
+        hostname,
+        href,
+        origin,
+        pathname,
+        port,
+        protocol,
+        query: search
+    } = new URLParse(url);
+    const { query = {}, queryArray } = normalizeLocation(url);
+    const route: Route = {
+        href,
+        origin,
+        host,
+        protocol,
+        hostname,
+        port,
+        pathname,
+        search,
+        hash,
+        query,
+        queryArray,
+        params: {},
+        state,
+        meta: {},
+        path: pathname,
+        fullPath: `${pathname}${search}${hash}`,
+        base: '',
+        matched: []
+    };
 
     if (regexDomain.test(url)) {
-        if (!/^https?:\/\//i.test(url)) {
-            url = `http://${url}`;
-        }
         return {
             flag: true,
-            url
+            route
         };
     }
 
     return {
         flag: false,
-        url
+        route
     };
 }

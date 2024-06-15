@@ -258,7 +258,7 @@ export interface RouterOptions {
     /**
      * 路由跳转到外部链接时触发
      */
-    handleOutside?: (location: RouterRawLocation, replace: boolean) => void;
+    handleOutside?: (route: Route, replace: boolean) => void;
 
     /**
      * 路由配置使用的 route

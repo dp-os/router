@@ -94,24 +94,30 @@ export class HtmlHistory extends RouterHistory {
 
     // 处理外站跳转逻辑
     handleOutside(location: RouterRawLocation, replace: boolean = false) {
-        const { flag, url } = isPathWithProtocolOrDomain(location);
+        const { flag, route } = isPathWithProtocolOrDomain(location);
         if (!flag) {
+            // 如果不以域名开头则跳出
+            return false;
+        }
+
+        // 如果域名相同则跳出
+        if (window.location.hostname === route.hostname) {
             return false;
         }
 
         // 如果有配置跳转外站函数，则执行配置函数
         const { handleOutside } = this.router.options;
         if (handleOutside) {
-            handleOutside(url, replace);
+            handleOutside(route, replace);
             return true;
         }
 
         // 没有配置则走默认逻辑
         if (replace) {
-            window.location.replace(url);
+            window.location.replace(route.href);
         } else {
-            const { hostname } = new URL(url);
-            openWindow(url, hostname);
+            const { hostname, href } = route;
+            openWindow(href, hostname);
         }
 
         return true;
