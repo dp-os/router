@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 
-import { createRouter } from '@gez/router';
+import { createRouter, RouterMode } from '@gez/router';
 import { RouterVuePlugin } from '@gez/router-vue2'
 
 import Test from './components/Test.vue';
@@ -13,22 +13,24 @@ import TestT5 from './components/TestT5.vue';
 import TestT6 from './components/TestT6.vue';
 
 const router = createRouter({
-    base: ({
-        fullPath,
-        // query,
-        // queryArray,
-        // hash
-    }) => {
-        let base = `/en`;
+    // base: ({
+    //     fullPath,
+    //     // query,
+    //     // queryArray,
+    //     // hash
+    // }) => {
+    //     let base = `/en`;
 
-        if (fullPath.includes('test3')) {
-            base = `/en-3`;
-        } else if (fullPath.includes('test4')) {
-            base = `/en-4`;
-        }
+    //     if (fullPath.includes('test3')) {
+    //         base = `/en-3`;
+    //     } else if (fullPath.includes('test4')) {
+    //         base = `/en-4`;
+    //     }
 
-        return base;
-    },
+    //     return base;
+    // },
+    base: `${location.origin}/en`,
+    // mode: RouterMode.ABSTRACT,
     noBackNavigation: () => {
         console.log('@noBackNavigation');
     },

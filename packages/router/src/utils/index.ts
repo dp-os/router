@@ -1,4 +1,5 @@
 export {
+    regexDomain,
     normalizePath,
     parsePath,
     stringifyPath,

@@ -18,7 +18,7 @@ import {
     type RouterRawLocation,
     type RouterScrollBehavior
 } from './types';
-import { inBrowser, normalizePath } from './utils';
+import { inBrowser, normalizePath, regexDomain } from './utils';
 
 /**
  * 路由类
@@ -123,10 +123,11 @@ class Router {
     /* 应用路由 */
     protected applyRoute(route: RouteRecord) {
         let url = '';
-        if (inBrowser) {
-            url = normalizePath(route.fullPath, location.origin);
+        const { fullPath } = route;
+        if (inBrowser && !regexDomain.test(fullPath)) {
+            url = normalizePath(fullPath, location.origin);
         } else {
-            url = normalizePath(route.fullPath);
+            url = normalizePath(fullPath);
         }
 
         const {
