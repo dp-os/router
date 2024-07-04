@@ -148,7 +148,9 @@ export class HtmlHistory extends RouterHistory {
                 saveScrollPosition(current.fullPath, computeScrollPosition());
             }
 
-            const state = route.state || history.state || {};
+            const state = replace
+                ? { ...history.state, ...route.state }
+                : route.state || {};
             window.history[replace ? 'replaceState' : 'pushState'](
                 Object.assign(state, { keepScrollPosition }),
                 '',
