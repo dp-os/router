@@ -163,7 +163,7 @@ importers:
         specifier: 0.0.9
         version: 0.0.9(eslint@8.57.0)(postcss@8.4.38)(stylelint@16.5.0)(typescript@5.4.5)
       '@gez/router':
-        specifier: 0.0.33
+        specifier: 0.0.34
         version: link:../router
       '@types/node':
         specifier: 20.12.12
@@ -193,7 +193,7 @@ importers:
   packages/router-vue2:
     dependencies:
       '@gez/router':
-        specifier: 0.0.33
+        specifier: 0.0.34
         version: link:../router
     devDependencies:
       '@gez/lint':
@@ -227,7 +227,7 @@ importers:
   packages/router-vue3:
     dependencies:
       '@gez/router':
-        specifier: 0.0.33
+        specifier: 0.0.34
         version: link:../router
     devDependencies:
       '@gez/lint':
