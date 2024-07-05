@@ -73,6 +73,8 @@ export function scrollToPosition(position: ScrollPosition): void {
  */
 export const scrollPositions = new Map<string, _ScrollPositionNormalized>();
 
+const POSITION_KEY = '__scroll_position_key';
+
 /**
  * 保存滚动位置
  */
@@ -83,7 +85,7 @@ export function saveScrollPosition(
     scrollPositions.set(key, scrollPosition);
     // preserve existing history state as it could be overriden by the user
     const stateCopy = Object.assign({}, window.history.state);
-    stateCopy.key = scrollPosition;
+    stateCopy[POSITION_KEY] = scrollPosition;
 
     const protocolAndPath =
         window.location.protocol + '//' + window.location.host;
@@ -97,7 +99,7 @@ export function saveScrollPosition(
 export function getSavedScrollPosition(
     key: string
 ): _ScrollPositionNormalized | null {
-    const scroll = scrollPositions.get(key) || history.state[key];
+    const scroll = scrollPositions.get(key) || history.state[POSITION_KEY];
 
     // 保存的滚动位置信息不应当被多次使用, 下一次应当使用新保存的位置信息
     scrollPositions.delete(key);
