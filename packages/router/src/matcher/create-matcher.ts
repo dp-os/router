@@ -79,16 +79,6 @@ class RouteMatcher {
                 })
             );
 
-            const fullPath = normalizePath(
-                compile({
-                    query,
-                    queryArray,
-                    params,
-                    hash
-                }),
-                base
-            );
-
             const {
                 params: realParams,
                 query: realQuery,
@@ -98,8 +88,12 @@ class RouteMatcher {
 
             const routeRecord = {
                 base,
-                path: realPath,
-                fullPath,
+                path: normalizePath(
+                    compile({
+                        params: realParams
+                    })
+                ),
+                fullPath: realPath,
                 params: realParams,
                 query: realQuery,
                 queryArray: realQueryArray,

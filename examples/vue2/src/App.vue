@@ -103,8 +103,8 @@ export default {
             keepScrollPosition: true,
             path: '/test4/99/11',
             query: {
-              k: '2',
-              b: '4',
+              k: '9',
+              b: '1',
             },
             hash: '5566',
             state: {
