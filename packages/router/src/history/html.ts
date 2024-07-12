@@ -146,6 +146,7 @@ export class HtmlHistory extends RouterHistory {
             const keepScrollPosition = getKeepScrollPosition(location);
             if (!keepScrollPosition) {
                 saveScrollPosition(current.fullPath, computeScrollPosition());
+                scrollToPosition({ left: 0, top: 0 });
             }
 
             const state = replace
