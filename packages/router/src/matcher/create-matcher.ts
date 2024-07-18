@@ -170,8 +170,6 @@ function createRouteMatches(
         });
         if (index === -1) {
             acc.push(match);
-        } else {
-            acc[index] = match;
         }
         return acc;
     }, []);
