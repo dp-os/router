@@ -273,7 +273,7 @@ function createRouteMatch(
             };
             acc.push(current);
             if (children && children.length > 0) {
-                acc.push(...createRouteMatches(children, current));
+                acc.unshift(...createRouteMatches(children, current));
             }
             return acc;
         },
