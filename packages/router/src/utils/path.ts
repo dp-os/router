@@ -14,15 +14,21 @@ import {
 export const regexDomain =
     /^(?:https?:\/\/|[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9](\/.*)?/i;
 
+/**
+ * 去除URL路径中重复的斜杠，但不改变协议部分的双斜杠。
+ *
+ * @param url 需要处理的URL字符串。
+ * @returns 处理后的URL，重复的斜杠被去除。
+ */
 function removeDuplicateSlashes(url: string): string {
-    /**
-     * 去除URL路径中重复的斜杠，但不改变协议部分的双斜杠。
-     *
-     * @param url 需要处理的URL字符串。
-     * @returns 处理后的URL，重复的斜杠被去除。
-     */
     // 正则表达式匹配除了://之外的连续两个或以上斜杠，并替换为一个斜杠
-    const result = url.replace(/(?<!:)\/{2,}/g, '/');
+    if (url.includes('://')) {
+        const [base, path] = url.split('://');
+        const result = path.replace(/\/{2,}/g, '/');
+        return `${base}://${result}`;
+    }
+
+    const result = url.replace(/\/{2,}/g, '/');
     return result;
 }
 
