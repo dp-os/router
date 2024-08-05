@@ -13,7 +13,7 @@
         "vue": "^2.7.8"
     },
     "dependencies": {
-        "@gez/router": "0.0.42"
+        "@gez/router": "0.0.43"
     },
     "devDependencies": {
         "@gez/lint": "0.0.9",
@@ -26,7 +26,7 @@
         "vitest": "1.6.0",
         "vue": "^2.7.8"
     },
-    "version": "0.0.42",
+    "version": "0.0.43",
     "type": "module",
     "private": false,
     "exports": {
