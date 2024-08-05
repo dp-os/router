@@ -4,6 +4,7 @@ import {
     type ScrollPosition,
     type ScrollPositionCoordinates
 } from '../types';
+import { warn } from './warn';
 
 /**
  * 获取当前滚动位置
@@ -87,10 +88,14 @@ export function saveScrollPosition(
     const stateCopy = Object.assign({}, window.history.state);
     stateCopy[POSITION_KEY] = scrollPosition;
 
-    const protocolAndPath =
-        window.location.protocol + '//' + window.location.host;
-    const absolutePath = window.location.href.replace(protocolAndPath, '');
-    window.history.replaceState(stateCopy, '', absolutePath);
+    try {
+        const protocolAndPath =
+            window.location.protocol + '//' + window.location.host;
+        const absolutePath = window.location.href.replace(protocolAndPath, '');
+        window.history.replaceState(stateCopy, '', absolutePath);
+    } catch (error) {
+        warn(`Failed to save scroll position.`, error);
+    }
 }
 
 /**
