@@ -23,7 +23,7 @@
     },
     "private": false,
     "publishConfig": {
-        "registry": "https://replicate.npmjs.com/"
+        "registry": "https://registry.npmjs.org"
     },
     "workspaces": [
         "packages/*",
