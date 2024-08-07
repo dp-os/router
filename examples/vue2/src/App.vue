@@ -101,7 +101,7 @@ export default {
                         k: '9',
                         b: '1',
                     },
-                    hash: '5566',
+                    hash: '5/6?7-8*9^1',
                     state: {
                         test: '6789',
                     },
@@ -121,6 +121,36 @@ export default {
                 k: '2',
                 b: '4',
                 }
+            </button>
+            <button @click="
+                router.push({
+                    query: {
+                        t: '1/2/3-4-5#6',
+                        r: undefined,
+                        s: null,
+                        p: NaN
+                    }
+                })
+                ">
+                push query: {
+                t: '1\2\3-4-5#6',
+                r: undefined,
+                s: null,
+                p: NaN
+                }
+            </button>
+            <button @click="
+                router.push({
+                    queryArray: {
+                        t: ['1/2/3-4-5#6', '9/8/7/6']
+                    },
+                    hash: '#111\\1\\'
+                })
+                ">
+                push queryArray: {
+                t: ['1/2/3-4-5#6', '9/8/7/6']
+                }
+                hash: '#111\\1\\'
             </button>
         </div>
         <div class="tabs">

@@ -7,6 +7,13 @@ import {
     type RouterLocation,
     type RouterRawLocation
 } from '../types';
+import {
+    decode,
+    encodeHash,
+    encodeQueryKey,
+    encodeQueryValue
+} from './encoding';
+import { isValidValue } from './utils';
 
 /**
  * 判断路径是否以 http 或 https 开头 或者直接是域名开头
@@ -77,7 +84,9 @@ export function parsePath(path: string = ''): {
             .slice(1)
             .split('&')
             .forEach((item) => {
-                const [key, value] = item.split('=');
+                let [key, value] = item.split('=');
+                key = decode(key);
+                value = decode(value);
                 if (key) {
                     queryObj[key] = value;
                     queryArray[key] = (queryArray[key] || []).concat(value);
@@ -92,7 +101,7 @@ export function parsePath(path: string = ''): {
         pathname,
         query: queryObj,
         queryArray,
-        hash
+        hash: decode(hash)
     };
 }
 
@@ -122,9 +131,37 @@ export function stringifyPath(
     const queryString = Object.entries(
         Object.assign({}, query, queryArray)
     ).reduce((acc, [key, value]) => {
-        return acc ? `${acc}&${key}=${value}` : `?${key}=${value}`;
+        let query = '';
+        const encodedKey = encodeQueryKey(key);
+
+        if (Array.isArray(value)) {
+            query = value.reduce((all, item) => {
+                if (!isValidValue(item)) return all;
+                const encodedValue = encodeQueryValue(item);
+                if (encodedValue) {
+                    all = all
+                        ? `${all}&${encodedKey}=${encodedValue}`
+                        : `${encodedKey}=${encodedValue}`;
+                }
+                return all;
+            }, '');
+        } else {
+            const encodedValue = encodeQueryValue(value);
+            if (isValidValue(value)) {
+                query = `${encodedKey}=${encodedValue}`;
+            }
+        }
+
+        if (query) {
+            acc = acc ? `${acc}&${query}` : `?${query}`;
+        }
+
+        return acc;
     }, '');
-    const hashString = hash ? (hash.startsWith('#') ? hash : `#${hash}`) : '';
+
+    const hashString = encodeHash(
+        hash ? (hash.startsWith('#') ? hash : `#${hash}`) : ''
+    );
     return `${pathname}${queryString}${hashString}`;
 }
 

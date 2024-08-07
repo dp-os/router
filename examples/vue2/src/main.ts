@@ -42,7 +42,7 @@ const router = createRouter({
         {
             // 这是一个错误的路由配置，但是会打印配置错误的提示
             appType: 'vue2',
-            path: '*', // 应当为 (.*)
+            path: '*', // 应当为 (.*)*   (.*) 也能生效，但是建议使用(.*)*
             component: TestT1,
         },
         {
@@ -366,11 +366,11 @@ const router = createRouter({
                 console.log('beforeLeave', 'hook', from.fullPath, to.fullPath);
             },
         },
-        // {
-        //     appType: 'vue2',
-        //     path: '(.*)*',
-        //     asyncComponent: () => import('./components/All.vue')
-        // },
+        {
+            appType: 'vue2',
+            path: '(.*)*',
+            asyncComponent: () => import('./components/All.vue')
+        },
     ]
 });
 
