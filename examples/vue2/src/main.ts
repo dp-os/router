@@ -334,6 +334,27 @@ const router = createRouter({
         },
         {
             appType: 'vue2',
+            path: ['tt1', 'tt2', 'tt3'],
+            component: TestT1,
+            children: [
+                {
+                    path: ['1', '2', '3'],
+                    component: TestT6,
+                    children: [
+                        {
+                            path: ':id?',
+                            component: TestT2
+                        }
+                    ]
+                },
+                {
+                    path: ':id?',
+                    component: TestT3
+                }
+            ]
+        },
+        {
+            appType: 'vue2',
             path: 'redirect',
             redirect: 'test2'
         },

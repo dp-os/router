@@ -162,18 +162,7 @@ function createRouteMatches(
             )
         );
     }
-
-    // 去除重复的匹配规则
-    const matches = routeMatches.reduce<RouteMatch[]>((acc, match) => {
-        const index = acc.findIndex((item) => {
-            return item.path === match.path;
-        });
-        if (index === -1) {
-            acc.push(match);
-        }
-        return acc;
-    }, []);
-    return matches;
+    return routeMatches;
 }
 
 /**
@@ -269,13 +258,15 @@ function createRouteMatch(
                         : undefined,
                 matched: [...(parent?.matched || []), route]
             };
-            acc.push(current);
             if (children && children.length > 0) {
-                acc.unshift(...createRouteMatches(children, current));
+                acc.push(...createRouteMatches(children, current));
             }
+            acc.push(current);
             return acc;
         },
         []
     );
-    return route.path instanceof Array ? routeMatches : routeMatches[0];
+    return route.path instanceof Array
+        ? routeMatches
+        : routeMatches[routeMatches.length - 1];
 }
