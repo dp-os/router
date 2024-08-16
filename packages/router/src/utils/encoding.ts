@@ -59,7 +59,7 @@ const ENC_SPACE_RE = /%20/g; // }
  * @returns encoded string
  */
 function commonEncode(text: string | number): string {
-    return encodeURI('' + text)
+    return encodeURIComponent('' + text)
         .replace(ENC_PIPE_RE, '|')
         .replace(ENC_BRACKET_OPEN_RE, '[')
         .replace(ENC_BRACKET_CLOSE_RE, ']');

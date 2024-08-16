@@ -17,3 +17,11 @@ export {
     getKeepScrollPosition
 } from './scroll';
 export { openWindow } from './bom';
+export {
+    encodeHash,
+    encodeParam,
+    encodePath,
+    encodeQueryKey,
+    encodeQueryValue,
+    decode
+} from './encoding';

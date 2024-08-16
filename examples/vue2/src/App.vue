@@ -125,7 +125,8 @@ export default {
             <button @click="
                 router.push({
                     query: {
-                        t: '1/2/3-4-5#6',
+                        redirect: '/trade?id=5&name=/a/b/c',
+                        t: '1/2/3-4=5^6?7=8',
                         r: undefined,
                         s: null,
                         p: NaN
@@ -133,7 +134,8 @@ export default {
                 })
                 ">
                 push query: {
-                t: '1\2\3-4-5#6',
+                redirect: '/trade?id=5&name=/a/b/c',
+                t: '1/2/3-4-5#6?7=8',
                 r: undefined,
                 s: null,
                 p: NaN
