@@ -47,6 +47,9 @@ export abstract class RouterHistory {
 
     constructor(router: RouterInstance) {
         this.router = router;
+        Object.defineProperty(this, 'router', {
+            enumerable: false
+        });
     }
 
     /**
