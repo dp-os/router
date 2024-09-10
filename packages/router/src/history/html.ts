@@ -40,7 +40,7 @@ export class HtmlHistory extends RouterHistory {
     onPopState = (e: PopStateEvent) => {
         const current = Object.assign({}, this.current);
         // 当路由变化时触发跳转事件
-        this.transitionTo(this.getCurrentLocation(), (route) => {
+        this.transitionTo(this.getCurrentLocation(), async (route) => {
             saveScrollPosition(current.fullPath, computeScrollPosition());
             setTimeout(async () => {
                 const keepScrollPosition = history.state.keepScrollPosition;
@@ -56,11 +56,7 @@ export class HtmlHistory extends RouterHistory {
 
                 const { nextTick } = this.router.options;
                 if (position) {
-                    if (nextTick) {
-                        nextTick(() => {
-                            scrollToPosition(position);
-                        });
-                    }
+                    nextTick && (await nextTick());
                     scrollToPosition(position);
                 }
             });
