@@ -34,6 +34,7 @@ const router = createRouter({
     noBackNavigation: () => {
         console.log('@noBackNavigation');
     },
+    nextTick: Vue.nextTick,
     handleOutside: (location, replace) => {
         console.log('@handleOutside', location, replace);
         return false;

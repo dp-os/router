@@ -53,7 +53,16 @@ export class HtmlHistory extends RouterHistory {
                     route,
                     savedPosition
                 );
-                position && scrollToPosition(position);
+
+                const { nextTick } = this.router.options;
+                if (position) {
+                    if (nextTick) {
+                        nextTick(() => {
+                            scrollToPosition(position);
+                        });
+                    }
+                    scrollToPosition(position);
+                }
             });
         });
     };

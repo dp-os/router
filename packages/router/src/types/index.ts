@@ -250,6 +250,11 @@ export interface RouterOptions {
     scrollBehavior?: RouterScrollBehavior;
 
     /**
+     * 类似 vue nextTick 等待下一次 DOM 更新刷新的工具方法
+     */
+    nextTick?: Awaitable<any>;
+
+    /**
      * 到达历史记录末点时触发 history back 之后的回调
      * @description 只有在 history state 可用的环境才生效
      */
