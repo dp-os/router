@@ -243,8 +243,8 @@ export abstract class RouterHistory {
             this.tasks = null;
             guardAfterTasks.run();
 
-            this.updateRoute(to);
             onComplete && onComplete(to);
+            this.updateRoute(to);
         }
     }
 
