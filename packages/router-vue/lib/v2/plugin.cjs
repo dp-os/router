@@ -22,6 +22,7 @@ class RouterVuePlugin {
     if (this.installed && this._Vue === Vue) return;
     this.installed = true;
     this._Vue = Vue;
+    const eventMap = /* @__PURE__ */new WeakMap();
     Vue.mixin({
       beforeCreate() {
         if (this.$options.router) {
@@ -31,11 +32,19 @@ class RouterVuePlugin {
             value: this._router.route,
             count: 0
           });
-          this.$options.router.afterEach(() => {
+          const _event = () => {
             this._route.count++;
-          });
+          };
+          eventMap.set(this, _event);
+          this.$options.router.afterEach(_event);
         } else {
           this.$parent && (this._routerRoot = this.$parent._routerRoot);
+        }
+      },
+      beforeDestroy() {
+        const _event = eventMap.get(this);
+        if (_event) {
+          this.$router.unBindBeforeEach(_event);
         }
       }
     });

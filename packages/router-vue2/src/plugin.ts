@@ -40,6 +40,8 @@ export class RouterVuePlugin {
         this.installed = true;
         this._Vue = Vue;
 
+        const eventMap = new WeakMap<any, () => void>();
+
         Vue.mixin({
             beforeCreate() {
                 // eslint-disable-next-line @typescript-eslint/no-this-alias
@@ -53,13 +55,21 @@ export class RouterVuePlugin {
                         value: this._router.route,
                         count: 0
                     });
-                    this.$options.router.afterEach(() => {
+                    const _event = () => {
                         this._route.count++;
-                    });
+                    };
+                    eventMap.set(this, _event);
+                    this.$options.router.afterEach(_event);
                 } else {
                     // 非根组件实例
                     this.$parent &&
                         (this._routerRoot = this.$parent._routerRoot);
+                }
+            },
+            beforeDestroy() {
+                const _event = eventMap.get(this);
+                if (_event) {
+                    (this as VueWithRouter).$router.unBindBeforeEach(_event);
                 }
             }
         });

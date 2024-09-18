@@ -666,9 +666,19 @@ export interface RouterInstance {
     beforeEach: (guard: NavigationGuard) => void;
 
     /**
+     * 卸载全局路由前置守卫
+     */
+    unBindBeforeEach: (guard: NavigationGuard) => void;
+
+    /**
      * 注册全局路由后置守卫
      */
     afterEach: (guard: NavigationGuardAfter) => void;
+
+    /**
+     * 卸载全局路由后置守卫
+     */
+    unBindAfterEach: (guard: NavigationGuardAfter) => void;
 
     /**
      * 路由跳转方法，会创建新的历史记录

@@ -206,9 +206,23 @@ class Router {
         this.guards.beforeEach.push(guard);
     }
 
+    /* 卸载全局路由前置守卫 */
+    unBindBeforeEach(guard: NavigationGuard) {
+        this.guards.beforeEach = this.guards.beforeEach.filter(
+            (item) => item !== guard
+        );
+    }
+
     /* 注册全局路由后置守卫 */
     afterEach(guard: NavigationGuardAfter) {
         this.guards.afterEach.push(guard);
+    }
+
+    /* 卸载全局路由后置守卫 */
+    unBindAfterEach(guard: NavigationGuardAfter) {
+        this.guards.afterEach = this.guards.afterEach.filter(
+            (item) => item !== guard
+        );
     }
 
     /* 路由跳转方法，会创建新的历史记录 */
