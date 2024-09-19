@@ -208,9 +208,8 @@ class Router {
 
     /* 卸载全局路由前置守卫 */
     unBindBeforeEach(guard: NavigationGuard) {
-        this.guards.beforeEach = this.guards.beforeEach.filter(
-            (item) => item !== guard
-        );
+        const i = this.guards.beforeEach.findIndex((item) => item === guard);
+        this.guards.beforeEach.splice(i, 1);
     }
 
     /* 注册全局路由后置守卫 */
@@ -220,9 +219,8 @@ class Router {
 
     /* 卸载全局路由后置守卫 */
     unBindAfterEach(guard: NavigationGuardAfter) {
-        this.guards.afterEach = this.guards.afterEach.filter(
-            (item) => item !== guard
-        );
+        const i = this.guards.afterEach.findIndex((item) => item === guard);
+        this.guards.afterEach.splice(i, 1);
     }
 
     /* 路由跳转方法，会创建新的历史记录 */

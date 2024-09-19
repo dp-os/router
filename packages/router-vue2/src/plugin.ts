@@ -69,7 +69,7 @@ export class RouterVuePlugin {
             beforeDestroy() {
                 const _event = eventMap.get(this);
                 if (_event) {
-                    (this as VueWithRouter).$router.unBindBeforeEach(_event);
+                    (this as VueWithRouter).$router.unBindAfterEach(_event);
                 }
             }
         });
