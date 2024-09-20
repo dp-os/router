@@ -34,7 +34,7 @@ export class RouterVuePlugin {
       beforeDestroy() {
         const _event = eventMap.get(this);
         if (_event) {
-          this.$router.unBindBeforeEach(_event);
+          this.$router.unBindAfterEach(_event);
         }
       }
     });

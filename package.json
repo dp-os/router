@@ -9,7 +9,7 @@
         "lint:js": "lerna run lint:js",
         "lint:type": "lerna run lint:type",
         "build:packages": "lerna run build --no-private",
-        "release": "npm run build:packages && lerna publish --force-publish --exact",
+        "release": "npm run build:packages && node ./build.js && lerna publish --force-publish --exact",
         "test": "lerna run test"
     },
     "engines": {
