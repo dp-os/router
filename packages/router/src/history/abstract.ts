@@ -45,6 +45,20 @@ export class AbstractHistory extends RouterHistory {
         return base.includes(route.hostname);
     }
 
+    /**
+     * 新开浏览器窗口的方法，在服务端会调用 push 作为替代
+     */
+    pushWindow(location: RouterRawLocation) {
+        this.push(location);
+    }
+
+    /**
+     * 替换当前浏览器窗口的方法，在服务端会调用 replace 作为替代
+     */
+    replaceWindow(location: RouterRawLocation) {
+        this.replace(location);
+    }
+
     // 处理外站跳转逻辑
     handleOutside(location: RouterRawLocation, replace: boolean = false) {
         const { flag, route } = isPathWithProtocolOrDomain(location);

@@ -97,17 +97,31 @@ export class HtmlHistory extends RouterHistory {
         window.removeEventListener('popstate', this.onPopState);
     }
 
-    // 处理外站跳转逻辑
-    handleOutside(location: RouterRawLocation, replace: boolean = false) {
-        const { flag, route } = isPathWithProtocolOrDomain(location);
-        if (!flag) {
-            // 如果不以域名开头则跳出
-            return false;
-        }
+    pushWindow(location: RouterRawLocation) {
+        this.handleOutside(location, false, false);
+    }
 
-        // 如果域名相同则跳出
-        if (window.location.hostname === route.hostname) {
-            return false;
+    replaceWindow(location: RouterRawLocation) {
+        this.handleOutside(location, true, false);
+    }
+
+    // 处理外站跳转逻辑
+    handleOutside(
+        location: RouterRawLocation,
+        replace: boolean = false,
+        accessCheck: boolean = true
+    ) {
+        const { flag, route } = isPathWithProtocolOrDomain(location);
+        if (accessCheck) {
+            if (!flag) {
+                // 如果不以域名开头则跳出
+                return false;
+            }
+
+            // 如果域名相同则跳出
+            if (window.location.hostname === route.hostname) {
+                return false;
+            }
         }
 
         // 如果有配置跳转外站函数，则执行配置函数

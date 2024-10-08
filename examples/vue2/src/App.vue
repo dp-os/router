@@ -198,6 +198,11 @@ export default {
             hooks
             <button @click="router.push('/beforeEnter')">push /beforeEnter</button>
         </div>
+        <div class="tabs">
+            pushWindow / replaceWindow
+            <button @click="router.pushWindow('www.baidu.com')">router.pushWindow('www.baidu.com')</button>
+            <button @click="router.replaceWindow('www.baidu.com')">router.replaceWindow('www.baidu.com')</button>
+        </div>
         <div class="data">
             <pre>route: </pre>
             <pre>{{ route }}</pre>

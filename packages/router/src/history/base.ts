@@ -249,6 +249,16 @@ export abstract class RouterHistory {
     }
 
     /**
+     * 新开浏览器窗口的方法，在服务端会调用 push 作为替代
+     */
+    abstract pushWindow(location: RouterRawLocation): void;
+
+    /**
+     * 替换当前浏览器窗口的方法，在服务端会调用 replace 作为替代
+     */
+    abstract replaceWindow(location: RouterRawLocation): void;
+
+    /**
      * 跳转方法，会创建新的历史纪录
      */
     abstract push(location: RouterRawLocation): Promise<void>;

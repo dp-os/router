@@ -397,6 +397,16 @@ export interface RouterHistory {
     replace: (location: RouterRawLocation) => Promise<void>;
 
     /**
+     * 新开浏览器窗口的方法，在服务端会调用 push 作为替代
+     */
+    pushWindow: (location: RouterRawLocation) => void;
+
+    /**
+     * 替换当前浏览器窗口的方法，在服务端会调用 replace 作为替代
+     */
+    replaceWindow: (location: RouterRawLocation) => void;
+
+    /**
      * 路由移动到指定历史记录方法
      */
     go: (delta: number) => void;
@@ -689,6 +699,16 @@ export interface RouterInstance {
      * 路由跳转方法，会替换当前的历史记录
      */
     replace: (location: RouterRawLocation) => Promise<void>;
+
+    /**
+     * 新开浏览器窗口的方法, 会进入配置的 handleOutside 钩子，在服务端会调用 push 作为替代
+     */
+    pushWindow: (location: RouterRawLocation) => void;
+
+    /**
+     * 替换当前浏览器窗口的方法，在服务端会调用 replace 作为替代
+     */
+    replaceWindow: (location: RouterRawLocation) => void;
 
     /**
      * 前往特定路由历史记录的方法，可以在历史记录前后移动

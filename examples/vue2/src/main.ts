@@ -37,7 +37,9 @@ const router = createRouter({
     nextTick: Vue.nextTick,
     handleOutside: (location, replace) => {
         console.log('@handleOutside', location, replace);
-        return false;
+        // window.open(location.href, '_blank');
+        // return false;
+        return true;
     },
     routes: [
         {

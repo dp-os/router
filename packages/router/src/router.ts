@@ -233,6 +233,20 @@ class Router {
         await this.history.replace(location);
     }
 
+    /**
+     * 新开浏览器窗口的方法，在服务端会调用 push 作为替代
+     */
+    pushWindow(location: RouterRawLocation) {
+        this.history.pushWindow(location);
+    }
+
+    /**
+     * 替换当前浏览器窗口的方法，在服务端会调用 replace 作为替代
+     */
+    replaceWindow(location: RouterRawLocation) {
+        this.history.replaceWindow(location);
+    }
+
     /* 前往特定路由历史记录的方法，可以在历史记录前后移动 */
     go(delta: number = 0) {
         this.history.go(delta);
