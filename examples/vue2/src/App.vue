@@ -99,8 +99,7 @@ export default {
                     path: '/test4/99/11',
                     query: {
                         k: '9',
-                        b: '1',
-                        t: 'a+b%c&d'
+                        b: '1'
                     },
                     hash: '5/6?7-8*9^1',
                     state: {
@@ -115,12 +114,17 @@ export default {
                     query: {
                         k: '2',
                         b: '4',
+                        t: 'a+b!c@d#e$f%g^h&i*j(k)l-m_n+o',
+                        m: 'a b',
+                        p: 'a+b',
                     },
                 })
                 ">
                 push query: {
                 k: '2',
                 b: '4',
+                t: 'a+b%c&d',
+                m: 'a b',
                 }
             </button>
             <button @click="

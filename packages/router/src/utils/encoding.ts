@@ -149,5 +149,5 @@ export function decode(text: string | number): string {
 }
 
 export function decodeQuery(text: string): string {
-    return decode(text).replace(PLUS_RE, ' ');
+    return decode(text.replace(PLUS_RE, ' '));
 }

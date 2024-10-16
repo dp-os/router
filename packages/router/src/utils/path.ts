@@ -9,6 +9,7 @@ import {
 } from '../types';
 import {
     decode,
+    decodeQuery,
     encodeHash,
     encodeQueryKey,
     encodeQueryValue
@@ -86,7 +87,7 @@ export function parsePath(path: string = ''): {
             .forEach((item) => {
                 let [key, value] = item.split('=');
                 key = decode(key);
-                value = decode(value);
+                value = decodeQuery(value);
                 if (key) {
                     queryObj[key] = value;
                     queryArray[key] = (queryArray[key] || []).concat(value);
