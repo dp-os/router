@@ -81,8 +81,6 @@ class RouteMatcher {
                 })
             );
 
-            console.log('@realPath', realPath);
-
             const {
                 params: realParams,
                 query: realQuery,
@@ -123,7 +121,6 @@ class RouteMatcher {
                     redirectedFrom: routeRecord
                 });
             }
-            console.log('@routeRecord', routeRecord);
             return routeRecord;
         }
         return null;
