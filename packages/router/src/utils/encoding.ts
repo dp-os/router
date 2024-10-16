@@ -147,3 +147,7 @@ export function decode(text: string | number): string {
     }
     return '' + text;
 }
+
+export function decodeQuery(text: string): string {
+    return decode(text).replace(PLUS_RE, ' ');
+}

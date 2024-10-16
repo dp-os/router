@@ -159,9 +159,8 @@ export function stringifyPath(
         return acc;
     }, '');
 
-    const hashString = encodeHash(
-        hash ? (hash.startsWith('#') ? hash : `#${hash}`) : ''
-    );
+    const hashContent = hash.startsWith('#') ? hash.replace(/^#/, '') : hash;
+    const hashString = hashContent ? `#${encodeHash(hashContent)}` : '';
     return `${pathname}${queryString}${hashString}`;
 }
 

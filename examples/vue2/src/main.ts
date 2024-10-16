@@ -398,38 +398,38 @@ const router = createRouter({
     ]
 });
 
-router.beforeEach(async (from, to) => {
-    await new Promise((resolve) => {
-        setTimeout(() => {
-            resolve(true);
-        }, 50);
-    });
-    console.log('beforeEach 1', from.fullPath, to.fullPath);
-});
-router.beforeEach(async (from, to) => {
-    await new Promise((resolve) => {
-        setTimeout(() => {
-            resolve(true);
-        }, 50);
-    });
-    console.log('beforeEach 2', from.fullPath, to.fullPath);
-});
-router.afterEach(async (from, to) => {
-    await new Promise((resolve) => {
-        setTimeout(() => {
-            resolve(true);
-        }, 50);
-    });
-    console.log('afterEach 1', from.fullPath, to.fullPath);
-});
-router.afterEach(async (from, to) => {
-    await new Promise((resolve) => {
-        setTimeout(() => {
-            resolve(true);
-        }, 50);
-    });
-    console.log('afterEach 2', from.fullPath, to.fullPath);
-});
+// router.beforeEach(async (from, to) => {
+//     await new Promise((resolve) => {
+//         setTimeout(() => {
+//             resolve(true);
+//         }, 50);
+//     });
+//     console.log('beforeEach 1', from.fullPath, to.fullPath);
+// });
+// router.beforeEach(async (from, to) => {
+//     await new Promise((resolve) => {
+//         setTimeout(() => {
+//             resolve(true);
+//         }, 50);
+//     });
+//     console.log('beforeEach 2', from.fullPath, to.fullPath);
+// });
+// router.afterEach(async (from, to) => {
+//     await new Promise((resolve) => {
+//         setTimeout(() => {
+//             resolve(true);
+//         }, 50);
+//     });
+//     console.log('afterEach 1', from.fullPath, to.fullPath);
+// });
+// router.afterEach(async (from, to) => {
+//     await new Promise((resolve) => {
+//         setTimeout(() => {
+//             resolve(true);
+//         }, 50);
+//     });
+//     console.log('afterEach 2', from.fullPath, to.fullPath);
+// });
 
 /* register用法 start */
 Vue.use(RouterVuePlugin);
@@ -443,14 +443,14 @@ router.register('vue2', (router) => {
     });
     return {
         mount() {
-            console.log('@mount');
+            // console.log('@mount');
             app.$mount('#app');
         },
         updated() {
-            console.log('@updated');
+            // console.log('@updated');
         },
         destroy() {
-            console.log('@destroy');
+            // console.log('@destroy');
             app.$destroy();
         }
     }

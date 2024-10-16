@@ -9,6 +9,8 @@ import {
     type RouterMatcher
 } from '../types';
 import {
+    decode,
+    encodePath,
     normalizeLocation,
     normalizePath,
     parsePath,
@@ -79,6 +81,8 @@ class RouteMatcher {
                 })
             );
 
+            console.log('@realPath', realPath);
+
             const {
                 params: realParams,
                 query: realQuery,
@@ -119,6 +123,7 @@ class RouteMatcher {
                     redirectedFrom: routeRecord
                 });
             }
+            console.log('@routeRecord', routeRecord);
             return routeRecord;
         }
         return null;
@@ -195,8 +200,8 @@ function createRouteMatch(
                 );
                 return acc;
             }
-            const toPath = compile(path, { encode: encodeURIComponent });
-            const parseParams = match(path, { decode: decodeURIComponent });
+            const toPath = compile(path, { encode: encodePath });
+            const parseParams = match(path, { decode });
             const current: RouteMatch = {
                 regex,
                 match: (path: string) => {

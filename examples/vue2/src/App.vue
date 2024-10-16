@@ -100,6 +100,7 @@ export default {
                     query: {
                         k: '9',
                         b: '1',
+                        t: 'a+b%c&d'
                     },
                     hash: '5/6?7-8*9^1',
                     state: {
