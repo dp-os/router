@@ -85,7 +85,7 @@ export function parsePath(path: string = ''): {
             .slice(1)
             .split('&')
             .forEach((item) => {
-                let [key, value] = item.split('=');
+                let [key = '', value = ''] = item.split('=');
                 key = decode(key);
                 value = decodeQuery(value);
                 if (key) {
