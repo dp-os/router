@@ -1,4 +1,4 @@
-<!-- <script setup lang="ts">
+<script setup lang="ts">
 import { computed, watch } from "vue"
 import { useRoute, useRouter } from "@gez/router-vue2"
 
@@ -7,36 +7,12 @@ const router = useRouter();
 const $route = useRoute();
 
 const route = computed(() => {
-  const { matched, ...rest } = $route;
-  return JSON.stringify(rest, null, 4);
-})
-
-watch($route, (cur, old) => {
-  console.log('@update', cur, cur.fullPath, cur === router.route);
+    const { matched, component, ...rest } = $route as any;
+    return JSON.stringify(rest, null, 4);
 });
 
-</script> -->
-<script lang="ts">
-export default {
-    name: "app",
-    computed: {
-        route() {
-            const { matched, ...rest } = this.$route;
-            return JSON.stringify(rest, null, 4);
-        },
-        router() {
-            return this.$router;
-        }
-    },
-    watch: {
-        $route(cur, old) {
-            console.log("@update", cur, cur.fullPath, cur === this.$router.route);
-        }
-    },
-    beforeCreate() {
-        console.log("@beforeCreate all");
-    }
-}
+console.log('@router', router);
+console.log('@route', route);
 </script>
 
 <template>
@@ -46,10 +22,7 @@ export default {
         </header>
         <div class="tabs">
             router-link
-            <router-link class="sss vvv" :class="{
-                test: false,
-                kk: true
-            }" to="/" data="data" :query="JSON.stringify($route.query)">/</router-link>
+            <router-link to="/" data="data" :query="JSON.stringify($route.query)">/</router-link>
             <router-link to="/test1" @click="console.log(123)">/test1</router-link>
             <router-link to="/test1/test2">/test1/test2</router-link>
             <router-link to="/test3">/test3</router-link>

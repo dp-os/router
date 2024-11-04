@@ -1,11 +1,4 @@
-<script lang="ts">
-export default {
-    name: "all",
-    beforeCreate() {
-        console.log("@beforeCreate all");
-    }
-}
-</script>
+<script setup lang="ts"></script>
 
 <template>
     <div>
