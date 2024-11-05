@@ -30,6 +30,7 @@ const router = createRouter({
     //     return base;
     // },
     base: `${location.origin}/en`,
+    // initUrl: '/test1/test2',
     // mode: RouterMode.ABSTRACT,
     noBackNavigation: () => {
         console.log('@noBackNavigation');

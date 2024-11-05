@@ -2,7 +2,7 @@
 import { computed, watch } from "vue"
 import { useRoute, useRouter } from "@gez/router-vue2"
 
-const router = useRouter();
+const $router = useRouter();
 
 const $route = useRoute();
 
@@ -11,8 +11,8 @@ const route = computed(() => {
     return JSON.stringify(rest, null, 4);
 });
 
-console.log('@router', router);
-console.log('@route', route);
+console.log('@router', $router);
+console.log('@route', $route);
 </script>
 
 <template>
@@ -22,8 +22,8 @@ console.log('@route', route);
         </header>
         <div class="tabs">
             router-link
-            <router-link to="/" data="data" :query="JSON.stringify($route.query)">/</router-link>
-            <router-link to="/test1" @click="console.log(123)">/test1</router-link>
+            <router-link to="/">/</router-link>
+            <router-link to="/test1">/test1</router-link>
             <router-link to="/test1/test2">/test1/test2</router-link>
             <router-link to="/test3">/test3</router-link>
             <router-link to="/test4">/test4</router-link>
@@ -40,6 +40,27 @@ console.log('@route', route);
                 },
             }">/test5/66/77</router-link>
             <router-link to="/test6">/test6</router-link>
+        </div>
+        <div class="tabs">
+            router.push
+            <button class="" @click="$router.push('/')">push /</button>
+            <button class="" @click="$router.push('/test1')">push /test1</button>
+            <button class="" @click="$router.push('/test1/test2')">push /test1/test2</button>
+            <button class="" @click="$router.push('/test3')">push /test3</button>
+            <button class="" @click="$router.push('/test4')">push /test4</button>
+            <button class="" @click="$router.push('/test4/4/5')">push /test4/4/5</button>
+            <button class="" @click="$router.push({
+                path: '/test4/66/77',
+                query: {
+                    a: '1',
+                    b: '2',
+                },
+                hash: '7788',
+                state: {
+                    test: '1234',
+                },
+            })">push /test4/66/77</button>
+            <button class="" @click="$router.push('/test6')">push /test6</button>
         </div>
         <div class="data">
             <pre>route: </pre>

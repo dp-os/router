@@ -14,12 +14,21 @@ import TestT6 from './components/TestT6.vue';
 
 const router = createRouter({
     base: `${location.origin}/en`,
+    initUrl: '/test2',
     // mode: RouterMode.ABSTRACT,
     noBackNavigation: () => {
         console.log('@noBackNavigation');
     },
     nextTick: Vue.nextTick,
     routes: [
+        {
+            appType: 'vue2',
+            path: 'test',
+            component: Test,
+            meta: {
+                ll: '/test'
+            }
+        },
         {
             appType: 'vue2',
             path: 'test1',
@@ -75,14 +84,6 @@ const router = createRouter({
             component: TestT6,
             meta: {
                 type: '/test6'
-            }
-        },
-        {
-            appType: 'vue2',
-            path: 'test5',
-            component: TestT5,
-            meta: {
-                type: '/test5'
             }
         },
         {
