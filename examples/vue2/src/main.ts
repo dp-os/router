@@ -476,4 +476,4 @@ await router.init();
 // (window as any)['app'] = app;
 // (window as any)['router'] = router;
 // (window as any)['route'] = router.route;
-/* 单应用便捷用法 start */
+/* 单应用便捷用法 end */

@@ -603,6 +603,17 @@ export interface RegisteredConfig {
  * 路由类实例
  */
 export interface RouterInstance {
+
+    /**
+     * 当前路由对象的上级路由对象
+     */
+    parent: RouterInstance | null;
+
+    /**
+     * 路由是否冻结
+     */
+    freeze: boolean;
+
     /**
      * 路由配置
      */
@@ -662,6 +673,9 @@ export interface RouterInstance {
         config: (router: RouterInstance) => RegisteredConfig
     ) => void;
 
+    /* 已注册的app配置 */
+    registeredConfigMap: RegisteredConfigMap;
+
     /**
      * 全局路由守卫
      */
@@ -699,6 +713,30 @@ export interface RouterInstance {
      * 路由跳转方法，会替换当前的历史记录
      */
     replace: (location: RouterRawLocation) => Promise<void>;
+
+    /**
+     * 当前路由弹层id，用于区分不同的路由弹层
+     */
+    layerId: number;
+
+    /**
+     * 路由弹层配置
+     */
+    layerConfig: Array<{
+        /**
+         * 路由弹层id
+         */
+        id: number;
+        /**
+         * 路由弹层深度
+         */
+        depth: number;
+    }>;
+
+    /**
+     * 打开路由弹层方法，会创建新的路由实例并调用注册的 register 方法
+     */
+    pushLayer: (location: RouterRawLocation) => void;
 
     /**
      * 新开浏览器窗口的方法, 会进入配置的 handleOutside 钩子，在服务端会调用 push 作为替代

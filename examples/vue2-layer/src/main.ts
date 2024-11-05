@@ -1,16 +1,16 @@
-import Vue from 'vue'
+import Vue, { nextTick } from 'vue'
 import App from './App.vue'
 
 import { createRouter, RouterMode } from '@gez/router';
 import { RouterVuePlugin } from '@gez/router-vue2'
 
-import Test from './components/Test.vue';
-import TestT1 from './components/TestT1.vue';
-import TestT2 from './components/TestT2.vue';
-import TestT3 from './components/TestT3.vue';
-import TestT4 from './components/TestT4.vue';
-import TestT5 from './components/TestT5.vue';
-import TestT6 from './components/TestT6.vue';
+import Test from '@/components/Test.vue';
+import TestT1 from '@/components/TestT1.vue';
+import TestT2 from '@/components/TestT2.vue';
+import TestT3 from '@/components/TestT3.vue';
+import TestT4 from '@/components/TestT4.vue';
+import TestT5 from '@/components/TestT5.vue';
+import TestT6 from '@/components/TestT6.vue';
 
 const router = createRouter({
     base: `${location.origin}/en`,
@@ -140,13 +140,30 @@ router.register('vue2', (router) => {
     return {
         mount() {
             // console.log('@mount');
-            app.$mount('#app');
+            const target = document.createElement('div');
+            const id = 'id-' + Math.random().toString().slice(2);
+            target.style.cssText = `
+                position: fixed;
+                inset: 0;
+                z-index: 10;
+                overflow: auto;
+                outline: 0;
+                -webkit-overflow-scrolling: touch;
+            `;
+            target.id = id;
+            target.appendChild(document.createElement('div'));
+            document.body.appendChild(target);
+            nextTick(() => {
+                app.$mount(target.querySelector('div')!);
+            });
+            console.log('@mount', app, target);
         },
         updated() {
             // console.log('@updated');
         },
         destroy() {
             // console.log('@destroy');
+            app.$el.remove();
             app.$destroy();
         }
     }
@@ -171,4 +188,4 @@ await router.init();
 // (window as any)['app'] = app;
 // (window as any)['router'] = router;
 // (window as any)['route'] = router.route;
-/* 单应用便捷用法 start */
+/* 单应用便捷用法 end */

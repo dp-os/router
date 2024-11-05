@@ -24,6 +24,16 @@ import { inBrowser, normalizePath, regexDomain } from './utils';
  * 路由类
  */
 class Router {
+    /**
+     * 当前路由对象的上级路由对象
+     */
+    parent: Router | null = null;
+
+    /**
+     * 路由是否冻结
+     */
+    freeze: boolean = false;
+
     /* 路由配置 */
     options: RouterOptions;
 
@@ -179,7 +189,7 @@ class Router {
     }
 
     /* 已注册的app配置 */
-    protected registeredConfigMap: RegisteredConfigMap = {};
+    registeredConfigMap: RegisteredConfigMap = {};
 
     /* app配置注册 */
     register(
@@ -231,6 +241,49 @@ class Router {
     /* 路由跳转方法，会替换当前的历史记录 */
     async replace(location: RouterRawLocation) {
         await this.history.replace(location);
+    }
+
+    /**
+     * 当前路由弹层id，用于区分不同的路由弹层
+     */
+    layerId: number = 0;
+
+    /**
+     * 路由弹层配置
+     * key为路由弹层id
+     */
+    layerConfig: Array<{
+        /**
+         * 路由弹层id
+         */
+        id: number;
+        /**
+         * 路由弹层深度
+         */
+        depth: number;
+    }> = [];
+
+    /* 打开路由弹层方法，会创建新的路由实例并调用注册的 register 方法 */
+    async pushLayer(location: RouterRawLocation) {
+        const route = this.resolve(location);
+        const appType = route.matched[0]?.appType;
+        if (!appType) return;
+        const registerConfig = this.registeredConfigMap[appType];
+        if (!registerConfig) return;
+
+        this.freeze = true;
+        const router = createRouter({
+            ...this.options,
+            initUrl: route.fullPath,
+            mode: RouterMode.ABSTRACT
+        });
+        router.registeredConfigMap = this.registeredConfigMap;
+        await router.init();
+        const { generator } = registerConfig;
+        registerConfig.config = generator(router);
+        registerConfig.config?.mount();
+        registerConfig.mounted = true;
+        registerConfig.config?.updated();
     }
 
     /**

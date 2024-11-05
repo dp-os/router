@@ -16,7 +16,7 @@ console.log('@route', $route);
 </script>
 
 <template>
-    <div id="app">
+    <div class="app">
         <header>
             <div class="wrapper">app.vue</div>
         </header>
@@ -43,13 +43,13 @@ console.log('@route', $route);
         </div>
         <div class="tabs">
             router.push
-            <button class="" @click="$router.push('/')">push /</button>
-            <button class="" @click="$router.push('/test1')">push /test1</button>
-            <button class="" @click="$router.push('/test1/test2')">push /test1/test2</button>
-            <button class="" @click="$router.push('/test3')">push /test3</button>
-            <button class="" @click="$router.push('/test4')">push /test4</button>
-            <button class="" @click="$router.push('/test4/4/5')">push /test4/4/5</button>
-            <button class="" @click="$router.push({
+            <button @click="$router.push('/')">push /</button>
+            <button @click="$router.push('/test1')">push /test1</button>
+            <button @click="$router.push('/test1/test2')">push /test1/test2</button>
+            <button @click="$router.push('/test3')">push /test3</button>
+            <button @click="$router.push('/test4')">push /test4</button>
+            <button @click="$router.push('/test4/4/5')">push /test4/4/5</button>
+            <button @click="$router.push({
                 path: '/test4/66/77',
                 query: {
                     a: '1',
@@ -60,7 +60,28 @@ console.log('@route', $route);
                     test: '1234',
                 },
             })">push /test4/66/77</button>
-            <button class="" @click="$router.push('/test6')">push /test6</button>
+            <button @click="$router.push('/test6')">push /test6</button>
+        </div>
+        <div class="tabs">
+            router.pushLayer
+            <button @click="$router.pushLayer('/')">pushLayer /</button>
+            <button @click="$router.pushLayer('/test1')">pushLayer /test1</button>
+            <button @click="$router.pushLayer('/test1/test2')">pushLayer /test1/test2</button>
+            <button @click="$router.pushLayer('/test3')">pushLayer /test3</button>
+            <button @click="$router.pushLayer('/test4')">pushLayer /test4</button>
+            <button @click="$router.pushLayer('/test4/4/5')">pushLayer /test4/4/5</button>
+            <button @click="$router.pushLayer({
+                path: '/test4/66/77',
+                query: {
+                    a: '1',
+                    b: '2',
+                },
+                hash: '7788',
+                state: {
+                    test: '1234',
+                },
+            })">pushLayer /test4/66/77</button>
+            <button @click="$router.pushLayer('/test6')">pushLayer /test6</button>
         </div>
         <div class="data">
             <pre>route: </pre>
@@ -91,10 +112,9 @@ console.log('@route', $route);
 </template>
 
 <style>
-body {
-    min-height: 2000px;
+.app {
+    background-color: #fff;
 }
-
 .tabs {
     padding: 12px 0;
 
