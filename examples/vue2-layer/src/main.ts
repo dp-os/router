@@ -100,13 +100,14 @@ Vue.use(RouterVuePlugin);
 router.register('vue2', (router) => {
     // 服务端情况：不需要销毁实例
     // 客户端：路由跳转，调用新的应用类型时，这里需要销毁
-    const app = new Vue({
-        render: (h) => h(App),
-        router,
-    });
+    let app: Vue;
     const id = 'id-' + Math.random().toString().slice(2);
     return {
         mount() {
+            app = new Vue({
+                render: (h) => h(App),
+                router,
+            });
             const target = document.createElement('div');
             target.style.cssText = `
                 position: fixed;
@@ -120,19 +121,22 @@ router.register('vue2', (router) => {
                 -webkit-overflow-scrolling: touch;
             `;
             target.id = id;
-            const instance = app.$mount();
-            target.appendChild(instance.$el);
+            target.appendChild(document.createElement('div'));
             document.body.appendChild(target);
-            console.log('@mount', app, target);
+            nextTick(() => {
+                app.$mount(target.children[0]);
+            });
         },
         updated() {
             // console.log('@updated');
         },
         destroy() {
-            // app.$el.remove();
             const target = document.getElementById(id);
             console.log('@destroy', id, target);
             document.body.removeChild(target!);
+
+            app.$el.remove();
+            app.$destroy();
         }
     }
 });
