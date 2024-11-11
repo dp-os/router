@@ -14,7 +14,7 @@ import TestT6 from '@/components/TestT6.vue';
 
 const router = createRouter({
     base: `${location.origin}/en`,
-    initUrl: '/test2',
+    // initUrl: '/test2',
     // mode: RouterMode.ABSTRACT,
     noBackNavigation: () => {
         console.log('@noBackNavigation');
@@ -64,7 +64,7 @@ const router = createRouter({
         },
         {
             appType: 'vue2',
-            path: 'test4/:id?/:name?',
+            path: 'test4/:id*',
             component: TestT4,
             meta: {
                 type: '/test4'
@@ -94,39 +94,6 @@ const router = createRouter({
     ]
 });
 
-// router.beforeEach(async (from, to) => {
-//     await new Promise((resolve) => {
-//         setTimeout(() => {
-//             resolve(true);
-//         }, 50);
-//     });
-//     console.log('beforeEach 1', from.fullPath, to.fullPath);
-// });
-// router.beforeEach(async (from, to) => {
-//     await new Promise((resolve) => {
-//         setTimeout(() => {
-//             resolve(true);
-//         }, 50);
-//     });
-//     console.log('beforeEach 2', from.fullPath, to.fullPath);
-// });
-// router.afterEach(async (from, to) => {
-//     await new Promise((resolve) => {
-//         setTimeout(() => {
-//             resolve(true);
-//         }, 50);
-//     });
-//     console.log('afterEach 1', from.fullPath, to.fullPath);
-// });
-// router.afterEach(async (from, to) => {
-//     await new Promise((resolve) => {
-//         setTimeout(() => {
-//             resolve(true);
-//         }, 50);
-//     });
-//     console.log('afterEach 2', from.fullPath, to.fullPath);
-// });
-
 /* register用法 start */
 Vue.use(RouterVuePlugin);
 
@@ -137,15 +104,17 @@ router.register('vue2', (router) => {
         render: (h) => h(App),
         router,
     });
+    const id = 'id-' + Math.random().toString().slice(2);
     return {
         mount() {
-            // console.log('@mount');
             const target = document.createElement('div');
-            const id = 'id-' + Math.random().toString().slice(2);
             target.style.cssText = `
                 position: fixed;
                 inset: 0;
                 z-index: 10;
+                width: 100%;
+                height: 100%;
+                background-color: #fff;
                 overflow: auto;
                 outline: 0;
                 -webkit-overflow-scrolling: touch;
@@ -154,16 +123,18 @@ router.register('vue2', (router) => {
             target.appendChild(document.createElement('div'));
             document.body.appendChild(target);
             nextTick(() => {
-                app.$mount(target.querySelector('div')!);
+                app.$mount(target.children[0]);
             });
-            console.log('@mount', app, target);
+            // console.log('@mount', app, target);
         },
         updated() {
             // console.log('@updated');
         },
         destroy() {
-            // console.log('@destroy');
-            app.$el.remove();
+            // app.$el.remove();
+            const target = document.getElementById(id);
+            console.log('@destroy', id, target);
+            document.body.removeChild(target!);
             app.$destroy();
         }
     }
@@ -174,18 +145,3 @@ await router.init();
 (window as any)['router'] = router;
 (window as any)['route'] = router.route;
 /* register用法 end */
-
-
-/* 单应用便捷用法 start */
-// Vue.use(RouterVuePlugin);
-// router.init();
-// const app = new Vue({
-//     render: (h) => h(App),
-//     router,
-// }).$mount('#app');
-
-// // for debugger
-// (window as any)['app'] = app;
-// (window as any)['router'] = router;
-// (window as any)['route'] = router.route;
-/* 单应用便捷用法 end */

@@ -4,6 +4,7 @@ import {
     type NavigationGuard,
     type NavigationGuardAfter,
     type RouteRecord,
+    type RouterHistory,
     type RouterInstance,
     type RouterRawLocation
 } from '../types';
@@ -34,11 +35,18 @@ function createRouteRecord(route: Partial<RouteRecord> = {}): RouteRecord {
     };
 }
 
-export abstract class RouterHistory {
+export abstract class BaseRouterHistory implements RouterHistory {
     /**
      * 路由类实例
      */
     public router: RouterInstance;
+
+    /**
+     * 路由是否冻结
+     */
+    public get isFrozen() {
+        return this.router.isFrozen;
+    }
 
     /**
      * 匹配的当前路由
@@ -282,7 +290,7 @@ export abstract class RouterHistory {
     /**
      * 初始化方法
      */
-    abstract init(): Promise<void>;
+    abstract init(params?: { replace?: boolean }): Promise<void>;
 
     /**
      * 卸载方法

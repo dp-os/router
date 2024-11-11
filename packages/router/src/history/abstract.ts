@@ -5,9 +5,9 @@ import {
     type RouterRawLocation
 } from '../types';
 import { isPathWithProtocolOrDomain, normalizeLocation } from '../utils';
-import { RouterHistory } from './base';
+import { BaseRouterHistory } from './base';
 
-export class AbstractHistory extends RouterHistory {
+export class AbstractHistory extends BaseRouterHistory {
     index: number;
     stack: RouteRecord[];
 
@@ -18,11 +18,15 @@ export class AbstractHistory extends RouterHistory {
         this.init();
     }
 
-    async init() {
+    async init({ replace }: { replace?: boolean } = { replace: true }) {
         const { initUrl } = this.router.options;
         if (initUrl !== undefined) {
             // 存在 initUrl 则用 initUrl 进行初始化
-            await this.replace(initUrl);
+            if (replace) {
+                this.replace(initUrl);
+            } else {
+                this.push(initUrl);
+            }
         }
     }
 

@@ -2,7 +2,7 @@
 import { computed, watch } from "vue"
 import { useRoute, useRouter } from "@gez/router-vue2"
 
-const $router = useRouter();
+// const $router = useRouter();
 
 const $route = useRoute();
 
@@ -11,8 +11,8 @@ const route = computed(() => {
     return JSON.stringify(rest, null, 4);
 });
 
-console.log('@router', $router);
-console.log('@route', $route);
+// console.log('@router', $router);
+// console.log('@route', $route);
 </script>
 
 <template>
@@ -20,6 +20,22 @@ console.log('@route', $route);
         <header>
             <div class="wrapper">app.vue</div>
         </header>
+        <div class="tabs">
+            go
+            <button @click="$router.go(-5)">go -5</button>
+            <button @click="$router.go(-3)">go -3</button>
+            <button @click="$router.go(-2)">go -2</button>
+            <button @click="$router.go(-1)">go -1</button>
+            <button @click="$router.go(0)">go 0</button>
+            <button @click="$router.go(1)">go 1</button>
+            <button @click="$router.go(2)">go 2</button>
+            <button @click="$router.go(5)">go 5</button>
+        </div>
+        <div class="tabs">
+            back forward
+            <button @click="$router.back()">back</button>
+            <button @click="$router.forward()">forward</button>
+        </div>
         <div class="tabs">
             router-link
             <router-link to="/">/</router-link>
@@ -29,7 +45,7 @@ console.log('@route', $route);
             <router-link to="/test4">/test4</router-link>
             <router-link to="/test4/4/5">/test4/4/5</router-link>
             <router-link :to="{
-                path: '/test4/66/77',
+                path: '/test5/66/77',
                 query: {
                     a: '1',
                     b: '2',
@@ -50,7 +66,7 @@ console.log('@route', $route);
             <button @click="$router.push('/test4')">push /test4</button>
             <button @click="$router.push('/test4/4/5')">push /test4/4/5</button>
             <button @click="$router.push({
-                path: '/test4/66/77',
+                path: '/test5/66/77',
                 query: {
                     a: '1',
                     b: '2',
@@ -59,7 +75,7 @@ console.log('@route', $route);
                 state: {
                     test: '1234',
                 },
-            })">push /test4/66/77</button>
+            })">push /test5/66/77</button>
             <button @click="$router.push('/test6')">push /test6</button>
         </div>
         <div class="tabs">
@@ -71,7 +87,7 @@ console.log('@route', $route);
             <button @click="$router.pushLayer('/test4')">pushLayer /test4</button>
             <button @click="$router.pushLayer('/test4/4/5')">pushLayer /test4/4/5</button>
             <button @click="$router.pushLayer({
-                path: '/test4/66/77',
+                path: '/test5/66/77',
                 query: {
                     a: '1',
                     b: '2',
@@ -80,7 +96,7 @@ console.log('@route', $route);
                 state: {
                     test: '1234',
                 },
-            })">pushLayer /test4/66/77</button>
+            })">pushLayer /test5/66/77</button>
             <button @click="$router.pushLayer('/test6')">pushLayer /test6</button>
         </div>
         <div class="data">

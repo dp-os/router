@@ -22,7 +22,7 @@ import {
  */
 class RouteMatcher {
     /*
-     *路由匹配规则
+     * 路由匹配规则
      */
     protected routeMatches: RouteMatch[];
 
@@ -31,7 +31,7 @@ class RouteMatcher {
     }
 
     /*
-     *根据配置匹配对应的路由
+     * 根据配置匹配对应的路由
      */
     public match(
         rawLocation: RouterLocation,

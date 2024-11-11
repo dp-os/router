@@ -9,9 +9,9 @@ import {
     saveScrollPosition,
     scrollToPosition
 } from '../utils';
-import { RouterHistory } from './base';
+import { BaseRouterHistory } from './base';
 
-export class HtmlHistory extends RouterHistory {
+export class HtmlHistory extends BaseRouterHistory {
     constructor(router: RouterInstance) {
         super(router);
 
@@ -38,12 +38,15 @@ export class HtmlHistory extends RouterHistory {
     }
 
     onPopState = (e: PopStateEvent) => {
+        if (this.isFrozen) return;
         const current = Object.assign({}, this.current);
         // 当路由变化时触发跳转事件
         this.transitionTo(this.getCurrentLocation(), async (route) => {
+            const { state } = window.history;
+            this.router.updateLayerState(route, state);
             saveScrollPosition(current.fullPath, computeScrollPosition());
             setTimeout(async () => {
-                const keepScrollPosition = history.state.keepScrollPosition;
+                const keepScrollPosition = state.keepScrollPosition;
                 if (keepScrollPosition) {
                     return;
                 }
@@ -63,28 +66,25 @@ export class HtmlHistory extends RouterHistory {
         });
     };
 
-    async init() {
+    async init({ replace }: { replace?: boolean } = { replace: true }) {
         const { initUrl } = this.router.options;
+        let route = this.getCurrentLocation();
         if (initUrl !== undefined) {
             // 存在 initUrl 则用 initUrl 进行初始化
-            await this.replace(initUrl);
+            route = this.resolve(initUrl) as any;
         } else {
-            // 初始化时替换当前历史记录，目的是将 base 错误的路径修改为 base正确的路径时 不创建新的历史记录
-            const location = this.getCurrentLocation();
-            let state = {
-                _ancientRoute: true // 最古历史的标记, 在调用返回事件时如果有这个标记则直接调用没有历史记录的钩子
+            const state = history.state || {};
+            route.state = {
+                ...state,
+                _ancientRoute: state._ancientRoute ?? true // 最古历史的标记, 在调用返回事件时如果有这个标记则直接调用没有历史记录的钩子
             };
-            try {
-                state = {
-                    ...location.state,
-                    ...state
-                };
-            } catch (error) {}
-            await this.replace({
-                ...location,
-                state
-            });
         }
+        if (replace) {
+            this.replace(route as RouterRawLocation);
+        } else {
+            this.push(route as RouterRawLocation);
+        }
+        console.log('@history init', this);
         this.setupListeners();
     }
 
@@ -146,16 +146,19 @@ export class HtmlHistory extends RouterHistory {
 
     // 新增路由记录跳转
     async push(location: RouterRawLocation) {
+        console.log('@push', location);
         await this.jump(location, false);
     }
 
     // 替换当前路由记录跳转
     async replace(location: RouterRawLocation) {
+        console.log('@replace', location);
         await this.jump(location, true);
     }
 
     // 跳转方法
     async jump(location: RouterRawLocation, replace: boolean = false) {
+        if (this.isFrozen) return;
         if (this.handleOutside(location, replace)) {
             return;
         }
@@ -168,14 +171,19 @@ export class HtmlHistory extends RouterHistory {
                 scrollToPosition({ left: 0, top: 0 });
             }
 
-            const state = replace
-                ? { ...history.state, ...route.state }
-                : route.state || {};
+            const state = Object.assign(
+                replace
+                    ? { ...history.state, ...route.state }
+                    : { ...route.state, _ancientRoute: false },
+                { keepScrollPosition }
+            );
             window.history[replace ? 'replaceState' : 'pushState'](
-                Object.assign(state, { keepScrollPosition }),
+                state,
                 '',
                 route.fullPath
             );
+
+            this.router.updateLayerState(route);
         });
     }
 
@@ -190,9 +198,17 @@ export class HtmlHistory extends RouterHistory {
     protected timer: NodeJS.Timeout | null = null;
 
     back(): void {
+        console.log(
+            '@back',
+            'isFrozen =>',
+            this.isFrozen,
+            'isAncientRoute =>',
+            history.state._ancientRoute === true
+        );
+        if (this.isFrozen) return;
         const oldState = history.state;
+        const noBackNavigation = this.router.options.noBackNavigation;
         if (oldState._ancientRoute === true) {
-            const noBackNavigation = this.router.options.noBackNavigation;
             noBackNavigation && noBackNavigation(this.router);
             return;
         }
@@ -200,7 +216,6 @@ export class HtmlHistory extends RouterHistory {
         window.history.back();
         this.timer = setTimeout(() => {
             if (history.state === oldState) {
-                const noBackNavigation = this.router.options.noBackNavigation;
                 noBackNavigation && noBackNavigation(this.router);
             }
             this.timer = null;
