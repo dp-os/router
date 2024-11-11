@@ -131,10 +131,12 @@ class Router implements RouterInstance {
                     config: registerConfig.config,
                     destroyed: false
                 };
-                this.layerConfigList.push({
-                    id: this.layerId,
-                    depth: 0
-                });
+                if (!this.layerConfigList.find((item) => item.id === layerId)) {
+                    this.layerConfigList.push({
+                        id: this.layerId,
+                        depth: 0
+                    });
+                }
             }
             registerConfig.config?.updated();
         }
@@ -230,10 +232,12 @@ class Router implements RouterInstance {
             };
             layerConfigList = parent.layerConfigList;
         }
-        layerConfigList.push({
-            id: layerId,
-            depth: 0
-        });
+        if (!layerConfigList.find((item) => item.id === layerId)) {
+            layerConfigList.push({
+                id: layerId,
+                depth: 0
+            });
+        }
         this.parent = parent;
         this.layerId = layerId;
         this.layerMap = layerMap;
@@ -428,6 +432,7 @@ class Router implements RouterInstance {
                     const { router, config } = layer;
                     config.destroy();
                     router.destroy();
+                    router.freeze();
                     layer.destroyed = true;
                 }
             });
@@ -438,19 +443,28 @@ class Router implements RouterInstance {
                     const { router, config } = layer;
                     router.updateLayerState(route);
                     config.mount();
+                    router.unfreeze();
                     layer.destroyed = false;
                 }
             });
 
-            const allIdList = Object.keys(this.layerMap);
+            const layerMapIdList = Object.keys(this.layerMap);
             const layerConfigIdList = this.layerConfigList.map(({ id }) => id);
             const createIdList = createList.map(({ id }) => id);
             const destroyIdList = destroyList.map(({ id }) => id);
-
-            console.log('@allIdList =>', allIdList);
-            console.log('@layerConfigList =>', layerConfigIdList);
-            console.log('@createList =>', createIdList);
-            console.log('@destroyList =>', destroyIdList);
+            console.log(
+                '@layerMapIdList =>',
+                layerMapIdList,
+                `\n`,
+                '@layerConfigList =>',
+                layerConfigIdList,
+                `\n`,
+                '@createList =>',
+                createIdList,
+                `\n`,
+                '@destroyList =>',
+                destroyIdList
+            );
 
             this.layerConfigList = stateLayerConfigList as any;
         } else {

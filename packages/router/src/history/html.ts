@@ -200,6 +200,8 @@ export class HtmlHistory extends BaseRouterHistory {
     back(): void {
         console.log(
             '@back',
+            'layerId =>',
+            this.router.layerId,
             'isFrozen =>',
             this.isFrozen,
             'isAncientRoute =>',

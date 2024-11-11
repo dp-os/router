@@ -120,12 +120,10 @@ router.register('vue2', (router) => {
                 -webkit-overflow-scrolling: touch;
             `;
             target.id = id;
-            target.appendChild(document.createElement('div'));
+            const instance = app.$mount();
+            target.appendChild(instance.$el);
             document.body.appendChild(target);
-            nextTick(() => {
-                app.$mount(target.children[0]);
-            });
-            // console.log('@mount', app, target);
+            console.log('@mount', app, target);
         },
         updated() {
             // console.log('@updated');
@@ -135,7 +133,6 @@ router.register('vue2', (router) => {
             const target = document.getElementById(id);
             console.log('@destroy', id, target);
             document.body.removeChild(target!);
-            app.$destroy();
         }
     }
 });
