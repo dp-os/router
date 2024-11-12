@@ -84,7 +84,6 @@ export class HtmlHistory extends BaseRouterHistory {
         } else {
             this.push(route as RouterRawLocation);
         }
-        console.log('@history init', this);
         this.setupListeners();
     }
 
@@ -146,13 +145,11 @@ export class HtmlHistory extends BaseRouterHistory {
 
     // 新增路由记录跳转
     async push(location: RouterRawLocation) {
-        console.log('@push', location);
         await this.jump(location, false);
     }
 
     // 替换当前路由记录跳转
     async replace(location: RouterRawLocation) {
-        console.log('@replace', location);
         await this.jump(location, true);
     }
 

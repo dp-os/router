@@ -122,6 +122,7 @@ export abstract class BaseRouterHistory implements RouterHistory {
         location: RouterRawLocation,
         onComplete?: (route: RouteRecord) => void
     ) {
+        if (this.isFrozen) return;
         // 寻找即将跳转路径匹配到的路由对象
         const route = this.resolve(location);
 

@@ -121,6 +121,7 @@ router.register('vue2', (router) => {
                 -webkit-overflow-scrolling: touch;
             `;
             target.id = id;
+            target.dataset.layerId = `${router.layerId}`;
             target.appendChild(document.createElement('div'));
             document.body.appendChild(target);
             nextTick(() => {
@@ -132,7 +133,7 @@ router.register('vue2', (router) => {
         },
         destroy() {
             const target = document.getElementById(id);
-            console.log('@destroy', id, target);
+            // console.log('@destroy', id, app);
             document.body.removeChild(target!);
 
             app.$el.remove();
