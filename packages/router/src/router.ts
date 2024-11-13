@@ -111,9 +111,6 @@ class Router implements RouterInstance {
         });
     }
 
-    addRoute: (route: RouteConfig) => void;
-    addRoutes: (routes: RouteConfig[]) => void;
-
     /* 更新路由 */
     updateRoute(route: RouteRecord) {
         const curAppType = this.route?.matched[0]?.appType;
