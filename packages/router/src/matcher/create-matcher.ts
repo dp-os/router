@@ -26,7 +26,13 @@ class RouteMatcher {
      */
     protected routeMatches: RouteMatch[];
 
+    /*
+     * 原始路由配置
+     */
+    // protected routes: RouteConfig[];
+
     constructor(routes: RouteConfig[]) {
+        // this.routes = routes;
         this.routeMatches = createRouteMatches(routes);
     }
 
@@ -133,8 +139,21 @@ class RouteMatcher {
         return this.routeMatches;
     }
 
-    // addRoute,
-    // addRoutes,
+    /**
+     * 新增单个路由匹配规则
+     */
+    // public addRoute(route: RouteConfig) {
+    //     this.routes.push(route);
+    //     this.routeMatches = createRouteMatches(this.routes);
+    // }
+
+    /**
+     * 新增多个路由匹配规则
+     */
+    // public addRoutes(routes: RouteConfig[]) {
+    //     this.routes.push(...routes);
+    //     this.routeMatches = createRouteMatches(this.routes);
+    // }
 }
 
 /**

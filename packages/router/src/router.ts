@@ -9,6 +9,7 @@ import {
     type RegisteredConfig,
     type RegisteredConfigMap,
     type Route,
+    type RouteConfig,
     type RouterBase,
     type RouteRecord,
     type RouterHistory,
@@ -110,6 +111,9 @@ class Router implements RouterInstance {
         });
     }
 
+    addRoute: (route: RouteConfig) => void;
+    addRoutes: (routes: RouteConfig[]) => void;
+
     /* 更新路由 */
     updateRoute(route: RouteRecord) {
         const curAppType = this.route?.matched[0]?.appType;
@@ -195,12 +199,16 @@ class Router implements RouterInstance {
         return this.history.resolve(location);
     }
 
-    // 注册多个路由
+    /**
+     * 新增单个路由匹配规则
+     */
     // addRoutes(routes: RouteConfig[]) {
     //     this.matcher.addRoutes(routes);
     // }
 
-    // 注册路由
+    /**
+     * 新增多个路由匹配规则
+     */
     // addRoute(route: RouteConfig): void {
     //     this.matcher.addRoute(route);
     // }

@@ -811,6 +811,16 @@ export interface RouterInstance {
     back: () => void;
 
     /**
+     * 新增单个路由匹配规则
+     */
+    // addRoute: (route: RouteConfig) => void;
+
+    /**
+     * 新增多个路由匹配规则
+     */
+    // addRoutes: (routes: RouteConfig[]) => void;
+
+    /**
      * 根据获取当前所有活跃的路由Record对象
      */
     getRoutes: () => RouteMatch[];
