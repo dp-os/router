@@ -109,17 +109,17 @@ router.register('vue2', (router) => {
                 router,
             });
             const target = document.createElement('div');
-            target.style.cssText = `
-                position: fixed;
-                inset: 0;
-                z-index: 10;
-                width: 100%;
-                height: 100%;
-                background-color: #fff;
-                overflow: auto;
-                outline: 0;
-                -webkit-overflow-scrolling: touch;
-            `;
+            // target.style.cssText = `
+            //     position: fixed;
+            //     inset: 0;
+            //     z-index: 10;
+            //     width: 100%;
+            //     height: 100%;
+            //     background-color: #fff;
+            //     overflow: auto;
+            //     outline: 0;
+            //     -webkit-overflow-scrolling: touch;
+            // `;
             target.id = id;
             target.dataset.layerId = `${router.layerId}`;
             target.appendChild(document.createElement('div'));

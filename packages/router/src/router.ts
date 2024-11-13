@@ -365,6 +365,7 @@ class Router implements RouterInstance {
      * 服务端会使用 push 作为替代
      */
     async pushLayer(location: RouterRawLocation) {
+        if (this.isFrozen) return;
         const route = this.resolve(location);
         if (route.fullPath === this.route.fullPath) return;
         if (!inBrowser) {

@@ -97,10 +97,12 @@ export class HtmlHistory extends BaseRouterHistory {
     }
 
     pushWindow(location: RouterRawLocation) {
+        if (this.isFrozen) return;
         this.handleOutside(location, false, false);
     }
 
     replaceWindow(location: RouterRawLocation) {
+        if (this.isFrozen) return;
         this.handleOutside(location, true, false);
     }
 
@@ -185,25 +187,18 @@ export class HtmlHistory extends BaseRouterHistory {
     }
 
     go(delta: number): void {
+        if (this.isFrozen) return;
         window.history.go(delta);
     }
 
     forward(): void {
+        if (this.isFrozen) return;
         window.history.forward();
     }
 
     protected timer: NodeJS.Timeout | null = null;
 
     back(): void {
-        console.log(
-            '@back',
-            'layerId =>',
-            this.router.layerId,
-            'isFrozen =>',
-            this.isFrozen,
-            'isAncientRoute =>',
-            history.state._ancientRoute === true
-        );
         if (this.isFrozen) return;
         const oldState = history.state;
         const noBackNavigation = this.router.options.noBackNavigation;
