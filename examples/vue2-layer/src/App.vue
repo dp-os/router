@@ -21,6 +21,9 @@ const route = computed(() => {
             <div class="wrapper">app.vue</div>
         </header>
         <div class="tabs">
+            layerId: {{ $router.layerId }}
+        </div>
+        <div class="tabs">
             go
             <button @click="$router.go(-5)">go -5</button>
             <button @click="$router.go(-3)">go -3</button>

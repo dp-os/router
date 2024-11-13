@@ -24,10 +24,11 @@ import { inBrowser, normalizePath, regexDomain } from './utils';
 
 const LayerConfigKey = '__layer_config_key';
 
-let layerId = Number(Date.now());
+const baseValue = Number(Date.now());
+let layerIdOffset = 0;
 
 function getLatestLayerId() {
-    return ++layerId;
+    return baseValue + ++layerIdOffset;
 }
 
 /**
@@ -131,7 +132,11 @@ class Router implements RouterInstance {
                     config: registerConfig.config,
                     destroyed: false
                 };
-                if (!this.layerConfigList.find((item) => item.id === layerId)) {
+                if (
+                    !this.layerConfigList.find(
+                        (item) => item.id === this.layerId
+                    )
+                ) {
                     this.layerConfigList.push({
                         id: this.layerId,
                         depth: 0
@@ -242,8 +247,6 @@ class Router implements RouterInstance {
         this.parent = parent;
         this.layerMap = layerMap;
         this.layerConfigList = layerConfigList;
-
-        console.log('@init router', layerId);
     }
 
     /* 已注册的app配置 */
@@ -304,7 +307,7 @@ class Router implements RouterInstance {
     /**
      * 当前路由弹层id，用于区分不同的路由弹层
      */
-    layerId: number = layerId;
+    layerId: number = 0;
 
     /**
      * 路由弹层配置
@@ -403,12 +406,6 @@ class Router implements RouterInstance {
                 layerConfigList.some((item) => item === id)
             );
             if (availableList.length === 0) return;
-            console.log(
-                '@updateLayerState',
-                stateLayerIdList,
-                Object.keys(this.layerMap),
-                availableList
-            );
             const destroyList = layerConfigList.filter((id) =>
                 stateLayerIdList.every((layerId) => layerId !== id)
             );
@@ -420,19 +417,6 @@ class Router implements RouterInstance {
                 layerConfigList.some((item) => item === id)
             );
             const activeId = Math.max(...existingList);
-            console.log(
-                '@activeId',
-                activeId,
-                '\n',
-                '@existingList',
-                existingList,
-                '\n',
-                '@destroyList',
-                destroyList,
-                '\n',
-                '@createList',
-                createList
-            );
             layerConfigList.forEach((id) => {
                 const layer = this.layerMap[id];
                 if (layer) {
@@ -465,7 +449,7 @@ class Router implements RouterInstance {
                     layer.destroyed = false;
                 }
             });
-            this.updateLayerState(route);
+            // this.updateLayerState(route);
             this.layerConfigList = stateLayerConfigList;
         } else {
             const layerConfig = this.layerConfigList.find(
