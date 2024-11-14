@@ -1,3 +1,5 @@
+export const StateLayerConfigKey = '__layer_config_key';
+
 /**
  * @internal
  */
@@ -774,10 +776,13 @@ export interface RouterInstance {
 
     /**
      * 更新路由弹层方法
-     * @param state 参数为history.state
-     * @description 没有传入 state 时使用当前配置更新 history.state，传入了 state 时使用传入的 state 更新当前配置
      */
-    updateLayerState: (route: RouteRecord, state?: HistoryState) => Promise<void>;
+    updateLayerState: (route: RouteRecord) => void;
+
+    /**
+     * 检查路由弹层方法
+     */
+    checkLayerState: (state: HistoryState) => boolean;
 
     /**
      * 打开路由弹层方法，会创建新的路由实例并调用注册的 register 方法

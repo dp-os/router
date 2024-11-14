@@ -1,4 +1,8 @@
-import { type RouterInstance, type RouterRawLocation } from '../types';
+import {
+    type RouterInstance,
+    type RouterRawLocation,
+    StateLayerConfigKey
+} from '../types';
 import {
     computeScrollPosition,
     getKeepScrollPosition,
@@ -40,10 +44,14 @@ export class HtmlHistory extends BaseRouterHistory {
     onPopState = (e: PopStateEvent) => {
         if (this.isFrozen) return;
         const current = Object.assign({}, this.current);
+
+        if (this.router.checkLayerState(e.state)) {
+            return;
+        }
+
         // 当路由变化时触发跳转事件
         this.transitionTo(this.getCurrentLocation(), async (route) => {
             const { state } = window.history;
-            this.router.updateLayerState(route, state);
             saveScrollPosition(current.fullPath, computeScrollPosition());
             setTimeout(async () => {
                 const keepScrollPosition = state.keepScrollPosition;

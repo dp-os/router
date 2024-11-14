@@ -22,6 +22,7 @@ const route = computed(() => {
         </header> -->
         <div class="tabs">
             layerId: {{ $router.layerId }}
+            fullPath: {{ $route.fullPath }}
         </div>
         <div class="tabs">
             back forward
@@ -32,9 +33,8 @@ const route = computed(() => {
             router.pushLayer
             <button @click="$router.pushLayer('/')">pushLayer /</button>
             <button @click="$router.pushLayer('/test1')">pushLayer /test1</button>
-            <button @click="$router.pushLayer('/test1/test2')">pushLayer /test1/test2</button>
+            <button @click="$router.pushLayer('/test2')">pushLayer /test2</button>
             <button @click="$router.pushLayer('/test3')">pushLayer /test3</button>
-            <button @click="$router.pushLayer('/test4')">pushLayer /test4</button>
             <button @click="$router.pushLayer('/test4/4/5')">pushLayer /test4/4/5</button>
             <button @click="$router.pushLayer({
                 path: '/test5/66/77',
@@ -49,6 +49,10 @@ const route = computed(() => {
             })">pushLayer /test5/66/77</button>
             <button @click="$router.pushLayer('/test6')">pushLayer /test6</button>
         </div>
+        <!-- <div class="data">
+            <pre>fullPath: </pre>
+            <pre>{{ $route.fullPath }}</pre>
+        </div>
         <div class="data">
             <pre>params: </pre>
             <pre>{{ $route.params }}</pre>
@@ -56,7 +60,7 @@ const route = computed(() => {
         <div class="data">
             <pre>query: </pre>
             <pre>{{ $route.query }}</pre>
-        </div>
+        </div> -->
         <router-view></router-view>
     </div>
 </template>

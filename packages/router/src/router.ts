@@ -9,7 +9,6 @@ import {
     type RegisteredConfig,
     type RegisteredConfigMap,
     type Route,
-    type RouteConfig,
     type RouterBase,
     type RouteRecord,
     type RouterHistory,
@@ -19,11 +18,10 @@ import {
     RouterMode,
     type RouterOptions,
     type RouterRawLocation,
-    type RouterScrollBehavior
+    type RouterScrollBehavior,
+    StateLayerConfigKey
 } from './types';
 import { inBrowser, normalizePath, regexDomain } from './utils';
-
-const LayerConfigKey = '__layer_config_key';
 
 const baseValue = Number(Date.now());
 let layerIdOffset = 0;
@@ -254,6 +252,13 @@ class Router implements RouterInstance {
         this.layerConfigList = layerConfigList;
     }
 
+    /**
+     * 卸载方法
+     */
+    async destroy() {
+        // this.history.destroy();
+    }
+
     /* 已注册的app配置 */
     registeredConfigMap: RegisteredConfigMap = {};
 
@@ -379,95 +384,118 @@ class Router implements RouterInstance {
         await router.init({ parent: this, route, replace: false });
     }
 
-    async destroy() {
-        // const index = this.layerConfigList.findIndex(
-        //     (item) => item.id === this.layerId
-        // );
-        // console.log(
-        //     '@destroy',
-        //     this.layerId,
-        //     index,
-        //     this.layerConfigList,
-        //     this.layerMap
-        // );
-        // if (index > -1) this.layerConfigList.splice(index, 1);
-    }
-
     /**
      * 更新路由弹层方法
      * @param state 参数为history.state
      * @description 没有传入 state 时使用当前配置更新 history.state，传入了 state 时使用传入的 state 更新当前配置
      */
-    async updateLayerState(route: RouteRecord, state?: HistoryState) {
-        if (state) {
-            // state 中存放的 layerConfig 配置
-            const stateLayerConfigList =
-                (state[LayerConfigKey] as typeof this.layerConfigList) || [];
-            // state中存放的 layerId 列表
-            const stateLayerIdList = stateLayerConfigList.map(({ id }) => id);
-            // 所有的 layerId 列表
-            const layerConfigList = this.layerConfigList.map(({ id }) => id);
+    checkLayerState(state: HistoryState) {
+        // state 中存放的 layerConfig 配置
+        const stateLayerConfigList =
+            (state[StateLayerConfigKey] as typeof this.layerConfigList) || [];
+        // state中存放的 layerId 列表
+        const stateLayerIdList = stateLayerConfigList.map(({ id }) => id);
+        // 所有的 layerId 列表
+        const layerConfigList = this.layerConfigList.map(({ id }) => id);
 
-            const availableList = stateLayerIdList.filter((id) =>
-                layerConfigList.some((item) => item === id)
-            );
-            if (availableList.length === 0) return;
-            const destroyList = layerConfigList.filter((id) =>
-                stateLayerIdList.every((layerId) => layerId !== id)
-            );
-            const createList = stateLayerIdList.filter((id) =>
-                layerConfigList.every((item) => item !== id)
-            );
+        // 可用的 layerId 列表, 只有同时在 state 和当前 layerConfig 中存在的 layerId 才是可用的
+        const availableList = stateLayerIdList.filter((id) =>
+            layerConfigList.some((item) => item === id)
+        );
 
-            const existingList = stateLayerIdList.filter((id) =>
-                layerConfigList.some((item) => item === id)
-            );
-            const activeId = Math.max(...existingList);
-            layerConfigList.forEach((id) => {
-                const layer = this.layerMap[id];
-                if (layer) {
-                    const { router } = layer;
-                    if (activeId === id) {
-                        router.unfreeze();
-                    } else {
-                        router.freeze();
-                    }
+        const createList: number[] = [];
+        const destroyList: number[] = [];
+        Object.entries(this.layerMap).forEach(([key, value]) => {
+            if (stateLayerIdList.includes(Number(key))) {
+                if (value.destroyed) {
+                    createList.push(Number(key));
                 }
-            });
+            } else {
+                destroyList.push(Number(key));
+            }
+        });
 
-            destroyList.forEach((id) => {
-                const layer = this.layerMap[id];
-                if (layer && !layer.destroyed) {
-                    const { router, config } = layer;
-                    config.destroy();
-                    router.destroy();
-                    router.freeze();
-                    layer.destroyed = true;
-                }
-            });
+        console.log(
+            '@stateLayerIdList',
+            stateLayerIdList,
+            '\n',
+            '@layerConfigList',
+            layerConfigList,
+            '\n',
+            '@layerMap',
+            Object.keys(this.layerMap),
+            '\n',
+            '@destroyList',
+            destroyList,
+            '\n',
+            '@createList',
+            createList
+        );
 
-            createList.forEach((id) => {
-                const layer = this.layerMap[id];
-                if (layer && layer.destroyed) {
-                    const { router, config } = layer;
-                    config.mount();
-                    router.unfreeze();
-                    layer.destroyed = false;
-                }
-            });
-            // this.updateLayerState(route);
-            this.layerConfigList = stateLayerConfigList;
-        } else {
-            const layerConfig = this.layerConfigList.find(
-                (item) => item.id === this.layerId
-            );
-            if (layerConfig) layerConfig.depth++;
-            const state = {
-                ...history.state,
-                [LayerConfigKey]: this.layerConfigList
-            };
-            window.history.replaceState(state, '', route.fullPath);
+        if (availableList.length === 0) {
+            // 没有可用的 layerId 列表时跳出
+            return false;
         }
+        if (createList.length === 0 && destroyList.length === 0) {
+            // 没有需要创建的 layerId 列表 并且 没有需要销毁的 layerId 列表时跳出
+            return false;
+        }
+
+        // const destroyList = layerConfigList.filter((id) => !stateLayerIdList.includes(id));
+        // const createList = stateLayerIdList.filter((id) => !layerConfigList.includes(id));
+
+        const existingList = stateLayerIdList.filter((id) =>
+            layerConfigList.includes(id)
+        );
+        const activeId = Math.max(...existingList);
+
+        layerConfigList.forEach((id) => {
+            const layer = this.layerMap[id];
+            if (layer) {
+                const { router } = layer;
+                if (activeId === id) {
+                    router.unfreeze();
+                } else {
+                    router.freeze();
+                }
+            }
+        });
+
+        destroyList.forEach((id) => {
+            const layer = this.layerMap[id];
+            if (layer && !layer.destroyed) {
+                const { router, config } = layer;
+                config.destroy();
+                router.destroy();
+                router.freeze();
+                layer.destroyed = true;
+            }
+        });
+
+        createList.forEach((id) => {
+            const layer = this.layerMap[id];
+            if (layer && layer.destroyed) {
+                const { router, config } = layer;
+                config.mount();
+                router.unfreeze();
+                layer.destroyed = false;
+            }
+        });
+        this.layerConfigList = stateLayerConfigList;
+
+        return true;
+    }
+
+    updateLayerState(route: RouteRecord) {
+        const layerConfig = this.layerConfigList.find(
+            (item) => item.id === this.layerId
+        );
+        if (layerConfig) layerConfig.depth++;
+        const state = {
+            ...history.state,
+            [StateLayerConfigKey]: this.layerConfigList
+        };
+        window.history.replaceState(state, '', route.fullPath);
     }
 
     /**
