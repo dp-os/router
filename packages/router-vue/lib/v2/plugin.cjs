@@ -13,10 +13,7 @@ var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, {
   writable: true,
   value
 }) : obj[key] = value;
-var __publicField = (obj, key, value) => {
-  __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
-  return value;
-};
+var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
 class RouterVuePlugin {
   static install(Vue) {
     if (this.installed && this._Vue === Vue) return;
