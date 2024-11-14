@@ -393,18 +393,24 @@ class Router implements RouterInstance {
         // state 中存放的 layerConfig 配置
         const stateLayerConfigList =
             (state[StateLayerConfigKey] as typeof this.layerConfigList) || [];
-        // state中存放的 layerId 列表
-        const stateLayerIdList = stateLayerConfigList.map(({ id }) => id);
+
         // 所有的 layerId 列表
         const layerConfigList = Object.keys(this.layerMap).map(Number);
-
-        // 可用的 layerId 列表, 只有同时在 state 和当前 layerConfig 中存在的 layerId 才是可用的
-        const availableList = stateLayerIdList.filter((id) =>
-            layerConfigList.includes(id)
-        );
-
-        if (availableList.length === 0) {
+        // state中存放的可用的 layerId 列表
+        const stateLayerIdList = stateLayerConfigList
+            .map(({ id }) => id)
+            .filter((id) => {
+                return layerConfigList.includes(id);
+            });
+        if (stateLayerIdList.length === 0) {
             // 没有可用的 layerId 列表时跳出
+            return false;
+        }
+        if (
+            stateLayerIdList.length === 1 &&
+            stateLayerIdList[0] === this.layerId
+        ) {
+            // 只有一个可用的 layerId 并且就是当前的layerId时跳出
             return false;
         }
 
@@ -424,48 +430,20 @@ class Router implements RouterInstance {
             return false;
         }
 
-        console.log(
-            '@cur layerId',
-            this.layerId,
-            '\n',
-            '@stateLayerIdList',
-            stateLayerIdList,
-            '\n',
-            '@layerConfigList',
-            layerConfigList,
-            '\n',
-            '@availableList',
-            availableList,
-            '\n',
-            '@layerMap',
-            Object.keys(this.layerMap),
-            '\n',
-            '@destroyList',
-            destroyList,
-            '\n',
-            '@createList',
-            createList
-        );
-        const existingList = stateLayerIdList.filter((id) =>
-            layerConfigList.includes(id)
-        );
-        const activeId = Math.max(...existingList);
+        const activeId = Math.max(...stateLayerIdList);
 
         layerConfigList.forEach((id) => {
-            const layer = this.layerMap[id];
-            if (layer) {
-                const { router } = layer;
-                if (activeId === id) {
-                    router.unfreeze();
-                } else {
-                    router.freeze();
-                }
+            const { router } = this.layerMap[id];
+            if (activeId === id) {
+                router.unfreeze();
+            } else {
+                router.freeze();
             }
         });
 
         destroyList.forEach((id) => {
             const layer = this.layerMap[id];
-            if (layer && !layer.destroyed) {
+            if (!layer.destroyed) {
                 const { router, config } = layer;
                 config.destroy();
                 router.destroy();
@@ -476,7 +454,7 @@ class Router implements RouterInstance {
 
         createList.forEach((id) => {
             const layer = this.layerMap[id];
-            if (layer && layer.destroyed) {
+            if (layer.destroyed) {
                 const { router, config } = layer;
                 config.mount();
                 router.unfreeze();
@@ -489,18 +467,17 @@ class Router implements RouterInstance {
     }
 
     updateLayerState(route: RouteRecord) {
-        const layerConfig = this.layerConfigList.find(
-            (item) => item.id === this.layerId
-        );
+        const layerConfig = this.layerConfigList.find((item) => {
+            return item.id === this.layerId;
+        });
         if (layerConfig) layerConfig.depth++;
+        const stateConfigList = this.layerConfigList.filter(({ id }) => {
+            return !this.layerMap[id]?.destroyed;
+        });
         const state = {
             ...history.state,
-            [StateLayerConfigKey]: this.layerConfigList
+            [StateLayerConfigKey]: stateConfigList
         };
-        console.log(
-            '@updateLayerState',
-            state[StateLayerConfigKey].map((item) => item.id).join()
-        );
         window.history.replaceState(state, '', route.fullPath);
     }
 
