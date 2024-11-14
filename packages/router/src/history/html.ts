@@ -43,11 +43,9 @@ export class HtmlHistory extends BaseRouterHistory {
 
     onPopState = (e: PopStateEvent) => {
         if (this.isFrozen) return;
-        const current = Object.assign({}, this.current);
+        if (this.router.checkLayerState(e.state)) return;
 
-        if (this.router.checkLayerState(e.state)) {
-            return;
-        }
+        const current = Object.assign({}, this.current);
 
         // 当路由变化时触发跳转事件
         this.transitionTo(this.getCurrentLocation(), async (route) => {

@@ -396,12 +396,17 @@ class Router implements RouterInstance {
         // state中存放的 layerId 列表
         const stateLayerIdList = stateLayerConfigList.map(({ id }) => id);
         // 所有的 layerId 列表
-        const layerConfigList = this.layerConfigList.map(({ id }) => id);
+        const layerConfigList = Object.keys(this.layerMap).map(Number);
 
         // 可用的 layerId 列表, 只有同时在 state 和当前 layerConfig 中存在的 layerId 才是可用的
         const availableList = stateLayerIdList.filter((id) =>
-            layerConfigList.some((item) => item === id)
+            layerConfigList.includes(id)
         );
+
+        if (availableList.length === 0) {
+            // 没有可用的 layerId 列表时跳出
+            return false;
+        }
 
         const createList: number[] = [];
         const destroyList: number[] = [];
@@ -414,13 +419,23 @@ class Router implements RouterInstance {
                 destroyList.push(Number(key));
             }
         });
+        if (createList.length === 0 && destroyList.length === 0) {
+            // 没有需要创建的 layerId 列表 并且 没有需要销毁的 layerId 列表时跳出
+            return false;
+        }
 
         console.log(
+            '@cur layerId',
+            this.layerId,
+            '\n',
             '@stateLayerIdList',
             stateLayerIdList,
             '\n',
             '@layerConfigList',
             layerConfigList,
+            '\n',
+            '@availableList',
+            availableList,
             '\n',
             '@layerMap',
             Object.keys(this.layerMap),
@@ -431,19 +446,6 @@ class Router implements RouterInstance {
             '@createList',
             createList
         );
-
-        if (availableList.length === 0) {
-            // 没有可用的 layerId 列表时跳出
-            return false;
-        }
-        if (createList.length === 0 && destroyList.length === 0) {
-            // 没有需要创建的 layerId 列表 并且 没有需要销毁的 layerId 列表时跳出
-            return false;
-        }
-
-        // const destroyList = layerConfigList.filter((id) => !stateLayerIdList.includes(id));
-        // const createList = stateLayerIdList.filter((id) => !layerConfigList.includes(id));
-
         const existingList = stateLayerIdList.filter((id) =>
             layerConfigList.includes(id)
         );
@@ -495,6 +497,10 @@ class Router implements RouterInstance {
             ...history.state,
             [StateLayerConfigKey]: this.layerConfigList
         };
+        console.log(
+            '@updateLayerState',
+            state[StateLayerConfigKey].map((item) => item.id).join()
+        );
         window.history.replaceState(state, '', route.fullPath);
     }
 
