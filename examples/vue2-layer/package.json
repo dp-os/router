@@ -1,6 +1,6 @@
 {
     "name": "example-vue2-layer",
-    "version": "0.0.65-alpha.0",
+    "version": "0.1.0-alpha.0",
     "private": true,
     "scripts": {
         "dev": "vite",
