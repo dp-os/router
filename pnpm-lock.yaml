@@ -137,7 +137,7 @@ importers:
         version: 1.9.4
       '@gez/lint':
         specifier: 3.0.0-beta.49
-        version: 3.0.0-beta.49(postcss-html@1.7.0)(postcss@8.4.41)(stylelint@16.10.0(typescript@5.7.3))
+        version: 3.0.0-beta.49(postcss-html@1.7.0)(postcss@8.4.49)(stylelint@16.10.0(typescript@5.7.3))
       '@types/node':
         specifier: 22.9.0
         version: 22.9.0
@@ -167,10 +167,10 @@ importers:
         version: 1.9.4
       '@gez/lint':
         specifier: 3.0.0-beta.49
-        version: 3.0.0-beta.49(postcss-html@1.7.0)(postcss@8.4.49)(stylelint@16.10.0(typescript@5.7.3))
+        version: 3.0.0-beta.49(postcss-html@1.7.0)(postcss@8.4.41)(stylelint@16.10.0(typescript@5.7.3))
       '@gez/router':
-        specifier: 0.0.64
-        version: 0.0.64
+        specifier: workspace:*
+        version: link:../router
       '@types/node':
         specifier: 22.9.0
         version: 22.9.0
@@ -196,8 +196,8 @@ importers:
   packages/router-vue2:
     dependencies:
       '@gez/router':
-        specifier: 0.0.64
-        version: 0.0.64
+        specifier: workspace:*
+        version: link:../router
     devDependencies:
       '@biomejs/biome':
         specifier: 1.9.4
@@ -230,8 +230,8 @@ importers:
   packages/router-vue3:
     dependencies:
       '@gez/router':
-        specifier: 0.0.64
-        version: 0.0.64
+        specifier: workspace:*
+        version: link:../router
     devDependencies:
       '@biomejs/biome':
         specifier: 1.9.4
@@ -883,9 +883,6 @@ packages:
     resolution: {integrity: sha512-t5pEfyQ/jzooIJLtODmoCPPtHpqrakdgDcxJ2aE27K1edHs84g1F7odszf5oHV/Sr7wqJKgkNRr/AvsGO1mSag==}
     peerDependencies:
       stylelint: '>=16.5.0'
-
-  '@gez/router@0.0.64':
-    resolution: {integrity: sha512-nkYLchVJF/IW9f8eCLBCEgPxONjdP76/5la2I9AkMLlyB9OmpnlfLjPlQj/2KuchVJnkrYkt7D8CWOFWc2KTKQ==}
 
   '@isaacs/cliui@8.0.2':
     resolution: {integrity: sha512-O8jcjabXaleOG9DQ0+ARXWZBTfnP4WNAqzuiJK7ll44AmxGKv/J2M4TPjxjY3znBCfvBXFzucm1twdyFybFqEA==}
@@ -3760,11 +3757,6 @@ snapshots:
     transitivePeerDependencies:
       - postcss
       - postcss-html
-
-  '@gez/router@0.0.64':
-    dependencies:
-      path-to-regexp: 6.2.2
-      url-parse: 1.5.10
 
   '@isaacs/cliui@8.0.2':
     dependencies:

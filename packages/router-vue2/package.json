@@ -13,9 +13,10 @@
         "vue": "^2.7.8"
     },
     "dependencies": {
-        "@gez/router": "0.0.64"
+        "@gez/router": "workspace:*"
     },
     "devDependencies": {
+        "@biomejs/biome": "1.9.4",
         "@gez/lint": "3.0.0-beta.49",
         "@types/node": "22.9.0",
         "@vitest/coverage-v8": "2.1.5",
@@ -23,10 +24,9 @@
         "typescript": "5.7.3",
         "unbuild": "2.0.0",
         "vitest": "2.1.5",
-        "vue": "^2.7.8",
-        "@biomejs/biome": "1.9.4"
+        "vue": "^2.7.8"
     },
-    "version": "0.0.64",
+    "version": "0.0.66",
     "type": "module",
     "private": false,
     "exports": {
