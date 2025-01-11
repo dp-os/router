@@ -103,18 +103,13 @@ function getEventTypeList(eventType) {
 }
 function guardEvent(e) {
   var _a;
-  if (e.metaKey || e.altKey || e.ctrlKey || e.shiftKey)
-    return;
-  if (e.defaultPrevented)
-    return;
-  if (e.button !== void 0 && e.button !== 0)
-    return;
+  if (e.metaKey || e.altKey || e.ctrlKey || e.shiftKey) return;
+  if (e.defaultPrevented) return;
+  if (e.button !== void 0 && e.button !== 0) return;
   if ((_a = e.currentTarget) == null ? void 0 : _a.getAttribute) {
     const target = e.currentTarget.getAttribute("target");
-    if (/\b_blank\b/i.test(target))
-      return;
+    if (/\b_blank\b/i.test(target)) return;
   }
-  if (e.preventDefault)
-    e.preventDefault();
+  if (e.preventDefault) e.preventDefault();
   return true;
 }

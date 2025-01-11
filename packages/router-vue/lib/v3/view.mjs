@@ -69,8 +69,7 @@ export const RouterView = defineComponent({
   }
 });
 function normalizeSlot(slot, data) {
-  if (!slot)
-    return null;
+  if (!slot) return null;
   const slotContent = slot(data);
   return slotContent.length === 1 ? slotContent[0] : slotContent;
 }

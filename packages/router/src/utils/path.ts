@@ -288,9 +288,9 @@ export function isPathWithProtocolOrDomain(location: RouterRawLocation): {
         });
     }
 
-    if (!/^https?:\/\//i.test(url)) {
-        url = `http://${url}`;
-    }
+    // if (!/^https?:\/\//i.test(url)) {
+    //     url = `http://${url}`;
+    // }
 
     const {
         hash,
