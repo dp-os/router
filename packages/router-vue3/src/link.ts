@@ -1,10 +1,10 @@
 import {
-    isEqualRoute,
-    isSameRoute,
     type RouteRecord,
-    type RouterRawLocation
+    type RouterRawLocation,
+    isEqualRoute,
+    isSameRoute
 } from '@gez/router';
-import { defineComponent, h, type PropType } from 'vue';
+import { type PropType, defineComponent, h } from 'vue';
 
 import { useRoute, useRouter } from './use';
 
@@ -147,7 +147,7 @@ export const RouterLink = defineComponent({
 });
 
 function getEventTypeList(eventType: string | string[]): string[] {
-    if (eventType instanceof Array) {
+    if (Array.isArray(eventType)) {
         if (eventType.length > 0) {
             return eventType;
         }

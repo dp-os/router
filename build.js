@@ -23,7 +23,7 @@ function copyFolder(sourceDir, targetDir) {
             return;
         }
 
-        entries.forEach(entry => {
+        entries.forEach((entry) => {
             const sourcePath = path.join(sourceDir, entry.name);
             const destPath = path.join(targetDir, entry.name);
 

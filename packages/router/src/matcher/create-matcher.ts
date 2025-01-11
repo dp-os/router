@@ -1,12 +1,12 @@
 import { compile, match, pathToRegexp } from 'path-to-regexp';
 
-import {
-    type HistoryState,
-    type RouteConfig,
-    type RouteMatch,
-    type RouteRecord,
-    type RouterLocation,
-    type RouterMatcher
+import type {
+    HistoryState,
+    RouteConfig,
+    RouteMatch,
+    RouteRecord,
+    RouterLocation,
+    RouterMatcher
 } from '../types';
 import {
     decode,
@@ -40,12 +40,12 @@ class RouteMatcher {
             redirectedFrom
         }: { base: string; redirectedFrom?: RouteRecord } = { base: '' }
     ): RouteRecord | null {
-        let path: string = '';
+        let path = '';
         /* 按 Hanson 要求加入 undefined 类型 */
         let query: Record<string, string | undefined> = {};
         let queryArray: Record<string, string[]> = {};
         let params: Record<string, string> = {};
-        let hash: string = '';
+        let hash = '';
         let state: HistoryState = {};
 
         const parsedOption = parsePath(rawLocation.path);

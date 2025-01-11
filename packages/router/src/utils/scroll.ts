@@ -1,8 +1,8 @@
-import {
-    type _ScrollPositionNormalized,
-    type RouterRawLocation,
-    type ScrollPosition,
-    type ScrollPositionCoordinates
+import type {
+    RouterRawLocation,
+    ScrollPosition,
+    ScrollPositionCoordinates,
+    _ScrollPositionNormalized
 } from '../types';
 import { warn } from './warn';
 

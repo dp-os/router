@@ -1,4 +1,4 @@
-import { type RouterInstance, type RouterRawLocation } from '../types';
+import type { RouterInstance, RouterRawLocation } from '../types';
 import {
     computeScrollPosition,
     getKeepScrollPosition,
@@ -108,8 +108,8 @@ export class HtmlHistory extends RouterHistory {
     // 处理外站跳转逻辑
     handleOutside(
         location: RouterRawLocation,
-        replace: boolean = false,
-        accessCheck: boolean = true
+        replace = false,
+        accessCheck = true
     ) {
         const { flag, route } = isPathWithProtocolOrDomain(location);
         if (accessCheck) {
@@ -155,7 +155,7 @@ export class HtmlHistory extends RouterHistory {
     }
 
     // 跳转方法
-    async jump(location: RouterRawLocation, replace: boolean = false) {
+    async jump(location: RouterRawLocation, replace = false) {
         if (this.handleOutside(location, replace)) {
             return;
         }

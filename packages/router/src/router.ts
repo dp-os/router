@@ -8,8 +8,8 @@ import {
     type RegisteredConfig,
     type RegisteredConfigMap,
     type Route,
-    type RouterBase,
     type RouteRecord,
+    type RouterBase,
     type RouterHistory,
     type RouterInstance,
     type RouterMatcher,
@@ -248,7 +248,7 @@ class Router {
     }
 
     /* 前往特定路由历史记录的方法，可以在历史记录前后移动 */
-    go(delta: number = 0) {
+    go(delta = 0) {
         this.history.go(delta);
     }
 

@@ -23,6 +23,8 @@
         "ignore": [
             "node_modules/**/*",
             "node_modules_back/**/*",
+            "packages/router-vue",
+            "examples/*",
             "dist/**/*",
             "types/**/*",
             ".rpt2_cache/**/*",

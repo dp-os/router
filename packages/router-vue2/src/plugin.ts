@@ -1,5 +1,5 @@
 import type { Route, RouterInstance } from '@gez/router';
-import { type VueConstructor } from 'vue';
+import type { VueConstructor } from 'vue';
 
 import { RouterLink } from './link';
 import { RouterView } from './view';

@@ -1,16 +1,16 @@
-import { type Route, type RouteConfig } from '@gez/router';
+import type { Route, RouteConfig } from '@gez/router';
 import {
-    computed,
     type ComputedRef,
+    type PropType,
+    type ShallowReactive,
+    type Slot,
+    computed,
     defineComponent,
     getCurrentInstance,
     h,
     inject,
-    type PropType,
     provide,
-    type ShallowReactive,
-    shallowReactive,
-    type Slot
+    shallowReactive
 } from 'vue';
 
 import { routerViewDepthKey, routerViewLocationKey } from './symbols';

@@ -1,4 +1,4 @@
-import { type RouteRecord } from '../types';
+import type { RouteRecord } from '../types';
 
 /**
  * 判断是否是同一个路由
