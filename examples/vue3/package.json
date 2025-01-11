@@ -1,7 +1,7 @@
 {
     "name": "example-vue3",
     "private": true,
-    "version": "0.0.69",
+    "version": "0.0.70",
     "scripts": {
         "dev": "vite",
         "build": "run-p type-check build-only",
