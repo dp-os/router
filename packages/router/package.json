@@ -24,7 +24,7 @@
         "unbuild": "2.0.0",
         "vitest": "2.1.5"
     },
-    "version": "0.0.67",
+    "version": "0.0.68",
     "type": "module",
     "private": false,
     "exports": {

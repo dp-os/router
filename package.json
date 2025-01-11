@@ -9,7 +9,7 @@
         "lint:js": "biome check --write --no-errors-on-unmatched",
         "lint:type": "pnpm --filter \"*\" lint:type",
         "build:packages": "pnpm --filter \"./packages/**\" build",
-        "release": "npm run build:packages && lerna publish --force-publish --exact",
+        "release": "npm run build:packages && node ./build.js && lerna publish --force-publish --exact",
         "test": "pnpm --filter \"*\" test"
     },
     "engines": {
