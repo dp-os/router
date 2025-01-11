@@ -1,4 +1,4 @@
-import { type Route } from '@gez/router';
+import type { Route } from '@gez/router';
 import { type PropType } from 'vue';
 export declare const RouterView: import("vue").DefineComponent<{
     name: {

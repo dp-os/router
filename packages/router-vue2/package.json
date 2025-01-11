@@ -26,7 +26,7 @@
         "vitest": "2.1.5",
         "vue": "^2.7.8"
     },
-    "version": "0.0.66",
+    "version": "0.0.67",
     "type": "module",
     "private": false,
     "exports": {

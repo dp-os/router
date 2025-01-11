@@ -44,52 +44,52 @@ export interface RouterLinkProps {
 }
 export declare const RouterLink: import("vue/types").DefineComponent<{
     to: {
-        type: PropType<RouterRawLocation>;
+        type: PropType<RouterLinkProps["to"]>;
         required: true;
     };
     tag: {
-        type: PropType<string>;
+        type: PropType<RouterLinkProps["tag"]>;
         default: string;
     };
     replace: {
-        type: PropType<boolean>;
+        type: PropType<RouterLinkProps["replace"]>;
         default: boolean;
     };
     exact: {
-        type: PropType<"include" | "route" | "exact">;
+        type: PropType<RouterLinkProps["exact"]>;
         default: string;
     };
     activeClass: {
-        type: PropType<string>;
+        type: PropType<RouterLinkProps["activeClass"]>;
         default: string;
     };
     event: {
-        type: PropType<string | string[]>;
+        type: PropType<RouterLinkProps["event"]>;
         default: string;
     };
 }, {}, {}, import("vue/types").ComponentComputedOptions, import("vue/types").ComponentMethodOptions, import("vue/types").ComponentOptionsMixin, import("vue/types").ComponentOptionsMixin, {}, string, Readonly<import("vue/types").ExtractPropTypes<{
     to: {
-        type: PropType<RouterRawLocation>;
+        type: PropType<RouterLinkProps["to"]>;
         required: true;
     };
     tag: {
-        type: PropType<string>;
+        type: PropType<RouterLinkProps["tag"]>;
         default: string;
     };
     replace: {
-        type: PropType<boolean>;
+        type: PropType<RouterLinkProps["replace"]>;
         default: boolean;
     };
     exact: {
-        type: PropType<"include" | "route" | "exact">;
+        type: PropType<RouterLinkProps["exact"]>;
         default: string;
     };
     activeClass: {
-        type: PropType<string>;
+        type: PropType<RouterLinkProps["activeClass"]>;
         default: string;
     };
     event: {
-        type: PropType<string | string[]>;
+        type: PropType<RouterLinkProps["event"]>;
         default: string;
     };
 }>>, {

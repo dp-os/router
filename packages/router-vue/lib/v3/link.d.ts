@@ -44,52 +44,52 @@ export interface RouterLinkProps {
 }
 export declare const RouterLink: import("vue").DefineComponent<{
     to: {
-        type: PropType<RouterRawLocation>;
+        type: PropType<RouterLinkProps["to"]>;
         required: true;
     };
     tag: {
-        type: PropType<string>;
+        type: PropType<RouterLinkProps["tag"]>;
         default: string;
     };
     replace: {
-        type: PropType<boolean>;
+        type: PropType<RouterLinkProps["replace"]>;
         default: boolean;
     };
     exact: {
-        type: PropType<"include" | "route" | "exact">;
+        type: PropType<RouterLinkProps["exact"]>;
         default: string;
     };
     activeClass: {
-        type: PropType<string>;
+        type: PropType<RouterLinkProps["activeClass"]>;
         default: string;
     };
     event: {
-        type: PropType<string | string[]>;
+        type: PropType<RouterLinkProps["event"]>;
         default: string;
     };
 }, unknown, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {}, string, import("vue").PublicProps, Readonly<import("vue").ExtractPropTypes<{
     to: {
-        type: PropType<RouterRawLocation>;
+        type: PropType<RouterLinkProps["to"]>;
         required: true;
     };
     tag: {
-        type: PropType<string>;
+        type: PropType<RouterLinkProps["tag"]>;
         default: string;
     };
     replace: {
-        type: PropType<boolean>;
+        type: PropType<RouterLinkProps["replace"]>;
         default: boolean;
     };
     exact: {
-        type: PropType<"include" | "route" | "exact">;
+        type: PropType<RouterLinkProps["exact"]>;
         default: string;
     };
     activeClass: {
-        type: PropType<string>;
+        type: PropType<RouterLinkProps["activeClass"]>;
         default: string;
     };
     event: {
-        type: PropType<string | string[]>;
+        type: PropType<RouterLinkProps["event"]>;
         default: string;
     };
 }>>, {
