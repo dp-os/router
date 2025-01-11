@@ -1,4 +1,4 @@
-import { switchVersion } from './utils.js';
+import { switchVersion } from './utils.mjs';
 
 let version = 0;
 try {
