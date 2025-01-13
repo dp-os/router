@@ -1,6 +1,6 @@
 {
     "name": "example-vue2",
-    "version": "0.0.71",
+    "version": "0.0.72",
     "private": true,
     "scripts": {
         "dev": "vite",
