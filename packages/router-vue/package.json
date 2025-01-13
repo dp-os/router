@@ -20,7 +20,7 @@
     },
     "devDependencies": {
         "@gez/lint": "0.0.9",
-        "@gez/router": "0.0.71",
+        "@gez/router": "workspace:*",
         "@types/node": "20.12.12",
         "@vitest/coverage-v8": "1.6.0",
         "eslint": "8.57.0",
