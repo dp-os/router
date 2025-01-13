@@ -1,5 +1,6 @@
 import {
     isEqualRoute,
+    isPathWithProtocolOrDomain,
     isSameRoute,
     type RouteRecord,
     type RouterRawLocation

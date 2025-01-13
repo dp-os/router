@@ -69,6 +69,9 @@ export default {
             <router-link to="developer.mozilla.org/zh-CN/docs/Web">mdn docs/Web</router-link>
             <router-link to="github.com">github.com</router-link>
             <router-link to="github.com" replace>replace github.com</router-link>
+            <router-link to="tel:911">tel:911</router-link>
+            <router-link to="mailto:911@google.com">mailto:911@google.com</router-link>
+            <router-link to="git+ssh://a.io">git+ssh://a.io</router-link>
         </div>
         <div class="tabs">
             router-push
