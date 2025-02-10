@@ -64,7 +64,10 @@ export function normalizePath(path: string, parentPath?: string) {
     let normalizedPath = parentPath ? `${parentPath}/${path}` : `${path}`;
 
     // 当解析的路径不是以http 或 https 协议开头时，给开头加上/
-    if (!regexHttpScheme.test(normalizedPath)) {
+    if (
+        !regexHttpScheme.test(normalizedPath) &&
+        !normalizedPath.startsWith('/')
+    ) {
         normalizedPath = `/${normalizedPath}`;
     }
 
@@ -89,6 +92,7 @@ export function parsePath(path: string = ''): {
 } {
     path = normalizePath(path);
     const { pathname, query, hash } = new URLParse(path || '/');
+    console.log(path, pathname, query, hash);
     const queryObj = {};
     const queryArray = {};
     if (query.length > 0) {
@@ -197,6 +201,7 @@ export function normalizeLocation(
 
     if (typeof rawLocation === 'object') {
         const parsedOption = parsePath(rawLocation.path);
+        console.log('parsedOption', parsedOption);
         pathname = parsedOption.pathname;
 
         // 只有在rawLocation初始传入了 query 或 queryArray 时才使用 rawLocation
