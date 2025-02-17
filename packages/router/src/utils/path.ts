@@ -92,7 +92,6 @@ export function parsePath(path: string = ''): {
 } {
     path = normalizePath(path);
     const { pathname, query, hash } = new URLParse(path || '/');
-    console.log(path, pathname, query, hash);
     const queryObj = {};
     const queryArray = {};
     if (query.length > 0) {
@@ -201,7 +200,6 @@ export function normalizeLocation(
 
     if (typeof rawLocation === 'object') {
         const parsedOption = parsePath(rawLocation.path);
-        console.log('parsedOption', parsedOption);
         pathname = parsedOption.pathname;
 
         // 只有在rawLocation初始传入了 query 或 queryArray 时才使用 rawLocation
