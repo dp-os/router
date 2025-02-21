@@ -106,10 +106,10 @@ importers:
         version: 16.18.104
       '@vitejs/plugin-legacy':
         specifier: ^2.0.0
-        version: 2.3.1(terser@5.31.3)(vite@3.2.10)
+        version: 2.3.1(terser@5.31.3)(vite@3.2.10(@types/node@16.18.104)(terser@5.31.3))
       '@vitejs/plugin-vue2':
         specifier: ^1.1.2
-        version: 1.1.2(vite@3.2.10)(vue@2.7.16)
+        version: 1.1.2(vite@3.2.10(@types/node@16.18.104)(terser@5.31.3))(vue@2.7.16)
       '@vue/tsconfig':
         specifier: ^0.1.3
         version: 0.1.3(@types/node@16.18.104)
