@@ -30,6 +30,7 @@ const router = createRouter({
     //     return base;
     // },
     base: `${location.origin}/en`,
+    // initUrl: '/test1/test2',
     // mode: RouterMode.ABSTRACT,
     noBackNavigation: () => {
         console.log('@noBackNavigation');
@@ -475,4 +476,4 @@ await router.init();
 // (window as any)['app'] = app;
 // (window as any)['router'] = router;
 // (window as any)['route'] = router.route;
-/* 单应用便捷用法 start */
+/* 单应用便捷用法 end */

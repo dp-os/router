@@ -89,6 +89,46 @@ importers:
         specifier: ^0.38.8
         version: 0.38.9(typescript@4.7.4)
 
+  examples/vue2-layer:
+    dependencies:
+      '@gez/router':
+        specifier: workspace:^
+        version: link:../../packages/router
+      '@gez/router-vue2':
+        specifier: workspace:^
+        version: link:../../packages/router-vue2
+      vue:
+        specifier: ^2.7.16
+        version: 2.7.16
+    devDependencies:
+      '@types/node':
+        specifier: ^16.11.45
+        version: 16.18.104
+      '@vitejs/plugin-legacy':
+        specifier: ^2.0.0
+        version: 2.3.1(terser@5.31.3)(vite@3.2.10)
+      '@vitejs/plugin-vue2':
+        specifier: ^1.1.2
+        version: 1.1.2(vite@3.2.10)(vue@2.7.16)
+      '@vue/tsconfig':
+        specifier: ^0.1.3
+        version: 0.1.3(@types/node@16.18.104)
+      npm-run-all:
+        specifier: ^4.1.5
+        version: 4.1.5
+      terser:
+        specifier: ^5.14.2
+        version: 5.31.3
+      typescript:
+        specifier: ~4.7.4
+        version: 4.7.4
+      vite:
+        specifier: ^3.0.2
+        version: 3.2.10(@types/node@16.18.104)(terser@5.31.3)
+      vue-tsc:
+        specifier: ^0.38.8
+        version: 0.38.9(typescript@4.7.4)
+
   examples/vue3:
     dependencies:
       '@gez/router':

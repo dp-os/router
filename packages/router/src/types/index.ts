@@ -1,3 +1,5 @@
+export const StateLayerConfigKey = '__layer_config_key';
+
 /**
  * @internal
  */
@@ -29,7 +31,7 @@ export interface HistoryState {
 /**
  * 路由的meta配置
  */
-export interface RouteMeta extends Record<string | number | symbol, unknown> {}
+export interface RouteMeta extends Record<string | number | symbol, unknown> { }
 
 /**
  * 路由模式
@@ -98,6 +100,7 @@ export interface RouteConfig {
      * 路径
      * 在配置path为数组类型时，会根据配置的数组生成多个匹配规则，在命中任意一个匹配规则时，会重定向到配置的第一个 path
      * 按 Hanson 要求，只支持相对路径
+     * 路径配置请参考文档: https://github.com/pillarjs/path-to-regexp/tree/v6.2.2#parameters
      */
     path: string | string[];
 
@@ -151,14 +154,14 @@ export interface RouteConfig {
 export type RouterBase =
     | string
     | ((params: {
-          fullPath: string;
-          /**
-           * 按 Hanson 要求加入 undefined 类型
-           */
-          query: Record<string, string | undefined>;
-          queryArray: Record<string, string[]>;
-          hash: string;
-      }) => string);
+        fullPath: string;
+        /**
+         * 按 Hanson 要求加入 undefined 类型
+         */
+        query: Record<string, string | undefined>;
+        queryArray: Record<string, string[]>;
+        hash: string;
+    }) => string);
 
 /**
  * Scroll position 与 {@link https://developer.mozilla.org/en-US/docs/Web/API/ScrollToOptions | `ScrollToOptions`} 相似.
@@ -372,6 +375,12 @@ export interface RouterHistory {
     readonly router: RouterInstance;
 
     /**
+     * 路由是否被冻结
+     * @description 路由实例被冻结后，路由实例的所有方法都将失效
+     */
+    isFrozen: boolean;
+
+    /**
      * 匹配的当前路由
      */
     readonly current: RouteRecord;
@@ -424,7 +433,9 @@ export interface RouterHistory {
     /**
      * 初始化方法
      */
-    init: () => Promise<void>;
+    init: (params?: {
+        replace?: boolean;
+    }) => Promise<void>;
 
     /**
      * 卸载方法
@@ -452,11 +463,11 @@ export interface RouterLocation {
  */
 export type RouterRawLocation =
     | (RouterLocation & {
-          /**
-           * 设置此参数后，不保存滚动位置，跳转后页面位置仍在原处
-           */
-          keepScrollPosition?: boolean;
-      })
+        /**
+         * 设置此参数后，不保存滚动位置，跳转后页面位置仍在原处
+         */
+        keepScrollPosition?: boolean;
+    })
     | string;
 
 /**
@@ -579,6 +590,12 @@ export type RegisteredConfigMap = Record<
     }
 >;
 
+export interface RouterInitOptions {
+    parent?: RouterInstance;
+    route?: RouteRecord;
+    replace?: boolean;
+}
+
 /**
  * 路由注册配置
  */
@@ -603,6 +620,27 @@ export interface RegisteredConfig {
  * 路由类实例
  */
 export interface RouterInstance {
+
+    /**
+     * 当前路由对象的上级路由对象
+     */
+    parent: RouterInstance | null;
+
+    /**
+     * 路由是否冻结
+     */
+    isFrozen: boolean;
+
+    /**
+     * 路由冻结方法
+     */
+    freeze: () => void;
+
+    /**
+     * 路由解冻方法
+     */
+    unfreeze: () => void;
+
     /**
      * 路由配置
      */
@@ -652,7 +690,12 @@ export interface RouterInstance {
     /**
      * 初始化
      */
-    init: () => Promise<void>;
+    init: (options?: RouterInitOptions) => Promise<void>;
+
+    /**
+     * 卸载方法
+     */
+    destroy: () => void;
 
     /**
      * app配置注册
@@ -661,6 +704,9 @@ export interface RouterInstance {
         name: string,
         config: (router: RouterInstance) => RegisteredConfig
     ) => void;
+
+    /* 已注册的app配置 */
+    registeredConfigMap: RegisteredConfigMap;
 
     /**
      * 全局路由守卫
@@ -701,6 +747,50 @@ export interface RouterInstance {
     replace: (location: RouterRawLocation) => Promise<void>;
 
     /**
+     * 当前路由弹层id，用于区分不同的路由弹层
+     */
+    layerId: number;
+
+    /**
+     * 路由弹层配置
+     */
+    layerConfigList: Array<{
+        /**
+         * 路由弹层id
+         */
+        id: number;
+        /**
+         * 路由弹层深度
+         */
+        depth: number;
+    }>;
+
+    /**
+     * 路由弹层id与路由实例的map
+     */
+    layerMap: Record<number, {
+        router: RouterInstance;
+        config: RegisteredConfig;
+        destroyed: boolean;
+    }>;
+
+    /**
+     * 更新路由弹层方法
+     */
+    updateLayerState: (route: RouteRecord) => void;
+
+    /**
+     * 检查路由弹层方法
+     */
+    checkLayerState: (state: HistoryState) => boolean;
+
+    /**
+     * 打开路由弹层方法，会创建新的路由实例并调用注册的 register 方法
+     * 服务端会使用 push 作为替代
+     */
+    pushLayer: (location: RouterRawLocation) => void;
+
+    /**
      * 新开浏览器窗口的方法, 会进入配置的 handleOutside 钩子，在服务端会调用 push 作为替代
      */
     pushWindow: (location: RouterRawLocation) => void;
@@ -724,6 +814,16 @@ export interface RouterInstance {
      * 路由历史记录后退方法
      */
     back: () => void;
+
+    /**
+     * 新增单个路由匹配规则
+     */
+    // addRoute: (route: RouteConfig) => void;
+
+    /**
+     * 新增多个路由匹配规则
+     */
+    // addRoutes: (routes: RouteConfig[]) => void;
 
     /**
      * 根据获取当前所有活跃的路由Record对象
